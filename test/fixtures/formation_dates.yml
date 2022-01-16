@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  formation_date: 2022-01-15
+  formed: one
+  formed_type: Formed
+
+two:
+  formation_date: 2022-01-15
+  formed: two
+  formed_type: Formed

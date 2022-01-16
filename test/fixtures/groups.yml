@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  specialization_code: 1
+  course: 1
+  form_of_education: MyString
+
+two:
+  specialization_code: 1
+  course: 1
+  form_of_education: MyString
