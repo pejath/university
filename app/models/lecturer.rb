@@ -1,5 +1,6 @@
 class Lecturer < ApplicationRecord
   belongs_to :department
+  has_many :lectures
 
   validates :name, presence: true
   validates :academic_degree, numericality: {only_integer: true, minimum: 1, maximum: 5}

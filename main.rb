@@ -1,3 +1,5 @@
-Faculty.new(name:"Test Faculty").save
-Department.new(name: "Test department", faculty_id: 1, department_type: "Interfacult").save
-Group.new(faculty_id: 1, specialization_code:123, course: 1, form_of_education: "full-time").save
+puts 'Student with good marks'
+ap Student.excellent_students
+'-'*200
+puts 'Students applying for a red diploma'
+ap Student.red_diplomas
