@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_16_143406) do
+ActiveRecord::Schema.define(version: 2022_01_17_114136) do
 
   create_table "departments", force: :cascade do |t|
     t.integer "faculty_id"
@@ -52,6 +52,10 @@ ActiveRecord::Schema.define(version: 2022_01_16_143406) do
     t.index ["group_id", "lecture_id"], name: "index_groups_lectures_on_group_id_and_lecture_id"
   end
 
+  create_table "lecture_times", force: :cascade do |t|
+    t.time "beginning"
+  end
+
   create_table "lecturers", force: :cascade do |t|
     t.integer "department_id"
     t.string "name"
@@ -64,18 +68,16 @@ ActiveRecord::Schema.define(version: 2022_01_16_143406) do
   end
 
   create_table "lectures", force: :cascade do |t|
+    t.integer "lecture_time_id"
     t.integer "corpus"
     t.integer "auditorium"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lecture_time_id"], name: "index_lectures_on_lecture_time_id"
   end
 
   create_table "students", force: :cascade do |t|
     t.integer "group_id"
     t.string "name"
     t.float "average_mark"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id"], name: "index_students_on_group_id"
   end
 

@@ -5,7 +5,6 @@ class CreateStudents < ActiveRecord::Migration[6.1]
       t.string :name
       t.float :average_mark
 
-      t.timestamps
     end
   end
 end
