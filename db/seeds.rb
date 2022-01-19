@@ -44,29 +44,34 @@ Group.create(faculty_id: 4, specialization_code: rand(400), course: 3, form_of_e
 Group.create(faculty_id: 2, specialization_code: rand(400), course: 4, form_of_education: 'full-time')
 Group.create(faculty_id: 1, specialization_code: rand(400), course: 5, form_of_education: 'full-time')
 
+15.times do
+||
+  Lecturer.create(name: @rnd.compose(3), academic_degree: rand(1..5), post: "lecturer")
+end
+
 20.times{
   ||
-  Student.create(group_id: 1, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 2, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 3, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 4, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 5, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 6, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 7, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 8, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 9, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 10, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 11, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 12, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 13, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 14, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 15, name: @rnd.compose, average_mark: rand(2..5))
-  Student.create(group_id: 16, name: @rnd.compose, average_mark: rand(2..5))
+  Student.create(group_id: 1, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 2, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 3, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 4, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 5, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 6, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 7, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 8, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 9, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 10, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 11, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 12, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 13, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 14, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 15, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: 16, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
 }
 
 20.times do
 ||
-  Student.create(group_id: rand(1..16), name: @rnd.compose, average_mark: rand(2..5))
+  Student.create(group_id: rand(1..16), name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
 end
 (1..15).each do |i|
   Lecturer.create(name: @rnd.compose, academic_degree: rand(1..5), post: 'куратор', curatorial_group: i)
@@ -82,5 +87,5 @@ LectureTime.create(beginning: '19:00')
 LectureTime.create(beginning: '20:40')
 
 100.times {
-  Lecture.create(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8))
+  Lecture.create(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer: rand(1..15))
 }

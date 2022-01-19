@@ -46,12 +46,6 @@ ActiveRecord::Schema.define(version: 2022_01_17_114136) do
     t.index ["faculty_id"], name: "index_groups_on_faculty_id"
   end
 
-  create_table "groups_lectures", id: false, force: :cascade do |t|
-    t.integer "group_id", null: false
-    t.integer "lecture_id", null: false
-    t.index ["group_id", "lecture_id"], name: "index_groups_lectures_on_group_id_and_lecture_id"
-  end
-
   create_table "lecture_times", force: :cascade do |t|
     t.time "beginning"
   end
@@ -69,9 +63,13 @@ ActiveRecord::Schema.define(version: 2022_01_17_114136) do
 
   create_table "lectures", force: :cascade do |t|
     t.integer "lecture_time_id"
+    t.integer "group_id"
+    t.integer "lecturer_id"
     t.integer "corpus"
     t.integer "auditorium"
+    t.index ["group_id"], name: "index_lectures_on_group_id"
     t.index ["lecture_time_id"], name: "index_lectures_on_lecture_time_id"
+    t.index ["lecturer_id"], name: "index_lectures_on_lecturer_id"
   end
 
   create_table "students", force: :cascade do |t|

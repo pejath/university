@@ -1,15 +1,25 @@
 class Lecture < ApplicationRecord
-  has_and_belongs_to_many :groups
+  belongs_to :group
   belongs_to :lecture_time
-  has_one :lecturer
+  belongs_to :lecturer
 
+  validate :possible
   validate :free_audience
   validates :auditorium, numericality: {only_integer: true}
   validates :corpus, numericality: {only_integer: true}
 
   def free_audience
     if Lecture.where(auditorium: auditorium).exists?(lecture_time_id: lecture_time_id)
-      errors.add(:lecture_time_id, 'auditorium will be occupied')
+      errors.add(:lecture_time_id, 'Auditorium will be occupied in this time')
+    end
+  end
+
+  def possible
+    if Lecture.exists?(group_id: group_id, lecture_time_id: lecture_time_id)
+      errors.add(:group_id, 'already has a lecture')
+    end
+    if Lecture.exists?(lecturer_id: lecturer_id, lecture_time_id: lecture_time_id)
+      errors.add(:lecturer, 'already has a lecture')
     end
   end
 
