@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_17_114136) do
+ActiveRecord::Schema.define(version: 2022_01_20_144505) do
+
+  create_table "curators", force: :cascade do |t|
+    t.integer "lecturer_id"
+    t.integer "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_curators_on_group_id"
+    t.index ["lecturer_id"], name: "index_curators_on_lecturer_id"
+  end
 
   create_table "departments", force: :cascade do |t|
     t.integer "faculty_id"
@@ -18,6 +27,7 @@ ActiveRecord::Schema.define(version: 2022_01_17_114136) do
     t.string "department_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "formation_date"
     t.index ["faculty_id"], name: "index_departments_on_faculty_id"
   end
 
@@ -25,6 +35,7 @@ ActiveRecord::Schema.define(version: 2022_01_17_114136) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "formation_date"
   end
 
   create_table "formation_dates", force: :cascade do |t|
@@ -54,8 +65,6 @@ ActiveRecord::Schema.define(version: 2022_01_17_114136) do
     t.integer "department_id"
     t.string "name"
     t.integer "academic_degree"
-    t.string "post"
-    t.integer "curatorial_group"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["department_id"], name: "index_lecturers_on_department_id"
@@ -72,10 +81,18 @@ ActiveRecord::Schema.define(version: 2022_01_17_114136) do
     t.index ["lecturer_id"], name: "index_lectures_on_lecturer_id"
   end
 
+  create_table "marks", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "name"
+    t.integer "mark"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["student_id"], name: "index_marks_on_student_id"
+  end
+
   create_table "students", force: :cascade do |t|
     t.integer "group_id"
     t.string "name"
-    t.float "average_mark"
     t.index ["group_id"], name: "index_students_on_group_id"
   end
 

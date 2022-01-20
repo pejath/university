@@ -6,14 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'random_name_generator'
-@rnd = RandomNameGenerator.new
-@facults = %w[Биологический Военный Журналистики Исторический]
+RND = RandomNameGenerator.new
+FACULTS = %w[Биологический Географии Исторический Журналистики Экономический].freeze
+FORM_OF_EDUCATION = %w[evening correspondence full-time].freeze
 
-Faculty.create(name: 'Биологический')
-Faculty.create(name: 'Географии')
-Faculty.create(name: 'Исторический')
-Faculty.create(name: 'Журналистики')
-Faculty.create(name: 'Экономический')
+
+
+FACULTS.each{|facult|
+  Faculty.create(name: facult, formation_date: "19#{rand(70..99)}.#{month = rand(1..12)}.#{month != 2? rand(1..28):rand(1..30)}")
+}
 
 Department.create(name: 'Ботаники', faculty_id: 1, department_type: 'Interfacult')
 Department.create(name: 'Генетики', faculty_id: 1, department_type: 'Basic')
@@ -28,53 +29,27 @@ Department.create(name: 'Цифровой Экономики', faculty_id: 5, de
 Department.create(name: 'Геодезии', faculty_id: 2, department_type: 'Interfacult')
 Department.create(name: 'Источниковедения', faculty_id: 3, department_type: 'Interfacult')
 
-Group.create(faculty_id: 1, specialization_code: rand(400), course: 1, form_of_education: 'evening')
-Group.create(faculty_id: 1, specialization_code: rand(400), course: 2, form_of_education: 'evening')
-Group.create(faculty_id: 3, specialization_code: rand(400), course: 3, form_of_education: 'evening')
-Group.create(faculty_id: 5, specialization_code: rand(400), course: 4, form_of_education: 'evening')
-Group.create(faculty_id: 4, specialization_code: rand(400), course: 5, form_of_education: 'correspondence')
-Group.create(faculty_id: 2, specialization_code: rand(400), course: 1, form_of_education: 'correspondence')
-Group.create(faculty_id: 2, specialization_code: rand(400), course: 2, form_of_education: 'correspondence')
-Group.create(faculty_id: 3, specialization_code: rand(400), course: 3, form_of_education: 'correspondence')
-Group.create(faculty_id: 5, specialization_code: rand(400), course: 4, form_of_education: 'full-time')
-Group.create(faculty_id: 1, specialization_code: rand(400), course: 5, form_of_education: 'full-time')
-Group.create(faculty_id: 2, specialization_code: rand(400), course: 1, form_of_education: 'full-time')
-Group.create(faculty_id: 4, specialization_code: rand(400), course: 2, form_of_education: 'full-time')
-Group.create(faculty_id: 4, specialization_code: rand(400), course: 3, form_of_education: 'full-time')
-Group.create(faculty_id: 2, specialization_code: rand(400), course: 4, form_of_education: 'full-time')
-Group.create(faculty_id: 1, specialization_code: rand(400), course: 5, form_of_education: 'full-time')
+16.times{
+  Group.create(faculty_id: rand(1..Faculty.count), specialization_code: rand(400), course: rand(1..5), form_of_education: FORM_OF_EDUCATION.sample)
+}
 
-15.times do
-||
-  Lecturer.create(name: @rnd.compose(3), academic_degree: rand(1..5), post: "lecturer")
-end
-
-20.times{
-  ||
-  Student.create(group_id: 1, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 2, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 3, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 4, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 5, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 6, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 7, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 8, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 9, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 10, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 11, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 12, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 13, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 14, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 15, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
-  Student.create(group_id: 16, name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+16.times{|i|
+  20.times{
+    Student.create(group_id: i, name: RND.compose, average_mark: rand(2.0..5.0).round(2))
+  }
 }
 
 20.times do
-||
-  Student.create(group_id: rand(1..16), name: @rnd.compose, average_mark: rand(2.0..5.0).round(2))
+  Student.create(group_id: rand(1..16), name: RND.compose)
 end
+
+20.times do
+  Student.create(group_id: 1, name: RND.compose)
+end
+
+
 (1..15).each do |i|
-  Lecturer.create(name: @rnd.compose, academic_degree: rand(1..5), post: 'куратор', curatorial_group: i)
+  Lecturer.create(department_id: 1, name: RND.compose, academic_degree: rand(1..5), post: 'куратор', curatorial_group: i)
 end
 
 LectureTime.create(beginning: '9:00')
@@ -88,4 +63,11 @@ LectureTime.create(beginning: '20:40')
 
 100.times {
   Lecture.create(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer: rand(1..15))
+}
+
+(1..20).each {
+  |i|
+  5.times {
+    Mark.create(name: 'test', mark: rand(1..5), student_id:i)
+  }
 }
