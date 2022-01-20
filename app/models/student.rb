@@ -1,9 +1,9 @@
 class Student < ApplicationRecord
   belongs_to :group
+  has_many :marks
 
   validates :name, presence: true
-  validates :average_mark, numericality: {greater_than: 2.0, less_or_equal_then:5.0}
 
-  scope :excellent_students, -> { where('average_mark>=4') }
-  scope :red_diplomas, -> {Student.joins(:group).where('average_mark>=4.5', 'course = 5')}
+  scope :average_mark, ->(id) {Mark.where('student_id = ?', id).average('mark').to_f.round(2)}
+
 end
