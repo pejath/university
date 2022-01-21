@@ -5,8 +5,8 @@ class Lecture < ApplicationRecord
 
   validate :possible
   validate :free_audience
-  validates :auditorium, numericality: {only_integer: true}
-  validates :corpus, numericality: {only_integer: true}
+  validates :auditorium, :corpus, numericality: {only_integer: true}, presence: true
+
 
   def free_audience
     if Lecture.where(auditorium: auditorium, corpus: corpus).exists?(lecture_time_id: lecture_time_id)

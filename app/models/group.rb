@@ -1,7 +1,7 @@
 class Group < ApplicationRecord
-  enum form_of_education: %w[evening correspondence full-time]
+  enum form_of_education: %i[evening correspondence full_time]
+  belongs_to :lecturer
   has_many :lectures
-  has_one :curator
   has_many :lecturers, through: :lectures
   belongs_to :faculty
 

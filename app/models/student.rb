@@ -1,9 +1,15 @@
 class Student < ApplicationRecord
   belongs_to :group
   has_many :marks
-
   validates :name, presence: true
 
-  scope :average_mark, ->(id) {Mark.where('student_id = ?', id).average('mark').to_f.round(2)}
+  #It sucks :/
+  scope :red_diplomas, -> {
+                         Student.select { |student|
+    (student.average_mark > 4.5) && (Group.find(student.group_id).course == 5)
+  }}
 
+  def average_mark
+    Mark.where('student_id = ?', id).average('mark').to_f.round(2)
+  end
 end
