@@ -1,5 +1,5 @@
 class Department < ApplicationRecord
-  enum department_type: { interfacult: 0, basic: 1, military: 2}
+  enum department_type: { Interfacult: 0, Basic: 1, Military: 2}
   belongs_to :faculty
   has_many :lecturers
 

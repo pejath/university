@@ -3,7 +3,6 @@ class CreateMarks < ActiveRecord::Migration[6.1]
     create_table :marks do |t|
       t.belongs_to :student
       t.belongs_to :lecturer
-      t.belongs_to :subject
       t.integer :mark, null: false
 
       t.timestamps

@@ -54,11 +54,6 @@ end
   Student.create(group_id: 1, name: RND.compose)
 end
 
-(1..15).each {
-  |i|
-  Subject.create(name: "Math", code: i, lecturer_id: i)
-}
-
 LectureTime.create(beginning: '9:00')
 LectureTime.create(beginning: '10:35')
 LectureTime.create(beginning: '12:25')
@@ -71,7 +66,10 @@ LectureTime.create(beginning: '20:40')
 100.times {
   Lecture.create(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: rand(1..15))
 }
-
+(1..15).each {
+  |i|
+  Subject.create(name: "Math", code: i, lecturer_id: i)
+}
 (1..20).each {
   |i|
   5.times {
