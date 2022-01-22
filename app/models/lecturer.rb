@@ -2,6 +2,7 @@ class Lecturer < ApplicationRecord
   belongs_to :department
   has_many :lectures
   has_many :marks
+  has_one :group
   has_many :groups, through: :lectures
 
   validates :name, presence: true

@@ -10,55 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_20_144505) do
-
-  create_table "curators", force: :cascade do |t|
-    t.integer "lecturer_id"
-    t.integer "group_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["group_id"], name: "index_curators_on_group_id"
-    t.index ["lecturer_id"], name: "index_curators_on_lecturer_id"
-  end
+ActiveRecord::Schema.define(version: 2022_01_22_154919) do
 
   create_table "departments", force: :cascade do |t|
     t.integer "faculty_id"
     t.string "name"
     t.string "department_type"
+    t.date "formation_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.date "formation_date"
     t.index ["faculty_id"], name: "index_departments_on_faculty_id"
   end
 
   create_table "faculties", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.date "formation_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.date "formation_date"
-  end
-
-  create_table "formation_dates", force: :cascade do |t|
-    t.date "formation_date"
-    t.string "formed_type", null: false
-    t.integer "formed_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["formed_type", "formed_id"], name: "index_formation_dates_on_formed"
+    t.index ["name"], name: "index_faculties_on_name"
   end
 
   create_table "groups", force: :cascade do |t|
     t.integer "faculty_id"
+    t.integer "lecturer_id"
     t.integer "specialization_code"
     t.integer "course"
     t.string "form_of_education"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["faculty_id"], name: "index_groups_on_faculty_id"
+    t.index ["lecturer_id"], name: "index_groups_on_lecturer_id"
   end
 
   create_table "lecture_times", force: :cascade do |t|
-    t.time "beginning"
+    t.time "beginning", null: false
   end
 
   create_table "lecturers", force: :cascade do |t|
@@ -76,6 +61,7 @@ ActiveRecord::Schema.define(version: 2022_01_20_144505) do
     t.integer "lecturer_id"
     t.integer "corpus"
     t.integer "auditorium"
+    t.index ["corpus", "auditorium", "lecture_time_id"], name: "index_lectures_on_corpus_and_auditorium_and_lecture_time_id", unique: true
     t.index ["group_id"], name: "index_lectures_on_group_id"
     t.index ["lecture_time_id"], name: "index_lectures_on_lecture_time_id"
     t.index ["lecturer_id"], name: "index_lectures_on_lecturer_id"
@@ -83,17 +69,27 @@ ActiveRecord::Schema.define(version: 2022_01_20_144505) do
 
   create_table "marks", force: :cascade do |t|
     t.integer "student_id"
-    t.string "name"
-    t.integer "mark"
+    t.integer "lecturer_id"
+    t.integer "mark", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["lecturer_id"], name: "index_marks_on_lecturer_id"
     t.index ["student_id"], name: "index_marks_on_student_id"
   end
 
   create_table "students", force: :cascade do |t|
     t.integer "group_id"
-    t.string "name"
+    t.string "name", null: false
     t.index ["group_id"], name: "index_students_on_group_id"
+  end
+
+  create_table "subjects", force: :cascade do |t|
+    t.integer "lecturer_id"
+    t.string "name", null: false
+    t.integer "code", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lecturer_id"], name: "index_subjects_on_lecturer_id"
   end
 
 end

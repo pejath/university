@@ -1,6 +1,10 @@
 class Student < ApplicationRecord
   belongs_to :group
   has_many :marks
+  has_many :subjects, through: :marks
+
+
+
   validates :name, presence: true
 
   #It sucks :/

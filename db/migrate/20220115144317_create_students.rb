@@ -3,7 +3,6 @@ class CreateStudents < ActiveRecord::Migration[6.1]
     create_table :students do |t|
       t.belongs_to :group
       t.string :name, null: false
-      t.float :average_mark
 
     end
   end
