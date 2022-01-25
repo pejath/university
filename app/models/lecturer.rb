@@ -1,7 +1,8 @@
 class Lecturer < ApplicationRecord
   belongs_to :department
   has_many :lectures
-  has_many :marks
+  has_many :subjects
+  has_many :marks, through: :subjects
   has_one :group
   has_many :groups, through: :lectures
 

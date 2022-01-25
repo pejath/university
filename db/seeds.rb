@@ -79,7 +79,6 @@ LectureTime.create(beginning: '20:40')
 (1..20).each {
   |i|
   5.times {
-    lecturer = rand(1..15)
-    Mark.create(lecturer_id: lecturer, subject_id: lecturer, mark: rand(1..5), student_id: i)
+    Mark.create(subject_id: rand(1..15), mark: rand(1..5), student_id: i)
   }
 }
