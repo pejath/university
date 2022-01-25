@@ -5,7 +5,7 @@ class CreateGroups < ActiveRecord::Migration[6.1]
       t.belongs_to :lecturer
       t.integer :specialization_code, null: false
       t.integer :course, null: false
-      t.string :form_of_education
+      t.integer :form_of_education
 
       t.timestamps
     end

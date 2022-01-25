@@ -5,6 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
 require 'random_name_generator'
 RND = RandomNameGenerator.new
 FACULTS = %w[Биологический Географии Исторический Журналистики Экономический]
@@ -64,15 +65,21 @@ LectureTime.create(beginning: '19:00')
 LectureTime.create(beginning: '20:40')
 
 100.times {
-  Lecture.create(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: rand(1..15))
+  lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: rand(1..15))
+  if lec.valid?
+    lec.save
+  end
 }
+
 (1..15).each {
   |i|
   Subject.create(name: "Math", code: i, lecturer_id: i)
 }
+
 (1..20).each {
   |i|
   5.times {
-    Mark.create(lecturer_id: rand(1..15), mark: rand(1..5), student_id:i)
+    lecturer = rand(1..15)
+    Mark.create(lecturer_id: lecturer, subject_id: lecturer, mark: rand(1..5), student_id: i)
   }
 }

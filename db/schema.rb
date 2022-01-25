@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
   create_table "departments", force: :cascade do |t|
     t.integer "faculty_id"
     t.string "name", null: false
-    t.string "department_type", null: false
+    t.integer "department_type", null: false
     t.date "formation_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
     t.integer "lecturer_id"
     t.integer "specialization_code", null: false
     t.integer "course", null: false
-    t.string "form_of_education"
+    t.integer "form_of_education"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["faculty_id"], name: "index_groups_on_faculty_id"
@@ -61,8 +61,7 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
     t.integer "lecturer_id"
     t.integer "corpus"
     t.integer "auditorium"
-    t.index ["corpus", "auditorium", "lecture_time_id"], name: "index_lectures_on_corpus_and_auditorium_and_lecture_time_id", unique: true
-    t.index ["group_id", "lecturer_id"], name: "index_lectures_on_group_id_and_lecturer_id", unique: true
+    t.index ["corpus", "auditorium", "lecture_time_id", "group_id", "lecturer_id"], name: "lecture_index", unique: true
     t.index ["group_id"], name: "index_lectures_on_group_id"
     t.index ["lecture_time_id"], name: "index_lectures_on_lecture_time_id"
     t.index ["lecturer_id"], name: "index_lectures_on_lecturer_id"
@@ -71,11 +70,13 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
   create_table "marks", force: :cascade do |t|
     t.integer "student_id"
     t.integer "lecturer_id"
+    t.integer "subject_id"
     t.integer "mark", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lecturer_id"], name: "index_marks_on_lecturer_id"
     t.index ["student_id"], name: "index_marks_on_student_id"
+    t.index ["subject_id"], name: "index_marks_on_subject_id"
   end
 
   create_table "students", force: :cascade do |t|
