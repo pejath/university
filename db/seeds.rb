@@ -9,7 +9,7 @@
 require 'random_name_generator'
 RND = RandomNameGenerator.new
 FACULTS = %w[Биологический Географии Исторический Журналистики Экономический]
-FORM_OF_EDUCATION = %w[evening correspondence full_time]
+FORM_OF_EDUCATION = [0, 1, 2]
 DEPARTMENT = %w['Ботаники','Генетики']
 DATE = '1999.12.12'
 
@@ -34,21 +34,21 @@ Department.create(name: 'Источниковедения', faculty_id: 3, depar
 
 
 (1..15).each do |i|
-  Lecturer.create(department_id: 1, name: RND.compose, academic_degree: rand(1..5))
+  Lecturer.create(department_id: rand(1..12), name: RND.compose, academic_degree: rand(1..5))
 end
 
 16.times{
-  Group.create(faculty_id: rand(1..Faculty.count), specialization_code: rand(400), course: rand(1..5), form_of_education: FORM_OF_EDUCATION.sample, lecturer_id: rand(1..15))
+  Group.create(faculty_id: rand(1..Faculty.count), specialization_code: rand(400), course: rand(1..5), form_of_education: FORM_OF_EDUCATION.sample, curator_id: rand(1..15))
 }
 
-16.times{|i|
+Group.count.times{|i|
   20.times{
     Student.create(group_id: i, name: RND.compose)
   }
 }
 
 20.times do
-  Student.create(group_id: rand(1..16), name: RND.compose)
+  Student.create(group_id: rand(1..Group.count), name: RND.compose)
 end
 
 20.times do
@@ -64,16 +64,17 @@ LectureTime.create(beginning: '17:10')
 LectureTime.create(beginning: '19:00')
 LectureTime.create(beginning: '20:40')
 
-100.times {
-  lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: rand(1..15))
-  if lec.valid?
-    lec.save
-  end
-}
-
 (1..15).each {
   |i|
   Subject.create(name: "Math", code: i, lecturer_id: i)
+}
+
+100.times {
+  lecturer = rand(1..15)
+  lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: lecturer, subject_id: lecturer)
+  if lec.valid?
+    lec.save
+  end
 }
 
 (1..20).each {
