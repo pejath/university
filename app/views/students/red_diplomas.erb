@@ -1,0 +1,40 @@
+<style>
+  table {
+      border-spacing: 15px 8px;
+  }
+</style>
+<% if @student.nil? %>
+<table>
+  <thead>
+  <tr>
+    <th>Group</th>
+    <th>Name</th>
+    <th>Marks</th>
+    <th>Average</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+    <% @students.each do |student| %>
+      <tr>
+        <td><%= student.group_id %></td>
+        <td><%= student.name %></td>
+        <td>
+          <% @marks.each do |mark| %>
+            <% if mark.student_id == student.id %>
+              <%= mark.mark %>
+            <% end %>
+          <% end %>
+        </td>
+        <td><%= student.average_mark %></td>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
+<% else %>
+  <p>There is no red dimplomas students</p>
+<% end %>
+<br>

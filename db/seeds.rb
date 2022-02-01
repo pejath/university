@@ -77,7 +77,7 @@ LectureTime.create(beginning: '20:40')
   end
 }
 
-(1..20).each {
+(1..Student.count).each {
   |i|
   5.times {
     Mark.create(subject_id: rand(1..15), mark: rand(1..5), student_id: i)
