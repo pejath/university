@@ -12,11 +12,12 @@ class StudentsController < ApplicationController
   end
 
   def create
-    @student = Student.new(student_params)
-
+    @students = Student.new(student_params)
+    @students.save
   end
 
   def update
+    @students.update(student_params)
   end
 
   def destroy
