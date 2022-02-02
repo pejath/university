@@ -1,8 +1,19 @@
 <div>
   <% if !@students.first.nil? %>
+  <%= link_to 'Create', new_student_path %>
+  <%= link_to 'Red diplomas', '/red_diplomas'  %>
   <%= select_tag('group', options_for_select(@groups_id.order(:id).map{|group| group.id}<<'', params[:group])) %>
 
 <table>
+  <thead>
+  <tr>
+    <th>Group</th>
+    <th>Name</th>
+    <th>Marks</th>
+    <th>Average</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
   <tbody>
 
   <% @students.order(:group_id).each do |student| %>
@@ -21,18 +32,6 @@
   <% end %>
 
   </tbody>
-
-  <thead>
-  <tr>
-    <th>Group</th>
-    <th>Name</th>
-    <th>Marks</th>
-    <th>Average</th>
-    <th colspan="3"></th>
-
-
-  </tr>
-  </thead>
 </table>
   <% else %>
     <p>There is no such group or in group 0 students</p>

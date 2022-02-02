@@ -1,8 +1,17 @@
 <div>
+  <%= link_to "Journal", '/journal' %>
   <% if !@students.first.nil? %>
-  <%= select_tag('group', options_for_select(@groups_id.order(:id).map{|group| group.id}<<'', params[:group])) %>
 
     <table>
+      <thead>
+      <tr>
+        <th>Group</th>
+        <th>Name</th>
+        <th>Marks</th>
+        <th>Average</th>
+        <th colspan="3"></th>
+      </tr>
+      </thead>
       <tbody>
 
       <% @students.order(:group_id).each do |student| %>
@@ -21,31 +30,9 @@
       <% end %>
 
       </tbody>
-
-      <thead>
-      <tr>
-        <th>Group</th>
-        <th>Name</th>
-        <th>Marks</th>
-        <th>Average</th>
-        <th colspan="3"></th>
-
-
-      </tr>
-      </thead>
     </table>
   <% else %>
     <p>There is no red diplomas students</p>
   <% end %>
 
-  <script>
-      const select = document.getElementById('group');
-      select.addEventListener("change", async (e) => {
-          const url =  window.location.href.split('/');
-          if (url[url.length - 1] !== "journal") {
-              url.pop();
-          }
-          location.href = url.join('/') + '/' + e.target.value
-      })
-  </script>
 </div>
