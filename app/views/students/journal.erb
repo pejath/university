@@ -1,9 +1,7 @@
 <div>
-<p>\n</p>
+  <% if !@students.first.nil? %>
+  <%= select_tag('group', options_for_select(@groups_id.order(:id).map{|group| group.id}<<'', params[:group])) %>
 
-<%= select_tag('group', options_for_select(@groups_id.order(:id).map{|group| group.id}<<'', params[:group])) %>
-<p></p>
-<% if @students.all.size>0 %>
 <table>
   <tbody>
 
@@ -16,6 +14,9 @@
           <%= mark.mark %>
         <% end %>
       <td><%= student.average_mark %></td>
+      <td><%= link_to 'Show', student %></td>
+      <td><%= link_to 'Edit', edit_student_path(student) %></td>
+      <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
 
@@ -41,7 +42,7 @@
     const select = document.getElementById('group');
     select.addEventListener("change", async (e) => {
         const url =  window.location.href.split('/');
-        if (url[-1] !== 'students') {
+        if (url[url.length - 1] !== "journal") {
             url.pop();
         }
         location.href = url.join('/') + '/' + e.target.value
