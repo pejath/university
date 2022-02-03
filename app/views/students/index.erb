@@ -1,8 +1,8 @@
 <div>
   <% if  !@students.empty? %>
     <%= link_to 'Create', new_student_path %>
+    <%= select_tag('group', options_for_select(@groups_id.order(:id).map{|group| group.id}<<'', params[:group_id])) %>
 
-    <input type="checkbox" id="red_diplomas" name="red_diplomas" value="1">
     <table>
       <thead>
       <tr>
