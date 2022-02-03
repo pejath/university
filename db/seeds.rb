@@ -8,10 +8,11 @@
 
 require 'random_name_generator'
 RND = RandomNameGenerator.new
-FACULTS = %w[Биологический Географии Исторический Журналистики Экономический]
-FORM_OF_EDUCATION = [0, 1, 2]
-DEPARTMENT = %w['Ботаники','Генетики']
-DATE = '1999.12.12'
+FACULTS = %w[Биологический Географии Исторический Журналистики Экономический].freeze
+FORM_OF_EDUCATION = [0, 1, 2].freeze
+DAY = %w[Monday Tuesday Wednesday Thursday Friday Saturday].freeze
+DEPARTMENT = %w['Ботаники','Генетики'].freeze
+DATE = '1999.12.12'.freeze
 
 FACULTS.each{|facult|
   Faculty.create(name: facult, formation_date: "19#{rand(70..99)}.#{month = rand(1..12)}.#{month != 2? rand(1..28):rand(1..30)}")
@@ -69,9 +70,9 @@ LectureTime.create(beginning: '20:40')
   Subject.create(name: "Math", code: i, lecturer_id: i)
 }
 
-100.times {
+500.times {
   lecturer = rand(1..15)
-  lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: lecturer, subject_id: lecturer)
+  lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: lecturer, subject_id: lecturer, weekday: DAY.sample)
   if lec.valid?
     lec.save
   end
