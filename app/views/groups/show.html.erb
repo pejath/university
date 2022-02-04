@@ -1,0 +1,27 @@
+<p>
+  <strong>Faculty:</strong>
+  <%= @group.faculty.name %>
+</p>
+
+<p>
+  <strong>Specialization code:</strong>
+  <%= @group.specialization_code %>
+</p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @group.course %>
+</p>
+
+<p>
+  <strong>Form of education:</strong>
+  <%= @group.form_of_education.split('_').join(' ') %>
+</p>
+
+<p>
+  <strong>Curator:</strong>
+  <%= @group.curator.name %>
+</p>
+
+<%= link_to 'Edit', edit_group_path(@group)%> |
+<%= link_to 'Back', groups_path %>
