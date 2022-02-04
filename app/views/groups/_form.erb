@@ -10,9 +10,16 @@
     </div>
   <% end %>
 
+  <% @i = 0 %>
+
+  <%@facult = @faculties.map{|value|
+    @i+=1
+    %W[#{value.name} #{@i}]}
+  %>
+
   <div class="field">
     <%= form.label :faculty_id %>
-    <%= form.text_field :faculty_id %>
+    <%= form.select :faculty_id , @facult%>
   </div>
 
   <div class="field">
@@ -30,9 +37,18 @@
     <%= form.select :form_of_education, [%w[evening evening], %w[correspondence correspondence], ['full time', 'full_time']] %>
   </div>
 
+  <% @i = 0 %>
+  <% @curator = @curators.map do |value|
+    @i+=1
+    if value.curatorial_group.nil?
+      puts @i
+      %W[#{value.name} #{@i}]
+    end
+    end
+  %>
   <div class="field">
     <%= form.label :curator_id %>
-    <%= form.text_field :curator_id %>
+    <%= form.select :curator_id, @curator %>
   </div>
 
   <div class="actions">

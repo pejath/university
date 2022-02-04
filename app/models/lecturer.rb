@@ -9,5 +9,5 @@ class Lecturer < ApplicationRecord
   validates :name, presence: true
   validates :academic_degree, numericality: {only_integer: true, greater_than: 0, less_than:6}, allow_blank: true
 
-
+  scope :free_curators, -> { Lecturer.where.missing(:curatorial_group)}
 end
