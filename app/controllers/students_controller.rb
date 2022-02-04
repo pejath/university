@@ -1,6 +1,8 @@
 class StudentsController < ApplicationController
   include StudentsHelper
   before_action :set_student, only: %i[show edit update destroy]
+  before_action :filter_params, only: :index
+
 
   def show; end
 
@@ -38,20 +40,18 @@ class StudentsController < ApplicationController
   end
 
   def destroy
-    @student.destroy
 
     respond_to do |format|
-      format.html { redirect_to student_url, notice: "Student was successfully destroyed." }
-      format.json { head :no_content }
+      if @student.destroy
+        format.html { redirect_to students_path, notice: "Student was successfully destroyed." }
+      else
+        format.html { redirect_to students_url, notice: "Student already destroyed."}
+      end
     end
   end
 
   def index
-    @students = if params.key?(:red_diplomas)
-                  red_diplomas(Student.all, params)
-                else
-                  filter_by_params(Student.all, params)
-                end
+    @students = filter_by_params(Student.order(:group_id).all, params)
     @marks = Mark.all
     @groups_id = Group.select(:id)
   end
@@ -60,6 +60,11 @@ class StudentsController < ApplicationController
 
   def set_student
     @student = Student.find(params[:id])
+  end
+
+  def filter_params
+    params.permit(:group_id, :red_diplomas)
+    # params.require(:filter).permit(:group_id, :red_diplomas)
   end
 
   def student_params

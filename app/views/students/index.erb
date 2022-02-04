@@ -15,7 +15,7 @@
       </thead>
       <tbody>
 
-      <% @students.order(:group_id).each do |student| %>
+      <% @students.each do |student| %>
         <tr>
           <td><%= student.group_id %></td>
           <td><%= student.name %></td>
