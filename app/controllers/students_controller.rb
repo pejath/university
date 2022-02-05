@@ -45,7 +45,7 @@ class StudentsController < ApplicationController
       if @student.destroy
         format.html { redirect_to students_path, notice: "Student was successfully destroyed." }
       else
-        format.html { redirect_to students_url, notice: "Student already destroyed."}
+        format.html { redirect_to students_url, notice: "Something went wrong."}
       end
     end
   end
