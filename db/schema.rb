@@ -60,9 +60,10 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
     t.integer "group_id"
     t.integer "lecturer_id"
     t.integer "subject_id"
+    t.integer "weekday", null: false
     t.integer "corpus", null: false
     t.integer "auditorium", null: false
-    t.index ["corpus", "auditorium", "lecture_time_id", "group_id", "lecturer_id"], name: "lecture_index", unique: true
+    t.index ["corpus", "auditorium", "lecture_time_id", "group_id", "lecturer_id", "weekday"], name: "lecture_index", unique: true
     t.index ["group_id"], name: "index_lectures_on_group_id"
     t.index ["lecture_time_id"], name: "index_lectures_on_lecture_time_id"
     t.index ["lecturer_id"], name: "index_lectures_on_lecturer_id"
