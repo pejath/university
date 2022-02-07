@@ -1,6 +1,33 @@
 <p id="notice"><%= notice %></p>
 
-<%= render 'form', lecture: [@group, @lecture] %>
+<p>
+  <strong>Group:</strong>
+  <%= @lecture.group_id %>
+</p>
+<p>
+  <strong>Lecture Time:</strong>
+<%= @lecture.lecture_time.formatted_time %>
+</p>
+<p>
+  <strong>Weekday:</strong>
+<%= @lecture.weekday %>
+</p>
+<p>
+  <strong>Subject:</strong>
+<%= @lecture.subject.name %>
+</p>
+<p>
+  <strong>Lecturer:</strong>
+<%= @lecture.lecturer.name %>
+</p>
+<p>
+  <strong>Corpus:</strong>
+<%= @lecture.corpus %>
+</p>
+<p>
+  <strong>Auditorium:</strong>
+<%= @lecture.auditorium %>
+</p>
 
-<%= link_to 'Show', [@group, @lecture] %> |
-<%= link_to 'Back', group_lecture_path %>
+<%= link_to 'Edit', edit_group_lecture_path %> |
+<%= link_to 'Back', group_lectures_path %>

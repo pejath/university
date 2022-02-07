@@ -1,6 +1,6 @@
 class LecturesController < ApplicationController
   before_action :get_group
-  before_action :set_lecturers_subject_and_time, only: %i[edit new update create]
+  before_action :set_lecturers_subject_and_time
   before_action :set_lecture, only: %i[ show edit update destroy ]
 
   # GET /lectures or /lectures.json
@@ -55,9 +55,9 @@ class LecturesController < ApplicationController
 
     respond_to do |format|
       if @lecture.destroy
-        format.html { redirect_to students_path, notice: "Lecture was successfully destroyed." }
+        format.html { redirect_to group_lectures_path, notice: "Lecture was successfully destroyed." }
       else
-        format.html { redirect_to students_url, notice: "Something went wrong."}
+        format.html { redirect_to group_lectures_path, notice: "Something went wrong."}
       end
     end
   end
