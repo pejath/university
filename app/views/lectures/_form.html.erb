@@ -1,15 +1,46 @@
-<%= form_with(model: lecture) do |form| %>
-  <% if lecture.errors.any? %>
+<%= form_with(model: [@group, @lecture]) do |form| %>
+  <% if @lecture.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(lecture.errors.count, "error") %> prohibited this lecture from being saved:</h2>
+      <h2><%= pluralize(@lecture.errors.count, "error") %> prohibited this lecture from being saved:</h2>
 
       <ul>
-        <% lecture.errors.each do |error| %>
+        <% @lecture.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
+
+  <div class="field">
+    <%= form.label :lecture_time %>
+    <%= form.select :lecture_time_id , @lecture_time.map{|time| [time.formatted_time, time.id]}%>
+  </div>
+
+  <div class="field">
+    <%= form.label :lecturer %>
+    <%= form.select :lecturer_id , @lecturers.map{|lecturer| [lecturer.name, lecturer.id]}%>
+  </div>
+
+  <div class="field">
+    <%= form.label :subject %>
+    <%= form.select :subject_id , @subject.map{|subject| [subject.name, subject.id]}%>
+  </div>
+
+  <div class="field">
+    <%= form.label :weekday %>
+    <%= form.select :weekday , [%w[Monday Monday], %w[Tuesday Tuesday], %w[Wednesday Wednesday], %w[Thursday Thursday], %w[Friday Friday], %w[Saturday Saturday]]%>
+  </div>
+
+  <div class="field">
+    <%= form.label :corpus %>
+    <%= form.text_field :corpus%>
+  </div>
+
+  <div class="field">
+    <%= form.label :auditorium %>
+    <%= form.text_field :auditorium%>
+  </div>
+
 
   <div class="actions">
     <%= form.submit %>

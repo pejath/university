@@ -1,4 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_lecture_path(@lecture) %> |
-<%= link_to 'Back', lectures_path %>
+<%= render 'form', lecture: [@group, @lecture] %>
+
+<%= link_to 'Show', [@group, @lecture] %> |
+<%= link_to 'Back', group_lecture_path %>

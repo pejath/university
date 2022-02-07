@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: %i[show edit update destroy]
-  before_action :edit_new_params, only: %i[edit new]
+  before_action :set_faculties_curators, only: %i[edit new update]
   def show; end
 
   def new
@@ -54,9 +54,9 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
-  def edit_new_params
-    @faculties = Faculty.select(:name)
-    @curators = Lecturer.free_curators.select(:name)
+  def set_faculties_curators
+    @faculties = Faculty.select(:id,:name)
+    @curators = Lecturer.free_curators.select(:id, :name)
   end
 
   def group_params
