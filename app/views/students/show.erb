@@ -1,0 +1,17 @@
+<p>
+  <strong>Group:</strong>
+  <%= @student.group_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @student.name %>
+</p>
+
+<p>
+  <strong>Average mark:</strong>
+  <%= @student.average_mark %>
+</p>
+
+<%= link_to 'Edit', edit_student_path(@student)%> |
+<%= link_to 'Back', students_path %>
