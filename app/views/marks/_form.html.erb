@@ -1,0 +1,27 @@
+<%= form_with(model: [@student, mark]) do |form| %>
+  <% if mark.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(mark.errors.count, "error") %> prohibited this mark from being saved:</h2>
+
+      <ul>
+        <% mark.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :mark %>
+    <%= form.select :mark, [['1', 1],['2', 2],['3', 3],['4', 4],['5', 5]] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :subject %>
+    <%= form.select :subject_id, @subject.map{|subject| [subject.name, subject.id]} %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

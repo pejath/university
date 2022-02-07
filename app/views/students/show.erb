@@ -13,5 +13,6 @@
   <%= @student.average_mark %>
 </p>
 
+<%= link_to 'Marks', student_marks_path(@student) %> |
 <%= link_to 'Edit', edit_student_path(@student)%> |
 <%= link_to 'Back', students_path %>
