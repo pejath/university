@@ -1,0 +1,51 @@
+<div>
+  <% if  !@students.empty? %>
+    <%= link_to 'Create', new_student_path %>
+    <%= select_tag('group', options_for_select(@groups_id.order(:id).map{|group| group.id}<<'', params[:group_id])) %>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Group</th>
+        <th>Name</th>
+        <th>Marks</th>
+        <th>Average</th>
+        <th colspan="3"></th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <% @students.each do |student| %>
+        <tr>
+          <td><%= student.group_id %></td>
+          <td><%= student.name %></td>
+          <td>
+            <% @marks.where(student_id: student.id).each do |mark| %>
+              <%= mark.mark %>
+            <% end %>
+          <td><%= student.average_mark %></td>
+          <td><%= link_to 'Show', student %></td>
+          <td><%= link_to 'Edit', edit_student_path(student) %></td>
+          <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+  <% else %>
+    <p>There is no such group or in group 0 students</p>
+  <% end %>
+
+  <script>
+      const select = document.getElementById('group');
+      const check = document.getElementById('red_diplomas');
+      select.addEventListener("change", async (e) => {
+          const url = window.location.href.split(/[/?]/);
+          while (url[url.length - 1] !== 'students') {
+              url.pop()
+          }
+          location.href = url.join('/') + '?group_id=' + e.target.value;
+      })
+      </script>
+</div>
