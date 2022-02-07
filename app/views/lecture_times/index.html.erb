@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Lecture Times</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lecture_times.each do |lecture_time| %>
+      <tr>
+        <td><%= lecture_time.formatted_time %></td>
+        <td><%= link_to 'Edit', edit_lecture_time_path(lecture_time) %></td>
+        <td><%= link_to 'Destroy', lecture_time, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Lecture Time', new_lecture_time_path %>
