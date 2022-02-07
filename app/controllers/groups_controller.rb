@@ -39,8 +39,12 @@ class GroupsController < ApplicationController
     @group.destroy
 
     respond_to do |format|
-      format.html { redirect_to group_url, notice: "Group was successfully destroyed." }
-      format.json { head :no_content }
+      if @group.destroy
+        format.html { redirect_to group_url, notice: "Group was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to group_url, notice: "Something went wrong."}
+      end
     end
   end
 
