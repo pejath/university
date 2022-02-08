@@ -1,5 +1,5 @@
 class LectureTimesController < ApplicationController
-  before_action :set_lecture_time, only: %i[ show edit update destroy ]
+  before_action :set_lecture_time, only: %i[ edit update destroy ]
 
   # GET /lecture_times or /lecture_times.json
   def index
@@ -7,8 +7,7 @@ class LectureTimesController < ApplicationController
   end
 
   # GET /lecture_times/1 or /lecture_times/1.json
-  def show
-  end
+  def show; end
 
   # GET /lecture_times/new
   def new
@@ -16,8 +15,7 @@ class LectureTimesController < ApplicationController
   end
 
   # GET /lecture_times/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /lecture_times or /lecture_times.json
   def create
@@ -49,7 +47,6 @@ class LectureTimesController < ApplicationController
 
   # DELETE /lecture_times/1 or /lecture_times/1.json
   def destroy
-    @lecture_time.destroy
 
     respond_to do |format|
       if @lecture_time.destroy
