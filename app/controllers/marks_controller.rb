@@ -1,26 +1,24 @@
 class MarksController < ApplicationController
-  before_action :get_student
+  before_action :set_student
   before_action :set_mark, only: %i[ show edit update destroy ]
 
-  # GET /marks or /marks.json
+  # GET /students/:id/marks or /students/:id/marks.json
   def index
     @marks = @student.marks
   end
 
-  # GET /marks/1 or /marks/1.json
-  def show
-  end
+  # GET /students/:id/marks/1 or /students/:id/marks/1.json
+  def show; end
 
-  # GET /marks/new
+  # GET /students/:id/marks/new
   def new
     @mark = @student.marks.build
   end
 
-  # GET /marks/1/edit
-  def edit
-  end
+  # GET /students/:id/marks/1/edit
+  def edit; end
 
-  # POST /marks or /marks.json
+  # POST /students/:id/marks or /students/:id/marks.json
   def create
     @mark = @student.marks.build(mark_params)
 
@@ -35,7 +33,7 @@ class MarksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /marks/1 or /marks/1.json
+  # PATCH/PUT /students/:id/marks/1 or /students/:id/marks/1.json
   def update
     respond_to do |format|
       if @mark.update(mark_params)
@@ -48,9 +46,8 @@ class MarksController < ApplicationController
     end
   end
 
-  # DELETE /marks/1 or /marks/1.json
+  # DELETE /students/:id/marks/1 or /students/:id/marks/1.json
   def destroy
-    @mark.destroy
 
     respond_to do |format|
       if @mark.destroy
@@ -64,7 +61,7 @@ class MarksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-  def get_student
+  def set_student
     @student = Student.find(params[:student_id])
     @subject = Subject.select(:id, :name)
   end
