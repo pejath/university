@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :get_group, only: %i[show edit update destroy]
-  before_action :set_faculties_curators, only: %i[edit new]
+  before_action :set_faculties_curators, only: %i[create edit new]
 
 
   def show; end

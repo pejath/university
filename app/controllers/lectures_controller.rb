@@ -1,6 +1,6 @@
 class LecturesController < ApplicationController
   before_action :get_group
-  before_action :set_lecturers_subject_and_time, only: %i[ edit new]
+  before_action :set_lecturers_subject_and_time, only: %i[create edit new]
   before_action :set_lecture, only: %i[ show edit update destroy ]
 
   # GET /groups/:id/lectures or /groups/:id/lectures.json
