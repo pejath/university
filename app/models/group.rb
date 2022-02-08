@@ -6,7 +6,7 @@ class Group < ApplicationRecord
   has_many :lecturers, through: :lectures
   has_many :subjects
 
-  validates :form_of_education, inclusion: {in: %w[evening correspondence full_time], message: 'is not valid form'}
+  validates :form_of_education, inclusion: { in: %w[evening correspondence full_time 0 1 2], message: 'is not valid form'}
   validates :specialization_code, :curator_id, presence: true, numericality: {only_integer: true}, uniqueness: true
   validates :course, presence: true, numericality: {only_integer: true, greater_than: 0, less_than:6}
 

@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
     t.integer "curator_id"
     t.integer "specialization_code", null: false
     t.integer "course", null: false
-    t.integer "form_of_education"
+    t.integer "form_of_education", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["curator_id"], name: "index_groups_on_curator_id"

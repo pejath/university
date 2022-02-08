@@ -1,27 +1,25 @@
 class LecturesController < ApplicationController
   before_action :get_group
-  before_action :set_lecturers_subject_and_time
+  before_action :set_lecturers_subject_and_time, only: %i[ edit new]
   before_action :set_lecture, only: %i[ show edit update destroy ]
 
-  # GET /lectures or /lectures.json
+  # GET /groups/:id/lectures or /groups/:id/lectures.json
   def index
-    @lectures = @group.lectures.order(:lecture_time_id)
+    @lectures = @group.lectures.order(:weekday).order(:lecture_time_id)
   end
 
-  # GET /lectures/1 or /lectures/1.json
-  def show
-  end
+  # GET /groups/:id/lectures/1 or /groups/:id/lectures/1.json
+  def show; end
 
-  # GET /lectures/new
+  # GET /groups/:id/lectures/new
   def new
     @lecture = @group.lectures.build
   end
 
-  # GET /lectures/1/edit
-  def edit
-  end
+  # GET /groups/:id/lectures/1/edit
+  def edit; end
 
-  # POST /lectures or /lectures.json
+  # POST /groups/:id/lectures or /groups/:id/lectures.json
   def create
     @lecture = @group.lectures.build(lecture_params)
 
@@ -36,10 +34,10 @@ class LecturesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /lectures/1 or /lectures/1.json
+  # PATCH/PUT /groups/:id/lectures/1 or /groups/:id/lectures/1.json
   def update
     respond_to do |format|
-      if @group.lectures.build(lecture_params)
+      if @lecture.update(lecture_params)
         format.html { redirect_to group_lecture_path, notice: "Lecture was successfully updated." }
         format.json { render :show, status: :ok, location: @lecture }
       else
@@ -49,7 +47,7 @@ class LecturesController < ApplicationController
     end
   end
 
-  # DELETE /lectures/1 or /lectures/1.json
+  # DELETE /groups/:id/lectures/1 or /groups/:id/lectures/1.json
   def destroy
     @lecture.destroy
 
@@ -66,6 +64,7 @@ class LecturesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
 
   def set_lecturers_subject_and_time
+
     @lecture_time = LectureTime.all
     @subject = Subject.all
     @lecturers = Lecturer.select(:id, :name)
@@ -80,6 +79,6 @@ class LecturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
   def lecture_params
-    params.require(:lecture).permit(:lecture_time_id, :group_id, :lecturer_id, :subject_id, :weekday, :corpus, :auditorium, {})
+    params.require(:lecture).permit(:lecture_time_id, :group_id, :lecturer_id, :subject_id, :weekday, :corpus, :auditorium)
   end
 end

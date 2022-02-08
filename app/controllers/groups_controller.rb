@@ -1,6 +1,8 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[show edit update destroy]
-  before_action :set_faculties_curators, only: %i[edit new update]
+  before_action :get_group, only: %i[show edit update destroy]
+  before_action :set_faculties_curators, only: %i[edit new]
+
+
   def show; end
 
   def new
@@ -36,31 +38,31 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @group.destroy
 
     respond_to do |format|
       if @group.destroy
-        format.html { redirect_to group_url, notice: "Group was successfully destroyed." }
+        format.html { redirect_to groups_url, notice: "Group was successfully destroyed." }
         format.json { head :no_content }
       else
-        format.html { redirect_to group_url, notice: "Something went wrong."}
+        format.html { redirect_to groups_url, notice: "Something went wrong."}
       end
     end
   end
 
   def index
-    @groups = Group.includes(:faculty, :curator).all
+    @groups = Group.includes(:faculty, :curator).order(:faculty_id).all
   end
 
   private
 
-  def set_group
+  def get_group
     @group = Group.find(params[:id])
   end
 
   def set_faculties_curators
     @faculties = Faculty.select(:id,:name)
     @curators = Lecturer.free_curators.select(:id, :name)
+
   end
 
   def group_params

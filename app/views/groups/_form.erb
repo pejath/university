@@ -33,7 +33,7 @@
   <div class="field">
     <%= form.label :curator_id %>
     <%= form.select :curator_id, @curators.map { |curator|
-      %W[#{curator.name} #{curator.id}] if curator.curatorial_group.nil?
+      %W[#{curator.name} #{curator.id}]
     } %>
   </div>
 
