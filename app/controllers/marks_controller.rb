@@ -1,5 +1,5 @@
 class MarksController < ApplicationController
-  before_action :set_student
+  before_action :set_student, only: %i[create edit new]
   before_action :set_mark, only: %i[ show edit update destroy ]
 
   # GET /students/:id/marks or /students/:id/marks.json
