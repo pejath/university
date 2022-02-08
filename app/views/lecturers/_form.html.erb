@@ -1,0 +1,32 @@
+<%= form_with(model: lecturer) do |form| %>
+  <% if lecturer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(lecturer.errors.count, "error") %> prohibited this lecturer from being saved:</h2>
+
+      <ul>
+        <% lecturer.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :department %>
+    <%= form.select :department_id, @departments.map { |value| [value.name, value.id] } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :academic_degree %>
+    <%= form.select :academic_degree, [1,2,3,4,5,''] %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
