@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_22_154919) do
+ActiveRecord::Schema.define(version: 2022_02_08_195039) do
 
   create_table "departments", force: :cascade do |t|
     t.integer "faculty_id"
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
     t.index ["department_id"], name: "index_lecturers_on_department_id"
   end
 
+  create_table "lecturers_subjects", id: false, force: :cascade do |t|
+    t.integer "subject_id"
+    t.integer "lecturer_id"
+    t.index ["lecturer_id", "subject_id"], name: "index_lecturers_subjects_on_lecturer_id_and_subject_id", unique: true
+    t.index ["lecturer_id"], name: "index_lecturers_subjects_on_lecturer_id"
+    t.index ["subject_id"], name: "index_lecturers_subjects_on_subject_id"
+  end
+
   create_table "lectures", force: :cascade do |t|
     t.integer "lecture_time_id"
     t.integer "group_id"
@@ -87,12 +95,9 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
   end
 
   create_table "subjects", force: :cascade do |t|
-    t.integer "lecturer_id"
     t.string "name", null: false
-    t.integer "code", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["lecturer_id"], name: "index_subjects_on_lecturer_id"
   end
 
   add_foreign_key "groups", "lecturers", column: "curator_id"

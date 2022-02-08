@@ -65,13 +65,16 @@ LectureTime.create(beginning: '17:10')
 LectureTime.create(beginning: '19:00')
 LectureTime.create(beginning: '20:40')
 
-(1..15).each {
+Subject.create(name: "Math")
+(1..Lecturer.count).each {
   |i|
-  Subject.create(name: "Math", code: i, lecturer_id: i)
+  @lecturer= Lecturer.find(i)
+  @subject = Subject.find(1)
+  @lecturer.subjects << @subject
 }
 
 500.times {
-  lecturer = rand(1..15)
+  lecturer = rand(1..Lecturer.count)
   lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: lecturer, subject_id: lecturer, weekday: DAY.sample)
   if lec.valid?
     lec.save
