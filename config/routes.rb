@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :lecture_times
+  get "/lecture_time", to: 'lecture_times#index'
   # resources :lecturers
   resources :students
 
