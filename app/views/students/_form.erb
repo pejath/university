@@ -1,4 +1,4 @@
-<%= form_with(model: student) do |form| %>
+<%= form_for @student do |form| %>
   <% if @student.errors.any? %>
     <div id="error_explanation">
       <h3><%= pluralize(student.errors.count, "error") %> prohibited this Student from being saved:</h3>
@@ -11,16 +11,35 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :group_id %>
-    <%= form.text_field :group_id %>
-  </div>
+  <%= form.label :group_id %>
+  <%= form.text_field :group_id %>
+</div>
 
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
 
+  <div class="field">
+        <%= render 'mark_fields', form: form %>
+  </div>
+
+
+  <%= link_to_add_fields "Add mark", form, :marks %>
+
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+
+
+<script>
+
+$('form').on('click','.add_fields', function (e){
+    var regexp, time
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'), 'g');
+    $(this).before($(this).data('fields').replace(regexp, time));
+    return e.preventDefault();
+})
+</script>

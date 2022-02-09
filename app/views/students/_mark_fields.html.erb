@@ -1,0 +1,11 @@
+
+<%= form.fields_for :mark do |f| %>
+
+    <p>
+      <%= f.label :mark %>
+      <%= f.select :mark, (1..5).to_a %>
+      <%= f.label :subject %>
+      <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
+    </p>
+
+<% end %>

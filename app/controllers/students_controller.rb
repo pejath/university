@@ -1,5 +1,6 @@
 class StudentsController < ApplicationController
   include StudentsHelper
+  before_action :set_subject, only: %i[create edit new]
   before_action :set_student, only: %i[show edit update destroy]
   before_action :filter_params, only: :index
 
@@ -8,6 +9,7 @@ class StudentsController < ApplicationController
 
   def new
     @student = Student.new
+    @student.marks.build
   end
 
   def edit; end
@@ -59,7 +61,11 @@ class StudentsController < ApplicationController
   private
 
   def set_student
+    @subjects = Subject.select(:id, :name)
     @student = Student.find(params[:id])
+  end
+
+  def set_subject
   end
 
   def filter_params
@@ -68,6 +74,6 @@ class StudentsController < ApplicationController
   end
 
   def student_params
-    params.require(:student).permit(:group_id, :name)
+    params.require(:student).permit(:group_id, :name, marks_attributes: [:id, :mark, :subject_id])
   end
 end
