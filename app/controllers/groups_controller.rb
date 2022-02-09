@@ -61,7 +61,7 @@ class GroupsController < ApplicationController
 
   def set_faculties_curators
     @faculties = Faculty.select(:id,:name)
-    @curators = Lecturer.free_curators.select(:id, :name)
+    @curators = Lecturer.free_curators(@group).select(:id, :name)
 
   end
 

@@ -27,7 +27,7 @@
 
   <div class="field">
     <%= form.label :form_of_education %>
-    <%= form.select :form_of_education, [%w[evening evening], %w[correspondence correspondence], ['full time', 'full_time']] %>
+    <%= form.select :form_of_education, Group::FORM_OF_EDUCATION %>
   </div>
 
   <div class="field">

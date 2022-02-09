@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :lecture_time %>
-    <%= form.select :lecture_time_id , @lecture_time.map{|time| [time.formatted_time, time.id]}%>
+    <%= form.select :lecture_time_id , @lectures_time.map{|time| [time.formatted_time, time.id]}%>
   </div>
 
   <div class="field">
@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label :weekday %>
-    <%= form.select :weekday , [%w[Monday Monday], %w[Tuesday Tuesday], %w[Wednesday Wednesday], %w[Thursday Thursday], %w[Friday Friday], %w[Saturday Saturday]]%>
+    <%= form.select :weekday , Lecture::WEEKDAY%>
   </div>
 
   <div class="field">

@@ -49,7 +49,6 @@ class LecturesController < ApplicationController
 
   # DELETE /groups/:id/lectures/1 or /groups/:id/lectures/1.json
   def destroy
-    @lecture.destroy
 
     respond_to do |format|
       if @lecture.destroy
@@ -65,8 +64,8 @@ class LecturesController < ApplicationController
 
   def set_lecturers_subject_and_time
 
-    @lecture_time = LectureTime.all
-    @subject = Subject.all
+    @lectures_time = LectureTime.all
+    @subjects = Subject.all
     @lecturers = Lecturer.select(:id, :name)
   end
   def get_group

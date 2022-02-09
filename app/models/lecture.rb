@@ -1,4 +1,5 @@
 class Lecture < ApplicationRecord
+  WEEKDAY = [%w[Monday Monday], %w[Tuesday Tuesday], %w[Wednesday Wednesday], %w[Thursday Thursday], %w[Friday Friday], %w[Saturday Saturday]]
   enum weekday: {Monday: 0, Tuesday: 1, Wednesday: 2, Thursday: 3, Friday: 4, Saturday: 5}
   belongs_to :group
   belongs_to :lecture_time

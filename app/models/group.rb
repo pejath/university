@@ -1,4 +1,6 @@
 class Group < ApplicationRecord
+  FORM_OF_EDUCATION = [%w[evening evening], %w[correspondence correspondence], ['full time', 'full_time']]
+
   enum form_of_education: {evening: 0, correspondence: 1, full_time: 2}
   belongs_to :faculty
   belongs_to :curator, class_name: 'Lecturer', foreign_key: :curator_id
