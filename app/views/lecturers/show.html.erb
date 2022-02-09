@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @lecturer.name %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @lecturer.department.name %>
+</p>
+
+<p>
+  <strong>Academic Degree:</strong>
+  <%= @lecturer.academic_degree %>
+</p>
+
+<p>
+  <strong>Subjects:</strong>
+  <%= @lecturer.subjects.map(&:name) %>
+</p>
+
+<%= link_to 'Edit subjects' %>
+<%= link_to 'Edit', edit_lecturer_path(@lecturer) %> |
+<%= link_to 'Back', lecturers_path %>
