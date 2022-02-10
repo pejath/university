@@ -65,9 +65,12 @@ LectureTime.create(beginning: '17:10')
 LectureTime.create(beginning: '19:00')
 LectureTime.create(beginning: '20:40')
 
-(1..15).each {
+Subject.create(name: "Math")
+(1..Lecturer.count).each {
   |i|
-  Subject.create(name: "Math", code: i, lecturer_id: i)
+  @lecturer = Lecturer.find(i)
+  @subject = Subject.first
+  @lecturer.subjects << @subject
 }
 
 500.times {

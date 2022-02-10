@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_22_154919) do
+ActiveRecord::Schema.define(version: 2022_02_10_113039) do
 
   create_table "departments", force: :cascade do |t|
     t.integer "faculty_id"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.integer "faculty_id"
+    t.integer "department_id"
     t.integer "curator_id"
     t.integer "specialization_code", null: false
     t.integer "course", null: false
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["curator_id"], name: "index_groups_on_curator_id"
-    t.index ["faculty_id"], name: "index_groups_on_faculty_id"
+    t.index ["department_id"], name: "index_groups_on_department_id"
   end
 
   create_table "lecture_times", force: :cascade do |t|
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["department_id"], name: "index_lecturers_on_department_id"
+  end
+
+  create_table "lecturers_subjects", force: :cascade do |t|
+    t.integer "lecturer_id"
+    t.integer "subject_id"
+    t.index ["lecturer_id", "subject_id"], name: "index_lecturers_subjects_on_lecturer_id_and_subject_id", unique: true
+    t.index ["lecturer_id"], name: "index_lecturers_subjects_on_lecturer_id"
+    t.index ["subject_id"], name: "index_lecturers_subjects_on_subject_id"
   end
 
   create_table "lectures", force: :cascade do |t|
@@ -87,12 +95,9 @@ ActiveRecord::Schema.define(version: 2022_01_22_154919) do
   end
 
   create_table "subjects", force: :cascade do |t|
-    t.integer "lecturer_id"
     t.string "name", null: false
-    t.integer "code", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["lecturer_id"], name: "index_subjects_on_lecturer_id"
   end
 
   add_foreign_key "groups", "lecturers", column: "curator_id"
