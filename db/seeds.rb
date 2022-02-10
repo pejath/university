@@ -39,7 +39,7 @@ Department.create(name: 'Источниковедения', faculty_id: 3, depar
 end
 
 16.times{
-  Group.create(faculty_id: rand(1..Faculty.count), specialization_code: rand(400), course: rand(1..5), form_of_education: FORM_OF_EDUCATION.sample, curator_id: rand(1..15))
+  Group.create(department_id: rand(1..Faculty.count), specialization_code: rand(400), course: rand(1..5), form_of_education: FORM_OF_EDUCATION.sample, curator_id: rand(1..15))
 }
 
 Group.count.times{|i|
