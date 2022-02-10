@@ -1,11 +1,11 @@
 
-<%= form.fields_for :mark do |f| %>
 
-    <p>
-      <%= f.label :mark %>
-      <%= f.select :mark, (1..5).to_a %>
-      <%= f.label :subject %>
-      <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
-    </p>
+  <div>
+    <%= form.label :mark %>
+    <%= form.select :mark, (1..5).to_a %>
+    <%= form.label :subject %>
+    <%= form.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
+    <%= form.label :Destroy %>
+    <%= form.check_box :_destroy %>
+  </div>
 
-<% end %>

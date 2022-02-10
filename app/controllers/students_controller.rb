@@ -66,6 +66,7 @@ class StudentsController < ApplicationController
   end
 
   def set_subject
+    @subjects = Subject.select(:id, :name)
   end
 
   def filter_params
@@ -74,6 +75,6 @@ class StudentsController < ApplicationController
   end
 
   def student_params
-    params.require(:student).permit(:group_id, :name, marks_attributes: [:id, :mark, :subject_id])
+    params.require(:student).permit(:group_id, :name, marks_attributes: [:id, :mark, :subject_id, :_destroy])
   end
 end

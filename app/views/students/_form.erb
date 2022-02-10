@@ -20,10 +20,19 @@
     <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-        <%= render 'mark_fields', form: form %>
-  </div>
-
+<!--  <div class="field">-->
+        <%#= render 'mark_fields', form: form %>
+<!--  </div>-->
+  <%= form.fields_for :marks do |f| %>
+    <div>
+      <%= f.label :mark %>
+      <%= f.select :mark, (1..5).to_a %>
+      <%= f.label :subject %>
+      <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
+      <%= f.label :Destroy %>
+      <%= f.check_box :_destroy %>
+    </div>
+  <% end %>
 
   <%= link_to_add_fields "Add mark", form, :marks %>
 
