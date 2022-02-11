@@ -9,7 +9,6 @@ class StudentsController < ApplicationController
 
   def new
     @student = Student.new
-    @student.marks.build
   end
 
   def edit; end
