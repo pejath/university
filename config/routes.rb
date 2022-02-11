@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   resources :subjects
   resources :lecturers
+  resources :lecturers_subjects
+
   resources :groups do
     resources :lectures
   end

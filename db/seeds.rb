@@ -70,7 +70,7 @@ Subject.create(name: "Math")
   |i|
   @lecturer = Lecturer.find(i)
   @subject = Subject.first
-  @lecturer.subjects << @subject
+  LecturersSubject.create(subject_id: @subject.id, lecturer_id: @lecturer.id)
 }
 
 500.times {

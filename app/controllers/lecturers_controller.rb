@@ -7,6 +7,10 @@ class LecturersController < ApplicationController
     @lecturers = Lecturer.all
   end
 
+  def subject
+    @subject = Subject
+  end
+
   # GET /lecturers/1 or /lecturers/1.json
   def show; end
 

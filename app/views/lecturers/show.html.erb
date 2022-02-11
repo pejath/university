@@ -20,6 +20,6 @@
   <%= @lecturer.subjects.map(&:name) %>
 </p>
 
-<%= link_to 'Edit subjects' %>
+<%= link_to 'Edit subjects', edit_lecturer_lecturers_subject_path(@lecturer) %> |
 <%= link_to 'Edit', edit_lecturer_path(@lecturer) %> |
 <%= link_to 'Back', lecturers_path %>

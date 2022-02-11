@@ -4,5 +4,5 @@ class Subject < ApplicationRecord
   has_many :students, through: :marks
   has_many :groups
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 end
