@@ -7,8 +7,7 @@ class FacultiesController < ApplicationController
   end
 
   # GET /faculties/1 or /faculties/1.json
-  def show
-  end
+  def show; end
 
   # GET /faculties/new
   def new
@@ -16,8 +15,7 @@ class FacultiesController < ApplicationController
   end
 
   # GET /faculties/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /faculties or /faculties.json
   def create
@@ -49,23 +47,26 @@ class FacultiesController < ApplicationController
 
   # DELETE /faculties/1 or /faculties/1.json
   def destroy
-    @faculty.destroy
 
     respond_to do |format|
-      format.html { redirect_to faculties_url, notice: "Faculty was successfully destroyed." }
-      format.json { head :no_content }
+      if @faculty.destroy
+        format.html { redirect_to faculties_url, notice: "Faculty was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to faculties_url, notice: "Something go wrong." }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_faculty
-      @faculty = Faculty.find(params[:id])
 
-    end
+   # Use callbacks to share common setup or constraints between actions.
+  def set_faculty
+    @faculty = Faculty.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def faculty_params
-      params.require(:faculty).permit(:name, :formation_date)
-    end
+  # Only allow a list of trusted parameters through.
+  def faculty_params
+    params.require(:faculty).permit(:name, :formation_date)
+  end
 end

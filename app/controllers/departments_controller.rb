@@ -8,7 +8,7 @@ class DepartmentsController < ApplicationController
   end
 
   # GET /faculties/:id/departments/1 or /faculties/:id/departments/1.json
-  def show;  end
+  def show; end
 
   # GET /faculties/:id/departments/new
   def new
@@ -24,7 +24,7 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.save
-        format.html { redirect_to faculty_department_url(@department), notice: "Department was successfully created." }
+        format.html { redirect_to faculty_department_url(@department), notice: 'Department was successfully created.' }
         format.json { render :show, status: :created, location: @department }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,7 +37,7 @@ class DepartmentsController < ApplicationController
   def update
     respond_to do |format|
       if @department.update(department_params)
-        format.html { redirect_to faculty_department_url(@department), notice: "Department was successfully updated." }
+        format.html { redirect_to faculty_department_url(@department), notice: 'Department was successfully updated.' }
         format.json { render :show, status: :ok, location: @department }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,26 +50,28 @@ class DepartmentsController < ApplicationController
   def destroy
     respond_to do |format|
       if @department.destroy
-      format.html { redirect_to faculty_departments_url, notice: "Department was successfully destroyed." }
+        format.html { redirect_to faculty_departments_url, notice: 'Department was successfully destroyed.' }
       format.json { head :no_content }
       else
-        format.html { redirect_to faculty_departments_url, notice: "Something go wrong." }
+        format.html { redirect_to faculty_departments_url, notice: 'Something go wrong.' }
       end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_department
-      @department = Department.find(params[:faculty_id])
-    end
+
+  # Use callbacks to share common setup or constraints between actions.
+
+  def set_department
+    @department = @faculty.departments.find(params[:department_id])
+  end
 
   def set_faculty
     @faculty = Faculty.find(params[:faculty_id])
   end
 
-    # Only allow a list of trusted parameters through.
-    def department_params
-      params.require(:department).permit(:name, :faculty_id, :department_type)
-    end
+  # Only allow a list of trusted parameters through.
+  def department_params
+    params.require(:department).permit(:name, :faculty_id, :department_type)
+  end
 end
