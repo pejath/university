@@ -8,6 +8,7 @@ class SubjectsController < ApplicationController
 
   # GET /subjects/1 or /subjects/1.json
   def show
+    @lecturer_subjects = LecturersSubject.where(subject_id: @subject.id)
   end
 
   # GET /subjects/new
@@ -16,8 +17,7 @@ class SubjectsController < ApplicationController
   end
 
   # GET /subjects/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /subjects or /subjects.json
   def create
@@ -49,11 +49,14 @@ class SubjectsController < ApplicationController
 
   # DELETE /subjects/1 or /subjects/1.json
   def destroy
-    @subject.destroy
 
     respond_to do |format|
-      format.html { redirect_to subjects_url, notice: "Subject was successfully destroyed." }
-      format.json { head :no_content }
+      if @subject.destroy
+        format.html { redirect_to subjects_url, notice: "Subject was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to subjects_url, notice: "Something go wrong." }
+      end
     end
   end
 
@@ -65,6 +68,6 @@ class SubjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def subject_params
-      params.fetch(:subject, {})
+      params.require(:subject).permit(:name)
     end
 end

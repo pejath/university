@@ -1,5 +1,6 @@
 class LecturersSubjectsController < ApplicationController
-  before_action :set_lecturer
+  include LecturersSubjectsHelper
+  before_action :set_lecturer_and_subject
   before_action :set_lecturers_subject, only: %i[ show edit update destroy ]
 
   # GET /lecturers_subjects or /lecturers_subjects.json
@@ -17,9 +18,7 @@ class LecturersSubjectsController < ApplicationController
   end
 
   # GET /lecturers_subjects/1/edit
-  def edit
-
-  end
+  def edit; end
 
   # POST /lecturers_subjects or /lecturers_subjects.json
   def create
@@ -27,7 +26,7 @@ class LecturersSubjectsController < ApplicationController
 
     respond_to do |format|
       if @lecturers_subject.save
-        format.html { redirect_to lecturers_subject_url(@lecturers_subject), notice: "Lecturers subject was successfully created." }
+        format.html { redirect_to lecturers_path, notice: "Data was successfully created." }
         format.json { render :show, status: :created, location: @lecturers_subject }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +39,7 @@ class LecturersSubjectsController < ApplicationController
   def update
     respond_to do |format|
       if @lecturers_subject.update(lecturers_subject_params)
-        format.html { redirect_to lecturers_subject_url(@lecturers_subject), notice: "Lecturers subject was successfully updated." }
+        format.html { redirect_to lecturers_path, notice: "Data was successfully updated." }
         format.json { render :show, status: :ok, location: @lecturers_subject }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,17 +59,19 @@ class LecturersSubjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_lecturers_subject
-      @lecturers_subject = LecturersSubject.find(params[:id])
-    end
 
-  def set_lecturer
-    @lecturer = Lecturer.find(params[:lecturer_id])
+    # Use callbacks to share common setup or constraints between actions.
+  def set_lecturers_subject
+    @lecturers_subject = LecturersSubject.find(params[:id])
+  end
+
+  def set_lecturer_and_subject
+    @subject = Subject.all
+    @lecturer = Lecturer.all
   end
 
     # Only allow a list of trusted parameters through.
-    def lecturers_subject_params
-      params.fetch(:lecturers_subject, {})
-    end
+  def lecturers_subject_params
+    params.require(:lecturers_subject).permit(:subject_id, :lecturer_id)
+  end
 end

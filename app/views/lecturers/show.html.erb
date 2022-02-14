@@ -15,11 +15,25 @@
   <%= @lecturer.academic_degree %>
 </p>
 
-<p>
-  <strong>Subjects:</strong>
-  <%= @lecturer.subjects.map(&:name) %>
-</p>
 
-<%= link_to 'Edit subjects', edit_lecturer_lecturers_subject_path(@lecturer) %> |
+<table>
+  <thead>
+  <tr>
+    <th>Subjects</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @lecturer.subjects.map do |subject| %>
+    <tr>
+      <td><%= subject.name %></td>
+
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'Edit subjects', new_lecturers_subject_path%> |
 <%= link_to 'Edit', edit_lecturer_path(@lecturer) %> |
 <%= link_to 'Back', lecturers_path %>

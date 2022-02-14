@@ -1,7 +1,7 @@
-<%= form_for [@lecturer, @lecturers_subject] do |form| %>
+<%= form_for @lecturers_subject do |form| %>
   <% if @lecturers_subject.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@lecturers_subject.errors.count, "error") %> prohibited this lecturers_subject from being saved:</h2>
+      <h2><%= pluralize(@lecturers_subject.errors.count, "error") %> prohibited this data from being saved:</h2>
 
       <ul>
         <% @lecturers_subject.errors.each do |error| %>
@@ -11,22 +11,15 @@
     </div>
   <% end %>
 
-
-
-
+    <div class="field">
+      <%= form.label :lecturer %>
+      <%= form.select :lecturer_id, @lecturer.map {|key|[key.name, key.id]} %>
+      <%= form.label :subject %>
+      <%= form.select :subject_id, @subject.map{|key|[key.name, key.id]} %>
+    </div>
 
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
 
-<script>
-
-    $('form').on('click','.add_fields', function (e){
-        var regexp, time
-        time = new Date().getTime();
-        regexp = new RegExp($(this).data('id'), 'g');
-        $(this).before($(this).data('fields').replace(regexp, time));
-        return e.preventDefault();
-    })
-</script>

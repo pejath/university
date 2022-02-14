@@ -13,7 +13,7 @@
     <% @lecturers_subjects.each do |lecturers_subject| %>
       <tr>
         <td><%= link_to 'Show', lecturers_subject %></td>
-        <td><%= link_to 'Edit', edit_lecturers_subject_path(lecturers_subject) %></td>
+<!--        <td><%#= link_to 'Edit', edit_lecturers_subject_path(lecturers_subject) %></td>-->
         <td><%= link_to 'Destroy', lecturers_subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

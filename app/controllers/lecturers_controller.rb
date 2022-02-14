@@ -73,6 +73,7 @@ class LecturersController < ApplicationController
   def set_departments
     @departments = Department.select(:id, :name)
   end
+
   # Only allow a list of trusted parameters through.
   def lecturer_params
     params.require(:lecturer).permit(:department_id, :name, :academic_degree)
