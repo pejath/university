@@ -29,6 +29,8 @@
       <%= f.select :mark, (1..5).to_a %>
       <%= f.label :subject %>
       <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
+      <%= f.label :lecturer %>
+      <%= f.select :lecturer_id, @lecturers.map{|lecturer| [lecturer.name, lecturer.id]} %>
       <%= f.label :Destroy %>
       <%= f.check_box :_destroy %>
     </div>
