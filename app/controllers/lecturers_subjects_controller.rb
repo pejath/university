@@ -1,7 +1,7 @@
 class LecturersSubjectsController < ApplicationController
   include LecturersSubjectsHelper
   before_action :set_lecturer_and_subject
-  before_action :set_lecturers_subject, only: %i[ show edit update destroy ]
+  before_action :set_lecturers_subject, only: %i[ show edit update ]
 
   # GET /lecturers_subjects or /lecturers_subjects.json
   def index
@@ -9,8 +9,7 @@ class LecturersSubjectsController < ApplicationController
   end
 
   # GET /lecturers_subjects/1 or /lecturers_subjects/1.json
-  def show
-  end
+  def show; end
 
   # GET /lecturers_subjects/new
   def new
@@ -50,11 +49,14 @@ class LecturersSubjectsController < ApplicationController
 
   # DELETE /lecturers_subjects/1 or /lecturers_subjects/1.json
   def destroy
-    @lecturers_subject.destroy
-
+    @lecturers_subject = LecturersSubject.find_by(lecturer_id: params[:lecturer_id], subject_id: params[:subject_id])
     respond_to do |format|
-      format.html { redirect_to lecturers_subjects_url, notice: "Lecturers subject was successfully destroyed." }
-      format.json { head :no_content }
+      if @lecturers_subject.destroy
+        format.html { redirect_to lecturers_path, notice: "Lecturers subject was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to lecturers_subjects_url, notice: "Something go wrong." }
+      end
     end
   end
 

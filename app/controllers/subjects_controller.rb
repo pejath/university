@@ -8,7 +8,7 @@ class SubjectsController < ApplicationController
 
   # GET /subjects/1 or /subjects/1.json
   def show
-    @lecturer_subjects = LecturersSubject.where(subject_id: @subject.id)
+    @lecturer_subjects = LecturersSubject.first
   end
 
   # GET /subjects/new

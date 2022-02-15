@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :subjects
   resources :lecturers
-  resources :lecturers_subjects, only: %i[new create]
+  resources :lecturers_subjects, only: %i[destroy new create]
 
   resources :groups do
     resources :lectures

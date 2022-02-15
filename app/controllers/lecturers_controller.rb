@@ -12,7 +12,9 @@ class LecturersController < ApplicationController
   end
 
   # GET /lecturers/1 or /lecturers/1.json
-  def show; end
+  def show
+    @lecturer_subjects = LecturersSubject.first
+  end
 
   # GET /lecturers/new
   def new
@@ -52,7 +54,6 @@ class LecturersController < ApplicationController
 
   # DELETE /lecturers/1 or /lecturers/1.json
   def destroy
-
 
     respond_to do |format|
       if @lecturer.destroy
