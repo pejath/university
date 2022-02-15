@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   include StudentsHelper
-  before_action :set_subject, only: %i[create edit new]
+  before_action :set_subject
   before_action :set_student, only: %i[show edit update destroy]
   before_action :filter_params, only: :index
 
@@ -60,7 +60,6 @@ class StudentsController < ApplicationController
   private
 
   def set_student
-    @subjects = Subject.select(:id, :name)
     @student = Student.find(params[:id])
   end
 
