@@ -1,4 +1,6 @@
 class Department < ApplicationRecord
+  DEPARTMENT_TYPE = %w[Interfacult Basic Military]
+
   enum department_type: { Interfacult: 0, Basic: 1, Military: 2}
   belongs_to :faculty
   has_many :lecturers
