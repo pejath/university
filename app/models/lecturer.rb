@@ -1,7 +1,8 @@
 class Lecturer < ApplicationRecord
   belongs_to :department
   has_many :lectures
-  has_and_belongs_to_many :subjects, through: :lectures_subjects
+  has_many :lecturers_subjects
+  has_many :subjects, through: :lecturers_subjects
   has_many :marks, through: :subjects
   has_one :curatorial_group, class_name: 'Group', foreign_key: :curator_id
   has_many :groups, through: :lectures

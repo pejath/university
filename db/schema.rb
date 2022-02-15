@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_10_113039) do
+ActiveRecord::Schema.define(version: 2022_02_15_171458) do
 
   create_table "departments", force: :cascade do |t|
     t.integer "faculty_id"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 2022_02_10_113039) do
   create_table "lecturers_subjects", force: :cascade do |t|
     t.integer "lecturer_id"
     t.integer "subject_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["lecturer_id", "subject_id"], name: "index_lecturers_subjects_on_lecturer_id_and_subject_id", unique: true
     t.index ["lecturer_id"], name: "index_lecturers_subjects_on_lecturer_id"
     t.index ["subject_id"], name: "index_lecturers_subjects_on_subject_id"

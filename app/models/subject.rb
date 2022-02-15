@@ -1,5 +1,6 @@
 class Subject < ApplicationRecord
-  has_and_belongs_to_many :lecturer, through: :lectures_subject
+  has_many :lecturers_subjects
+  has_many :lecturer, through: :lecturers_subjects
   has_many :marks
   has_many :students, through: :marks
   has_many :groups
