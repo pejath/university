@@ -51,7 +51,7 @@ class DepartmentsController < ApplicationController
     respond_to do |format|
       if @department.destroy
         format.html { redirect_to faculty_departments_url, notice: 'Department was successfully destroyed.' }
-      format.json { head :no_content }
+        format.json { head :no_content }
       else
         format.html { redirect_to faculty_departments_url, notice: 'Something go wrong.' }
       end
@@ -63,7 +63,7 @@ class DepartmentsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
 
   def set_department
-    @department = @faculty.departments.find(params[:department_id])
+    @department = @faculty.departments.find(params[:id])
   end
 
   def set_faculty
