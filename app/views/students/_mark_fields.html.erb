@@ -1,0 +1,13 @@
+
+
+  <div>
+    <%= form.label :mark %>
+    <%= form.select :mark, (1..5).to_a %>
+    <%= form.label :subject %>
+    <%= form.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
+    <%= form.label :lecturer %>
+    <%= form.select :lecturer_id, @lecturers.map{|lecturer| [lecturer.name, lecturer.id]} %>
+    <%= form.label :Destroy %>
+    <%= form.check_box :_destroy %>
+  </div>
+

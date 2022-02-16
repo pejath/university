@@ -12,6 +12,22 @@
   <strong>Average mark:</strong>
   <%= @student.average_mark %>
 </p>
+<table>
+  <tbody>
+  <thead>
+  <tr><th>Marks</th></tr>
+  </thead>
+  <tbody>
+    <% @student.marks.each do |mark| %>
+    <tr>
+      <td> <%= mark.mark %></td>
+      <td> <%= mark.subject.name %></td>
+      <td> <%= mark.lecturer&.name %></td>
+    </tr>
+    <% end %>
+
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_student_path(@student)%> |
 <%= link_to 'Back', students_path %>

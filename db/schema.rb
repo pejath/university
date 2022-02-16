@@ -83,9 +83,11 @@ ActiveRecord::Schema.define(version: 2022_02_15_171458) do
   create_table "marks", force: :cascade do |t|
     t.integer "student_id"
     t.integer "subject_id"
+    t.integer "lecturer_id"
     t.integer "mark", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["lecturer_id"], name: "index_marks_on_lecturer_id"
     t.index ["student_id"], name: "index_marks_on_student_id"
     t.index ["subject_id"], name: "index_marks_on_subject_id"
   end
