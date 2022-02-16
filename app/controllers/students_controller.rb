@@ -1,8 +1,7 @@
 class StudentsController < ApplicationController
   include StudentsHelper
-  before_action :set_subject
-  before_action :set_student_and_lecturers, only: %i[show edit update destroy]
-  before_action :filter_params, only: :index
+  before_action :set_subject_and_lecturers, only: %i[show edit new create]
+  before_action :set_student, only: %i[show edit update destroy]
 
 
   def show; end
@@ -59,13 +58,13 @@ class StudentsController < ApplicationController
 
   private
 
-  def set_student_and_lecturers
+  def set_student
     @student = Student.find(params[:id])
-    @lecturers = Lecturer.select(:id,:name)
   end
 
-  def set_subject
+  def set_subject_and_lecturers
     @subjects = Subject.select(:id, :name)
+    @lecturers = Lecturer.select(:id, :name)
   end
 
   def filter_params
