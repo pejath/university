@@ -3,7 +3,7 @@ class Lecturer < ApplicationRecord
   has_many :lectures
   has_many :lecturers_subjects
   has_many :subjects, through: :lecturers_subjects
-  has_many :marks, through: :subjects, dependent: :nullify
+  has_many :marks, dependent: :nullify
   has_one  :curatorial_group, class_name: 'Group', foreign_key: :curator_id, dependent: :nullify
   has_many :groups, through: :lectures
 

@@ -19,22 +19,24 @@
     <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
+  <% unless @subject.nil? %>
+    <%= form.fields_for :marks do |f| %>
+      <div>
+        <%= f.label :mark %>
+        <%= f.select :mark, (1..5).to_a %>
+        <%= f.label :subject %>
+        <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
+        <%= f.label :lecturer %>
+        <%= f.select :lecturer_id, @lecturers.map{|lecturer| [lecturer.name, lecturer.id]} %>
+        <%= f.label :Destroy %>
+        <%= f.check_box :_destroy %>
+      </div>
+    <% end %>
 
-  <%= form.fields_for :marks do |f| %>
-    <div>
-      <%= f.label :mark %>
-      <%= f.select :mark, (1..5).to_a %>
-      <%= f.label :subject %>
-      <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
-      <%= f.label :lecturer %>
-      <%= f.select :lecturer_id, @lecturers.map{|lecturer| [lecturer.name, lecturer.id]} %>
-      <%= f.label :Destroy %>
-      <%= f.check_box :_destroy %>
-    </div>
+    <%= link_to_add_fields "Add mark", form, :marks %>
+  <% else %>
+    <p>There is no subjects</p>
   <% end %>
-
-  <%= link_to_add_fields "Add mark", form, :marks %>
-
   <div class="actions">
     <%= form.submit %>
   </div>

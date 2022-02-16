@@ -1,7 +1,7 @@
 class LecturersSubjectsController < ApplicationController
   include LecturersSubjectsHelper
-  before_action :set_lecturer_and_subject
-
+  before_action :set_lecturer_and_subject, only: %i[new create]
+  before_action :set_ls, only: :destroy
 
   def index
     @lecturers_subjects = LecturersSubject.all
@@ -59,6 +59,10 @@ class LecturersSubjectsController < ApplicationController
     @subject = Subject.all
     @lecturer = Lecturer.all
 
+  end
+
+  def set_ls
+    @lecturers_subject = LecturersSubject.find(params[:id])
   end
 
   def lecturers_subject_params

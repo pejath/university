@@ -1,6 +1,6 @@
 class LecturersController < ApplicationController
   before_action :set_departments, only: %i[edit new create]
-  before_action :set_lecturer, only: %i[show edit update destroy destroy_subject]
+  before_action :set_lecturer, only: %i[show edit update destroy ]
 
   # GET /lecturers or /lecturers.json
   def index
@@ -50,16 +50,6 @@ class LecturersController < ApplicationController
     end
   end
 
-  def destroy_subject
-    respond_to do |format|
-      if @lecturer.subjects.delete(params[:subject])
-        format.html { redirect_to lecturer_url(@lecturer), notice: "Subject for Lecturer was successfully destroyed." }
-        format.json { head :no_content }
-      else
-        format.html { redirect_to lecturer_url(@lecturer), notice: "Something go wrong." }
-      end
-    end
-  end
 
   # DELETE /lecturers/1 or /lecturers/1.json
   def destroy

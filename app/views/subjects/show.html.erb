@@ -13,10 +13,10 @@
     </tr>
   </thead>
   <tbody>
-    <% @subject.lecturers.map do |lecturer| %>
+    <% @subject.lecturers_subjects.map do |ls| %>
       <tr>
-        <td><%= lecturer.name %></td>
-        <td><%= link_to 'Destroy', destroy_subject_subject_path(@subject, lecturer: lecturer), data: { confirm: 'Are you sure?' } %></td>
+        <td><%= ls.lecturer.name %></td>
+        <td><%= link_to 'Destroy', lecturers_subject_path(ls),method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
