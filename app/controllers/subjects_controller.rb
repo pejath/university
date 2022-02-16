@@ -1,5 +1,5 @@
 class SubjectsController < ApplicationController
-  before_action :set_subject, only: %i[ show edit update destroy ]
+  before_action :set_subject, only: %i[show edit update destroy destroy_subject]
 
   # GET /subjects or /subjects.json
   def index
@@ -7,9 +7,7 @@ class SubjectsController < ApplicationController
   end
 
   # GET /subjects/1 or /subjects/1.json
-  def show
-    @lecturer_subjects = LecturersSubject.first
-  end
+  def show; end
 
   # GET /subjects/new
   def new
@@ -34,6 +32,17 @@ class SubjectsController < ApplicationController
     end
   end
 
+  def destroy_subject
+    respond_to do |format|
+      if @subject.lecturers.delete(params[:lecturer])
+        format.html { redirect_to subject_url(@subject), notice: "Subject for Lecturer was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to subject_url(@subject), notice: "Something go wrong." }
+      end
+    end
+  end
+
   # PATCH/PUT /subjects/1 or /subjects/1.json
   def update
     respond_to do |format|
@@ -49,7 +58,6 @@ class SubjectsController < ApplicationController
 
   # DELETE /subjects/1 or /subjects/1.json
   def destroy
-
     respond_to do |format|
       if @subject.destroy
         format.html { redirect_to subjects_url, notice: "Subject was successfully destroyed." }

@@ -1,7 +1,17 @@
 Rails.application.routes.draw do
 
-  resources :subjects
-  resources :lecturers
+  resources :subjects, :lecturers do
+    member do
+      get :destroy_subject
+      post :destroy_subject
+    end
+  end
+  # resources :lecturers do
+  #   member do
+  #     get :destroy_subject
+  #     post :destroy_subject
+  #   end
+  # end
   resources :lecturers_subjects, only: %i[destroy new create]
 
   resources :groups do

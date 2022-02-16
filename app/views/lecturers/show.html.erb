@@ -27,7 +27,7 @@
   <% @lecturer.subjects.map do |subject| %>
     <tr>
       <td><%= subject.name %></td>
-      <td><%= link_to 'Destroy', lecturers_subject_path(id:@lecturer_subjects.id, lecturer_id: @lecturer.id, subject_id: subject.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'Destroy', destroy_subject_lecturer_path(@lecturer, subject: subject), data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
   </tbody>

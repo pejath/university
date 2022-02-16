@@ -1,6 +1,6 @@
 class LecturersController < ApplicationController
   before_action :set_departments, only: %i[edit new create]
-  before_action :set_lecturer, only: %i[ show edit update destroy ]
+  before_action :set_lecturer, only: %i[show edit update destroy destroy_subject]
 
   # GET /lecturers or /lecturers.json
   def index
@@ -12,9 +12,7 @@ class LecturersController < ApplicationController
   end
 
   # GET /lecturers/1 or /lecturers/1.json
-  def show
-    @lecturer_subjects = LecturersSubject.first
-  end
+  def show; end
 
   # GET /lecturers/new
   def new
@@ -52,9 +50,19 @@ class LecturersController < ApplicationController
     end
   end
 
+  def destroy_subject
+    respond_to do |format|
+      if @lecturer.subjects.delete(params[:subject])
+        format.html { redirect_to lecturer_url(@lecturer), notice: "Subject for Lecturer was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to lecturer_url(@lecturer), notice: "Something go wrong." }
+      end
+    end
+  end
+
   # DELETE /lecturers/1 or /lecturers/1.json
   def destroy
-
     respond_to do |format|
       if @lecturer.destroy
         format.html { redirect_to lecturers_url, notice: "Lecturer was successfully destroyed." }
@@ -66,6 +74,7 @@ class LecturersController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_lecturer
     @lecturer = Lecturer.find(params[:id])
@@ -79,4 +88,5 @@ class LecturersController < ApplicationController
   def lecturer_params
     params.require(:lecturer).permit(:department_id, :name, :academic_degree)
   end
+
 end
