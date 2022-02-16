@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :get_group, only: %i[show edit update destroy]
-  before_action :set_faculties_curators, only: %i[create edit new]
+  before_action :set_department_curators, only: %i[create edit new]
 
 
   def show; end
@@ -50,7 +50,7 @@ class GroupsController < ApplicationController
   end
 
   def index
-    @groups = Group.includes(:faculty, :curator).order(:faculty_id).all
+    @groups = Group.includes(:department, :curator).order(:department_id).all
   end
 
   private
@@ -59,13 +59,13 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
-  def set_faculties_curators
-    @faculties = Faculty.select(:id,:name)
+  def set_department_curators
+    @department = Department.select(:id,:name)
     @curators = Lecturer.free_curators(@group).select(:id, :name)
 
   end
 
   def group_params
-    params.require(:group).permit(:faculty_id, :curator_id, :specialization_code, :course, :form_of_education)
+    params.require(:group).permit(:department_id, :curator_id, :specialization_code, :course, :form_of_education)
   end
 end

@@ -5,7 +5,7 @@
     <table>
       <thead>
       <tr>
-        <th>Faculty</th>
+        <th>Department</th>
         <th>Specialization code</th>
         <th>Course</th>
         <th>Form of education</th>
@@ -17,11 +17,11 @@
 
       <% @groups.each do |group| %>
         <tr>
-          <td><%= group.faculty.name %></td>
+          <td><%= group.department.name %></td>
           <td><%= group.specialization_code %></td>
           <td><%= group.course %></td>
           <td><%= group.form_of_education.split('_').join(' ') %></td>
-          <td><%= group.curator.name %></td>
+          <td><%= group.curator&.name %></td>
 
 
           <td><%= link_to 'Show', group %></td>
