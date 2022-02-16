@@ -22,7 +22,7 @@
           <td>
             <% @marks.where(student_id: student.id).each do |mark| %>
               <%= mark.mark %>
-            <% end %>
+            <% end %></td>
           <td><%= student.average_mark %></td>
           <td><%= link_to 'Show', student %></td>
           <td><%= link_to 'Edit', edit_student_path(student) %></td>
