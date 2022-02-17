@@ -24,7 +24,7 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.save
-        format.html { redirect_to faculty_department_url(@department), notice: 'Department was successfully created.' }
+        format.html { redirect_to faculty_department_url(@faculty, @department), notice: 'Department was successfully created.' }
         format.json { render :show, status: :created, location: @department }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,7 +37,7 @@ class DepartmentsController < ApplicationController
   def update
     respond_to do |format|
       if @department.update(department_params)
-        format.html { redirect_to faculty_department_url(@department), notice: 'Department was successfully updated.' }
+        format.html { redirect_to faculty_department_url(@faculty, @department), notice: 'Department was successfully updated.' }
         format.json { render :show, status: :ok, location: @department }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -72,6 +72,6 @@ class DepartmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def department_params
-    params.require(:department).permit(:name, :faculty_id, :department_type)
+    params.require(:department).permit(:name, :faculty_id, :department_type, :formation_date)
   end
 end

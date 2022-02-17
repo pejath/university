@@ -20,7 +20,7 @@
 
 <p>
   <strong>Curator:</strong>
-  <%= @group.curator.name %>
+  <%= @group.curator&.name %>
 </p>
 
 <%= link_to 'Edit', edit_group_path(@group)%> |

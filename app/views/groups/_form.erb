@@ -11,8 +11,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :faculty_id %>
-    <%= form.select :faculty_id , @faculties.map{|faculty| [faculty.name, faculty.id]}, {}, class: "form-control"%>
+    <%= form.label :department_id %>
+    <%= form.select :department_id , @departments.map{|faculty| [faculty.name, faculty.id]}, {}, class: "form-control"%>
   </div>
 
   <div class="field">

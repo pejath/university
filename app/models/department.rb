@@ -6,6 +6,7 @@ class Department < ApplicationRecord
   has_many :lecturers
   has_many :groups
 
-  validates :name, :formation_date, presence: true
+  validates :name, presence: true, uniqueness: true
+  validates :formation_date, presence: true
   validates_format_of :formation_date, with: /\A\d{0,4}.\d{0,2}.\d{0,2}\z/
 end

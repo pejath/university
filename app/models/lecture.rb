@@ -9,7 +9,7 @@ class Lecture < ApplicationRecord
   validates :weekday, inclusion: { in: %w[Monday Tuesday Wednesday Thursday Friday Saturday 0 1 2 3 4 5], message: 'is not valid form'}
   validates :auditorium, numericality: {only_integer: true}, presence: true, uniqueness: { scope: %i[corpus lecture_time_id ]}
   validates :group_id, :lecturer_id, presence: true, uniqueness: {scope: %i[lecture_time_id weekday]}
-  validates :corpus, presence: true
+  validates :corpus, presence: true, numericality: {only_integer: true}
 
   def weekday=(value)
     super

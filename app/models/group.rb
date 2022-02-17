@@ -6,7 +6,8 @@ class Group < ApplicationRecord
   belongs_to :curator, class_name: 'Lecturer', foreign_key: :curator_id, optional: true
   has_many :lectures, dependent: :destroy
   has_many :lecturers, through: :lectures
-  has_many :subjects
+  has_many :subjects, through: :lectures
+
 
   validates :form_of_education, inclusion: { in: %w[evening correspondence full_time 0 1 2], message: 'is not valid form'}
   validates :specialization_code, :curator_id, presence: true, numericality: {only_integer: true}, uniqueness: true

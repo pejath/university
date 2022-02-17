@@ -29,6 +29,9 @@
 /public/assets
 .byebug_history
 
+# Ignore Base rails tests
+/test
+
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
