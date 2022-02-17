@@ -1,17 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :subjects, :lecturers
   resources :students
   resources :lecturers_subjects, only: %i[destroy new create]
 
   resources :faculties do
     resources :departments
-  end
-
-  resources :subjects, :lecturers do
-    member do
-      get :destroy_subject
-      post :destroy_subject
-    end
   end
 
   resources :groups do

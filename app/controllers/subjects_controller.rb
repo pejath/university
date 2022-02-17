@@ -1,5 +1,5 @@
 class SubjectsController < ApplicationController
-  before_action :set_subject, only: %i[show edit update destroy destroy_subject]
+  before_action :set_subject, only: %i[show edit update destroy]
 
   # GET /subjects or /subjects.json
   def index
