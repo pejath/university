@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+
+<p>
+  <strong>Name:</strong>
+  <%= @subject.name %>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Lecturers</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @subject.lecturers_subjects.map do |ls| %>
+      <tr>
+        <td><%= ls.lecturer.name %></td>
+        <td><%= link_to 'Destroy', lecturers_subject_path(ls),method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'Add lecturer', new_lecturers_subject_path%> |
+<%= link_to 'Edit', edit_subject_path(@subject) %> |
+<%= link_to 'Back', subjects_path %>

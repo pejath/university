@@ -1,0 +1,6 @@
+<div>
+  <%= form.label :subject %>
+  <%= form.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
+  <%= form.label :Destroy %>
+  <%= form.check_box :_destroy %>
+</div>

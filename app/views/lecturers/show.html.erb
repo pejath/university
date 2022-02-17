@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @lecturer.name %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @lecturer.department.name %>
+</p>
+
+<p>
+  <strong>Academic Degree:</strong>
+  <%= @lecturer.academic_degree %>
+</p>
+
+
+<table>
+  <thead>
+  <tr>
+    <th>Subjects</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @lecturer.lecturers_subjects.map do |ls| %>
+    <tr>
+      <td><%= ls.subject.name %></td>
+      <td><%= link_to 'Destroy', lecturers_subject_path(ls),method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'Add subjects', new_lecturers_subject_path%> |
+<%= link_to 'Edit', edit_lecturer_path(@lecturer) %> |
+<%= link_to 'Back', lecturers_path %>

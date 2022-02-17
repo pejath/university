@@ -1,0 +1,2 @@
+module LecturersSubjectsHelper
+end

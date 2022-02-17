@@ -35,11 +35,11 @@ Department.create(name: 'Источниковедения', faculty_id: 3, depar
 
 
 (1..15).each do |i|
-  Lecturer.create(department_id: rand(1..12), name: RND.compose, academic_degree: rand(1..5))
+  Lecturer.create(department_id: rand(1..Department.count), name: RND.compose, academic_degree: rand(1..5))
 end
 
 16.times{
-  Group.create(faculty_id: rand(1..Faculty.count), specialization_code: rand(400), course: rand(1..5), form_of_education: FORM_OF_EDUCATION.sample, curator_id: rand(1..15))
+  Group.create(department_id: rand(1..Department.count), specialization_code: rand(400), course: rand(1..5), form_of_education: FORM_OF_EDUCATION.sample, curator_id: rand(1..Lecturer.count))
 }
 
 Group.count.times{|i|
@@ -65,14 +65,19 @@ LectureTime.create(beginning: '17:10')
 LectureTime.create(beginning: '19:00')
 LectureTime.create(beginning: '20:40')
 
-(1..15).each {
-  |i|
-  Subject.create(name: "Math", code: i, lecturer_id: i)
+Subject.create(name: "Math")
+Lecturer.all.each {
+  |lecturer|
+  @ls = LecturersSubject.new(subject: Subject.all.sample, lecturer: lecturer)
+  if @ls.valid?
+    @ls.save
+  end
 }
 
 500.times {
-  lecturer = rand(1..15)
-  lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: lecturer, subject_id: lecturer, weekday: DAY.sample)
+  lecturer = rand(1..Lecturer.count)
+  subject = rand(1..Subject.count)
+  lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: lecturer, subject_id: subject, weekday: DAY.sample)
   if lec.valid?
     lec.save
   end
@@ -81,6 +86,6 @@ LectureTime.create(beginning: '20:40')
 (1..Student.count).each {
   |i|
   5.times {
-    Mark.create(subject_id: rand(1..15), mark: rand(1..5), student_id: i, lecturer_id: rand(1..Lecturer.count))
+    Mark.create(subject_id: rand(1..Subject.count), mark: rand(1..5), student_id: i, lecturer_id: rand(1..Lecturer.count))
   }
 }
