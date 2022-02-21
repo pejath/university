@@ -16,4 +16,10 @@ RSpec.describe Lecturer, type: :model do
     it { is_expected.to allow_value('', nil).for(:academic_degree) }
     it { is_expected.to validate_numericality_of(:academic_degree).is_greater_than(0).is_less_than(6) }
   end
+
+  describe 'class_scopes' do
+    lecturer = FactoryBot.build(:lecturer)
+    group = FactoryBot.build(:group)
+    it { expect(Lecturer.free_curators(group)).not_to include(lecturer) }
+  end
 end

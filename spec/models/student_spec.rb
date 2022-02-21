@@ -11,4 +11,14 @@ RSpec.describe Student, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
   end
+
+  describe 'class_scope' do
+    student = FactoryBot.build(:student)
+    it { expect(Student.red_diplomas).not_to include(student)}
+  end
+
+  describe 'class_methods' do
+    student = FactoryBot.build(:student)
+    it { expect(student.average_mark).to match(0.0) }
+  end
 end
