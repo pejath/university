@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Lecturer, type: :model do
+  let!(:lecturer) { FactoryBot.build(:lecturer) }
+  let!(:curator) { FactoryBot.create(:lecturer) }
+  let!(:group) { FactoryBot.build(:group, curator_id: curator.id) }
+
   describe 'relations' do
     it { is_expected.to have_many(:lecturers_subjects) }
     it { is_expected.to have_many(:subjects).through(:lecturers_subjects) }
@@ -18,8 +22,13 @@ RSpec.describe Lecturer, type: :model do
   end
 
   describe 'class_scopes' do
-    lecturer = FactoryBot.build(:lecturer)
-    group = FactoryBot.build(:group)
-    it { expect(Lecturer.free_curators(group)).not_to include(lecturer) }
+    describe 'free_curators scope' do
+      it 'group should has another curator' do
+        expect(Lecturer.free_curators(group)).not_to include(lecturer)
+      end
+      it 'group should has this lecturer as curator' do
+        expect(Lecturer.free_curators(group)).to include(curator)
+      end
+    end
   end
 end

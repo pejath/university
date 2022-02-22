@@ -1,7 +1,7 @@
 FactoryBot.define do
 
   factory :faculty do
-    name { 'Test' }
+    name { Faker::University.name }
     formation_date { '20.12.2002' }
   end
 

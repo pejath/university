@@ -1,7 +1,7 @@
 FactoryBot.define do
 
   factory :group do
-    association :curator, factory: :lecturer, name: Faker::Name.name
+    association :curator, factory: :lecturer
     association :department, factory: :department
 
     department_id { department.id }
