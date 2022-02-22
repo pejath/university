@@ -14,8 +14,10 @@ RSpec.describe LectureTime, type: :model do
   end
 
   describe 'class_methods' do
-    describe 'formatted time method' do
-      it { expect(subject.formatted_time).to eq('00:00') }
+    describe '#formatted_time' do
+      it 'returns time in correct format' do
+        expect(subject.formatted_time).to eq('00:00')
+      end
     end
   end
 end

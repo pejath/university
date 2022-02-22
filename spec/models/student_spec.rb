@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Student, type: :model do
   let!(:student) { build(:student, :random_student) }
-  let!(:fifth_course_student) { create(:student, :fifth_course_student) }
-  let!(:mark) { create(:mark, student_id: fifth_course_student.id, mark: 5) }
+  let!(:red_diploma_student) { create(:student, :with_red_diploma) }
+  let!(:mark) { create(:mark, student_id: red_diploma_student.id, mark: 5) }
 
   describe 'relations' do
     it { is_expected.to belong_to(:group) }
@@ -17,28 +17,28 @@ RSpec.describe Student, type: :model do
   end
 
   describe 'class_scope' do
-    describe 'red diplomas scope' do
-      it "that student shouldn't pass" do
+    describe '#red_diplomas' do
+      it "shouldn't has that student" do
         expect(Student.red_diplomas).not_to include(student)
       end
-      it 'that student should pass' do
-        expect(Student.red_diplomas).to include(fifth_course_student)
+      it 'should has that student' do
+        expect(Student.red_diplomas).to include(red_diploma_student)
       end
     end
   end
 
 
   describe 'class_methods' do
-    describe 'average mark method' do
-      it 'should has average mark 0.0' do
+    describe '#average_mark' do
+      it 'returns 0.0' do
         expect(student.average_mark).to match(0.0)
       end
-      it 'should has average mark 5.0' do
-        expect(fifth_course_student.average_mark).to match(5.0)
+      it 'returns 5.0' do
+        expect(red_diploma_student.average_mark).to match(5.0)
       end
-      it 'should has average mark 4.5 with two marks' do
-        fifth_course_student.marks << build(:mark, student_id: fifth_course_student.id, mark: 4)
-        expect(fifth_course_student.average_mark).to match(4.5)
+      it 'returns 4.5 with two marks' do
+        red_diploma_student.marks << build(:mark, student_id: red_diploma_student.id, mark: 4)
+        expect(red_diploma_student.average_mark).to match(4.5)
       end
     end
   end

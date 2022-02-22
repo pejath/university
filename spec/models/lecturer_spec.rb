@@ -22,11 +22,11 @@ RSpec.describe Lecturer, type: :model do
   end
 
   describe 'class_scopes' do
-    describe 'free_curators scope' do
-      it 'group should has another curator' do
+    describe '#free_curators' do
+      it 'contains another curator' do
         expect(Lecturer.free_curators(group)).not_to include(lecturer)
       end
-      it 'group should has this lecturer as curator' do
+      it 'contains their curator' do
         expect(Lecturer.free_curators(group)).to include(curator)
       end
     end
