@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :get_group, only: %i[show edit update destroy]
+  before_action :set_group, only: %i[show edit update destroy]
   before_action :set_department_curators, only: %i[create edit new]
 
 
@@ -55,12 +55,12 @@ class GroupsController < ApplicationController
 
   private
 
-  def get_group
+  def set_group
     @group = Group.find(params[:id])
   end
 
   def set_department_curators
-    @department = Department.select(:id,:name)
+    @departments = Department.select(:id,:name)
     @curators = Lecturer.free_curators(@group).select(:id, :name)
 
   end

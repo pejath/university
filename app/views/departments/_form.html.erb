@@ -21,6 +21,11 @@
   <%= form.select :department_type, Department::DEPARTMENT_TYPE%>
   </div>
 
+  <div class="field">
+    <%= form.label 'Formation date' %>
+    <%= form.date_select :formation_date %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

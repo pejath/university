@@ -4,7 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.2'
 
 gem 'random_name_generator'
-gem 'awesome_print', '~> 1.8'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
 # Use sqlite3 as the database for Active Record
@@ -32,7 +31,9 @@ gem 'jquery-rails'
 gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
+  gem 'faker'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails', '~> 5.0.0'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
@@ -48,6 +49,9 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
+  gem 'factory_bot'
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers', '~> 5.0'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
