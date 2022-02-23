@@ -26,8 +26,11 @@ RSpec.describe Lecturer, type: :model do
       it 'contains free lecturer' do
         expect(Lecturer.free_curators(group)).to include(lecturer)
       end
-      it 'contains curator' do
+      it 'returns that lecturers is already a curator' do
         expect(Lecturer.free_curators(group)).not_to include(curator)
+      end
+      it 'returns that the lecturers is the curator of the group' do
+        expect(curator.curatorial_group.curator).to eq(curator)
       end
     end
   end
