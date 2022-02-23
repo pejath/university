@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Lecturer, type: :model do
-  let!(:lecturer) { FactoryBot.build(:lecturer) }
-  let!(:curator) { FactoryBot.create(:lecturer) }
-  let!(:group) { FactoryBot.build(:group, curator_id: curator.id) }
+  let!(:lecturer) { FactoryBot.create(:lecturer) }
+  let!(:curator) { FactoryBot.create(:lecturer, :curator) }
+  let!(:group) { FactoryBot.build(:group) }
 
   describe 'relations' do
     it { is_expected.to have_many(:lecturers_subjects) }
@@ -23,11 +23,11 @@ RSpec.describe Lecturer, type: :model do
 
   describe 'class_scopes' do
     describe '#free_curators' do
-      it 'contains another curator' do
-        expect(Lecturer.free_curators(group)).not_to include(lecturer)
+      it 'contains free lecturer' do
+        expect(Lecturer.free_curators(group)).to include(lecturer)
       end
-      it 'contains their curator' do
-        expect(Lecturer.free_curators(group)).to include(curator)
+      it 'contains curator' do
+        expect(Lecturer.free_curators(group)).not_to include(curator)
       end
     end
   end

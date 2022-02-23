@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Student, type: :model do
   let!(:student) { build(:student, :random_student) }
   let!(:red_diploma_student) { create(:student, :with_red_diploma) }
-  let!(:mark) { create(:mark, student_id: red_diploma_student.id, mark: 5) }
 
   describe 'relations' do
     it { is_expected.to belong_to(:group) }
@@ -30,15 +29,21 @@ RSpec.describe Student, type: :model do
 
   describe 'class_methods' do
     describe '#average_mark' do
-      it 'returns 0.0' do
-        expect(student.average_mark).to match(0.0)
+      context "without marks student" do
+        it 'returns 0.0' do
+          expect(student.average_mark).to match(0.0)
+        end
       end
-      it 'returns 5.0' do
-        expect(red_diploma_student.average_mark).to match(5.0)
+      context "with only one mark" do
+        it 'returns 5.0' do
+          expect(red_diploma_student.average_mark).to match(5.0)
+        end
       end
-      it 'returns 4.5 with two marks' do
-        red_diploma_student.marks << build(:mark, student_id: red_diploma_student.id, mark: 4)
-        expect(red_diploma_student.average_mark).to match(4.5)
+      context "with many marks" do
+        it 'returns 4.5 with two marks' do
+          red_diploma_student.marks << build(:mark, student_id: red_diploma_student.id, mark: 4)
+          expect(red_diploma_student.average_mark).to match(4.5)
+        end
       end
     end
   end
