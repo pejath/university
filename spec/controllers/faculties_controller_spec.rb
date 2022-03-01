@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe FacultiesController, type: :controller do
@@ -7,6 +5,7 @@ RSpec.describe FacultiesController, type: :controller do
 
   describe '#index' do
     subject(:http_request) { get :index }
+
     it 'returns OK' do
       expect(http_request).to have_http_status(:success)
     end
@@ -18,18 +17,27 @@ RSpec.describe FacultiesController, type: :controller do
 
   describe '#show' do
     subject(:http_request) { get :show, params: params }
+
     context 'with valid params' do
       let(:params) { { id: faculty } }
+
       it 'returns OK' do
         expect(http_request).to have_http_status(:success)
+      end
+
+      it 'takes correct faculty' do
+        http_request
+        expect(assigns(:faculty)).to eq faculty
       end
 
       it 'renders the :show template' do
         expect(http_request).to render_template :show
       end
     end
+
     context 'with invalid params' do
       let(:params) { { id: -1 } }
+
       it 'returns Not Found' do
         expect(http_request).to have_http_status(:not_found)
       end
@@ -38,6 +46,7 @@ RSpec.describe FacultiesController, type: :controller do
 
   describe '#new' do
     subject(:http_request) { get :new }
+
     it 'returns OK' do
       expect(http_request).to have_http_status(:success)
     end
@@ -54,6 +63,7 @@ RSpec.describe FacultiesController, type: :controller do
 
   describe '#edit' do
     subject(:http_request) { get :edit, params: params }
+
     context 'with valid params' do
       let(:params) { { id: faculty } }
       it 'returns OK' do
@@ -69,8 +79,10 @@ RSpec.describe FacultiesController, type: :controller do
         expect(http_request).to render_template :edit
       end
     end
-    context 'with invalid id' do
+
+    context 'with invalid params' do
       let(:params) { { id: -1 } }
+
       it 'returns Not Found' do
         expect(http_request).to have_http_status(:not_found)
       end
@@ -79,8 +91,10 @@ RSpec.describe FacultiesController, type: :controller do
 
   describe '#create' do
     subject(:http_request) { post :create, params: params }
+
     context 'with valid attributes' do
       let(:params) { { faculty: attributes_for(:faculty) } }
+
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
@@ -96,6 +110,7 @@ RSpec.describe FacultiesController, type: :controller do
 
     context 'with invalid attributes' do
       let(:params) { { faculty: attributes_for(:invalid_faculty) } }
+
       it 'returns Unprocessable Entity' do
         expect(http_request).to have_http_status(:unprocessable_entity)
       end
@@ -112,8 +127,10 @@ RSpec.describe FacultiesController, type: :controller do
 
   describe '#update' do
     subject(:http_request) { patch :update, params: params }
+
     context 'with valid attributes' do
       let(:params) { { id: faculty, faculty: attributes_for(:faculty) } }
+
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
@@ -121,29 +138,10 @@ RSpec.describe FacultiesController, type: :controller do
       it 'redirects to the updated faculty' do
         expect(http_request).to redirect_to faculty
       end
-    end
 
-    context 'with invalid id' do
-      let(:params) { { id: -1 } }
-      it 'returns Not Found' do
-        expect(http_request).to have_http_status(:not_found)
-      end
-    end
-
-    context 'with invalid attributes' do
-      let(:params) { { id: faculty, faculty: attributes_for(:invalid_faculty) } }
-      it 're-renders the edit template' do
-        http_request
-        expect(response).to render_template :edit
-      end
-    end
-
-    context 'with valid manual attributes' do
-      let(:params) do
-        { id: faculty,
-          faculty: attributes_for(:faculty, name: 'Test', formation_date: '1000.01.01') }
-      end
       it "changes faculty's attributes" do
+        params[:faculty][:name] = 'Test'
+        params[:faculty][:formation_date] = '1000.01.01'
         http_request
         faculty.reload
         expect(faculty.name).to eq('Test')
@@ -151,10 +149,23 @@ RSpec.describe FacultiesController, type: :controller do
       end
     end
 
-    context 'with invalid manual attributes' do
-      let(:params) { { id: faculty, faculty: attributes_for(:faculty, name: 'Test', formation_date: nil) } }
+    context 'with invalid attributes' do
+      let(:params) { { id: faculty, faculty: attributes_for(:invalid_faculty) } }
+
+      it 'returns Not Found' do
+        params['id'] = -1
+        expect(http_request).to have_http_status(:not_found)
+      end
+
+      it 're-renders the edit template' do
+        http_request
+        expect(response).to render_template :edit
+      end
+
       it 'does not change the faculties attributes' do
         faculty_date = faculty.formation_date
+        params[:faculty][:name] = 'Test'
+        params[:faculty][:formation_date] = nil
         http_request
         faculty.reload
         expect(faculty.name).to_not eq('Test')
@@ -165,6 +176,7 @@ RSpec.describe FacultiesController, type: :controller do
 
   describe '#destroy' do
     subject(:http_request) { delete :destroy, params: params }
+
     context 'with valid attributes' do
       let(:params) { { id: faculty } }
       it 'returns Found' do
@@ -181,6 +193,7 @@ RSpec.describe FacultiesController, type: :controller do
     end
     context 'with invalid id' do
       let(:params) { { id: -1 } }
+
       it 'returns Not Found' do
         expect(http_request).to have_http_status(:not_found)
       end
