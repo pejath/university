@@ -1,188 +1,236 @@
 require 'rails_helper'
 
 RSpec.describe DepartmentsController, type: :controller do
-  let!(:faculty) { create( :faculty )}
-  let!(:department) { create( :department, faculty: faculty ) }
+  let(:faculty) { create(:faculty) }
+  let!(:department) { create(:department, faculty: faculty) }
 
-  describe "#index" do
-    it 'returns OK' do
-      get :index, params: { faculty_id: faculty }
-      expect(response).to have_http_status(:success)
+  describe '#index' do
+    subject(:http_request) { get :index, params: params }
+    context 'with valid params' do
+      let(:params) { { faculty_id: faculty } }
+      it 'returns OK' do
+        expect(http_request).to have_http_status(:success)
+      end
+      it 'renders the :index template' do
+        expect(http_request).to render_template :index
+      end
     end
-
-    it 'renders the :index template' do
-      get :new, params: { faculty_id: faculty }
-      expect(response).to render_template :new
-    end
-  end
-
-  describe "#show" do
-    it 'returns OK' do
-      get :show, params: { id: department, faculty_id: faculty }
-      expect(response).to have_http_status(:success)
-    end
-    it 'returns Not Found' do
-      get :show, params: { id: -1, faculty_id: faculty }
-      expect(response).to have_http_status(:not_found)
-    end
-
-    it 'renders the :show template' do
-      get :show, params: { id: department, faculty_id: faculty }
-      expect(response).to render_template :show
+    context 'with invalid faculty' do
+      let(:params) { { faculty_id: -1 } }
+      it 'returns Not Found' do
+        expect(http_request).to have_http_status(:not_found)
+      end
     end
   end
 
-  describe "#new" do
+  describe '#show' do
+    subject(:http_request) { get :show, params: params }
+
+    context 'with valid params' do
+      let(:params) { { id: department, faculty_id: faculty } }
+      it 'returns OK' do
+        expect(http_request).to have_http_status(:success)
+      end
+      it 'renders the :show template' do
+        expect(http_request).to render_template :show
+      end
+      it 'gets correct department' do
+        http_request
+        expect(assigns(:department)).to eq department
+      end
+    end
+    context 'with invalid faculty_id' do
+      let(:params) { { id: department, faculty_id: -1 } }
+      it 'returns Not Found' do
+        expect(http_request).to have_http_status(:not_found)
+      end
+    end
+
+    context 'with invalid id' do
+      let(:params) { { id: -1, faculty_id: faculty } }
+      it 'returns Not Found' do
+        expect(http_request).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe '#new' do
+    subject(:http_request) { get :new, params: params }
+    context 'with valid params'
+    let(:params) { { faculty_id: faculty } }
     it 'returns OK' do
-      get :new, params: { faculty_id: faculty }
-      expect(response).to have_http_status(:success)
+      expect(http_request).to have_http_status(:success)
     end
 
     it 'builds new department' do
-      get :new, params: { faculty_id: faculty }
+      http_request
       expect(assigns(:department)).to be_a_new(Department)
     end
 
     it 'renders the :new template' do
-      get :new, params: { faculty_id: faculty }
-      expect(response).to render_template :new
+      expect(http_request).to render_template :new
+    end
+    context 'with invalid faculty_id' do
+      let(:params) { { faculty_id: -1 } }
+      it 'returns Not Found' do
+        expect(http_request).to have_http_status(:not_found)
+      end
     end
   end
 
-  describe "#edit" do
-    it 'returns OK' do
-      get :edit, params: { id: department, faculty_id: faculty }
-      expect(response).to have_http_status(:success)
+  describe '#edit' do
+    subject(:http_request) { get :edit, params: params }
+    context 'with valid params' do
+      let(:params) { { id: department, faculty_id: faculty } }
+      it 'returns OK' do
+        expect(http_request).to have_http_status(:success)
+      end
+
+      it 'edits department record' do
+        http_request
+        expect(assigns(:department)).to eq department
+      end
+
+      it 'renders the :edit template' do
+        expect(http_request).to render_template :edit
+      end
     end
 
-    it 'returns Not Found' do
-      get :edit, params: { id: -1, faculty_id: faculty }
-      expect(response).to have_http_status(:not_found)
-    end
-
-    it 'edits department record' do
-      get :edit, params: { id: department, faculty_id: faculty }
-      expect(assigns(:department)).to eq department
-    end
-
-    it 'renders the :edit template' do
-      get :edit, params: { id: department, faculty_id: faculty }
-      expect(response).to render_template :edit
+    context 'with invalid id' do
+      let(:params) { { id: -1, faculty_id: faculty } }
+      it 'returns Not Found' do
+        expect(http_request).to have_http_status(:not_found)
+      end
     end
   end
 
-  describe "#create" do
+  describe '#create' do
+    subject(:http_request) { post :create, params: params }
     context 'with valid attributes' do
-
+      let(:params) { { faculty_id: faculty, department: attributes_for(:department, faculty_id: faculty) } }
       it 'returns Found' do
-        post :create, params: {faculty_id: faculty, department: attributes_for(:department, faculty_id: faculty)}
-        expect(response).to have_http_status(:found)
+        expect(http_request).to have_http_status(:found)
       end
 
       it 'creates department' do
-        expect{ post :create, params: {faculty_id: faculty, department: attributes_for(:department, faculty_id: faculty)} }.to change(Department, :count).by(1)
+        expect { http_request }.to change(Department, :count).by(1)
       end
 
-      it "redirects to faculties#show" do
-        post :create,  params: {faculty_id: faculty, department: attributes_for(:department, faculty_id: faculty)}
-        expect(response).to redirect_to faculty_department_path(faculty_id:faculty, id: Department.last)
-      end
-    end
-
-    context "with invalid attributes" do
-
-      it "returns Unprocessable Entity" do
-        post :create, params: {department: attributes_for(:invalid_department), faculty_id: faculty}
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
-      it "does not save the new department in the database" do
-        expect{ post :create, params: {department: attributes_for(:invalid_department), faculty_id: faculty} }.to_not change(Department, :count)
-      end
-
-      it "re-renders the :new template" do
-        post :create, params: {department: attributes_for(:invalid_department), faculty_id: faculty}
-        expect(response).to render_template :new
+      it 'redirects to faculties#show' do
+        expect(http_request).to redirect_to faculty_department_path(faculty_id: faculty, id: assigns[:department])
       end
     end
 
+    context 'with invalid attributes' do
+      let(:params) { { department: attributes_for(:invalid_department), faculty_id: faculty } }
+      it 'returns Unprocessable Entity' do
+        expect(http_request).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'does not save the new department in the database' do
+        expect { http_request }.to_not change(Department, :count)
+      end
+
+      it 're-renders the :new template' do
+        expect(http_request).to render_template :new
+      end
+    end
+    context 'with invalid faculty' do
+      let(:params) { { id: department, faculty_id: -1 } }
+      it 'returns Not Found' do
+        expect(http_request).to have_http_status(:not_found)
+      end
+    end
   end
 
-  describe "#update" do
-    context 'with valid attributes' do
+  describe '#update' do
+    subject(:http_request) { patch :update, params: params }
 
+    context 'with valid attributes' do
+      let(:params) do
+        { id: department, faculty_id: faculty, department: attributes_for(:department, faculty_id: faculty) }
+      end
       it 'returns Found' do
-        patch :update, params: { id: department, faculty_id: faculty, department: attributes_for(:department, faculty_id: faculty)}
-        expect(response).to have_http_status(:found)
+        expect(http_request).to have_http_status(:found)
       end
 
+      it 'redirects to the updated department' do
+        expect(http_request).to redirect_to faculty_department_path(faculty_id: faculty, id: department)
+      end
+    end
+
+    context 'with invalid id' do
+      let(:params) { { id: -1, faculty_id: faculty } }
+      it 'returns Not Found' do
+        expect(http_request).to have_http_status(:not_found)
+      end
+    end
+    context 'update with invalid attributes' do
+      let(:params) do
+        { id: department,
+          department: attributes_for(:invalid_department),
+          faculty_id: faculty }
+      end
+      it 're-renders the edit template' do
+        expect(http_request).to render_template :edit
+      end
+    end
+
+    context 'with valid manual attributes' do
+      let(:params) do
+        { id: department, faculty_id: faculty,
+          department: { name: 'Test', formation_date: '1000.01.01', faculty_id: faculty } }
+      end
       it "changes department's attributes" do
-        patch :update, params: { id: department, faculty_id: faculty,
-                                 department: attributes_for(:department, name: 'Test', formation_date: '1000.01.01', faculty_id: faculty),
-         }
+        http_request
         department.reload
         expect(department.name).to eq('Test')
-        expect(department.faculty_id).to eq( faculty.id)
+        expect(department.faculty_id).to eq(faculty.id)
         expect(department.formation_date).to eq('1000.01.01'.to_date)
       end
-
-      it "redirects to the updated department" do
-        patch :update, params: { id: department, faculty_id: faculty, department: attributes_for(:department, faculty_id: faculty) }
-        expect(response).to redirect_to faculty_department_path(faculty_id:faculty, id: Department.last)
-      end
     end
 
-    context "with invalid attributes" do
-
-      it 'returns Not Found' do
-        patch :update, params: { id: -1, faculty_id: faculty }
-        expect(response).to have_http_status(:not_found)
+    context 'with invalid manual attributes' do
+      let(:params) do
+        { id: department,
+          faculty_id: faculty,
+          department: attributes_for(:department, name: 'Test', formation_date: nil,
+                                                  faculty_id: faculty) }
       end
-
-      it "does not change the faculties attributes" do
+      it 'does not change the faculties attributes' do
         department_date = department.formation_date
-        patch :update, params: { id: department,
-                                 faculty_id: faculty,
-                                 department: attributes_for(:department, name: 'Test', formation_date: nil, faculty_id: faculty ) }
+        http_request
         department.reload
-        expect(department.name).to_not eq( 'Test' )
-        expect(department.faculty_id).to eq( faculty.id )
-        expect(department.formation_date).to eq( department_date )
-      end
-
-      it "re-renders the edit template" do
-        patch :update, params: { id: department,
-                                 department: attributes_for(:invalid_department),
-                                 faculty_id: faculty}
-        expect(response).to render_template :edit
+        expect(department.name).to_not eq('Test')
+        expect(department.faculty_id).to eq(faculty.id)
+        expect(department.formation_date).to eq(department_date)
       end
     end
-
-
   end
 
   describe '#destroy' do
+    subject(:http_request) { delete :destroy, params: params }
+    context 'with valid params' do
+      let(:params) { { id: department, faculty_id: faculty } }
+      it 'returns Found' do
+        expect(http_request).to have_http_status(:found)
+      end
 
-    it 'returns Found' do
-      delete :destroy, params: { id: department, faculty_id: faculty }
-      expect(response).to have_http_status(:found)
+      it 'deletes the department' do
+        expect { http_request }.to change(Department, :count).by(-1)
+      end
+
+      it 'redirects to #index' do
+        expect(http_request).to redirect_to faculty_departments_url
+      end
     end
 
-    it 'returns Not Found' do
-      delete :destroy, params: { id: -1, faculty_id: faculty }
-      expect(response).to have_http_status(:not_found)
-    end
-
-    it "deletes the department" do
-      expect{
-        delete :destroy, params: { id: department, faculty_id: faculty }
-      }.to change(Department, :count).by(-1)
-    end
-
-    it "redirects to #index" do
-      delete :destroy, params: { id: department, faculty_id: faculty }
-      expect(response).to redirect_to faculty_departments_url
+    context 'with invalid id' do
+      let(:params) { { id: -1, faculty_id: faculty } }
+      it 'returns Not Found' do
+        http_request
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
-
 end
