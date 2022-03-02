@@ -9,5 +9,8 @@ FactoryBot.define do
     department_type { 'Basic' }
   end
 
+  factory :invalid_department, class: Department do
+    name { nil }
+  end
 end
 
