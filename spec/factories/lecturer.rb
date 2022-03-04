@@ -14,5 +14,8 @@ FactoryBot.define do
     academic_degree {}
   end
 
+  factory :invalid_lecturer, class: Lecturer do
+    name { nil }
+  end
 end
 

@@ -25,7 +25,7 @@ class LecturesController < ApplicationController
 
     respond_to do |format|
       if @lecture.save
-        format.html { redirect_to group_lectures_path, notice: "Lecture was successfully created." }
+        format.html { redirect_to group_lecture_path(@group, @lecture), notice: "Lecture was successfully created." }
         format.json { render :show, status: :created, location: @lecture }
       else
         format.html { render :new, status: :unprocessable_entity }

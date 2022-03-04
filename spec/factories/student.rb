@@ -11,7 +11,12 @@ FactoryBot.define do
         FactoryBot.create(:mark, mark: 5, student: student)
       end
     end
+    group_id { group.id}
     name { Faker::Name.name }
+  end
+
+  factory :invalid_student, class: Student do
+    name { nil }
   end
 end
 

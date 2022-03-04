@@ -1,7 +1,7 @@
 FactoryBot.define do
 
   factory :lecture_time do
-    beginning { '00:00' }
+    beginning { "#{rand(0..23)}:#{rand(0..59)}" }
   end
 
 end

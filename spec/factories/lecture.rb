@@ -11,9 +11,12 @@ FactoryBot.define do
     lecturer_id { lecturer.id }
     subject_id { subject.id }
     weekday { 'Monday' }
-    corpus { 1 }
-    auditorium { 1 }
+    corpus { rand(1..1000) }
+    auditorium { rand(1..1000) }
   end
 
+  factory :invalid_lecture, class: Lecture do
+    auditorium { nil }
+  end
 end
 
