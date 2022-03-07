@@ -181,6 +181,7 @@ RSpec.describe LecturersController, type: :controller do
 
     context 'with valid attributes' do
       let(:params) { { id: lecturer } }
+
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end

@@ -104,6 +104,7 @@ RSpec.describe StudentsController, type: :controller do
 
     context 'with valid params' do
       let(:params) { { id: student} }
+
       it 'returns OK' do
         expect(http_request).to have_http_status(:success)
       end
@@ -235,6 +236,7 @@ RSpec.describe StudentsController, type: :controller do
 
     context 'with valid attributes' do
       let(:params) { { id: student } }
+
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
