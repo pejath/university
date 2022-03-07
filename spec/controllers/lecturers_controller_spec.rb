@@ -67,6 +67,7 @@ RSpec.describe LecturersController, type: :controller do
 
     context 'with valid params' do
       let(:params) { { id: lecturer } }
+
       it 'returns OK' do
         expect(http_request).to have_http_status(:success)
       end
@@ -192,6 +193,7 @@ RSpec.describe LecturersController, type: :controller do
         expect(http_request).to redirect_to lecturers_url
       end
     end
+
     context 'with invalid id' do
       let(:params) { { id: -1 } }
 

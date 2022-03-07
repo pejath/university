@@ -15,6 +15,15 @@ RSpec.describe GroupsController, type: :controller do
     it 'renders the :index template' do
       expect(http_request).to render_template :index
     end
+
+    it 'returns groups in correct order' do
+      lecturers = create_list(:lecturer, 10)
+      lecturers.each do |lecturer|
+        create(:group, department: create(:department), curator: lecturer)
+      end
+      http_request
+      expect(assigns(:groups)).to eq Group.order(:department_id).all
+    end
   end
 
   describe '#show' do
@@ -68,6 +77,7 @@ RSpec.describe GroupsController, type: :controller do
 
     context 'with valid params' do
       let(:params) { { id: group } }
+
       it 'returns OK' do
         expect(http_request).to have_http_status(:success)
       end
@@ -181,6 +191,7 @@ RSpec.describe GroupsController, type: :controller do
 
     context 'with valid attributes' do
       let(:params) { { id: group } }
+
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
@@ -193,6 +204,7 @@ RSpec.describe GroupsController, type: :controller do
         expect(http_request).to redirect_to groups_url
       end
     end
+
     context 'with invalid id' do
       let(:params) { { id: -1 } }
 

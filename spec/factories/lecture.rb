@@ -6,11 +6,7 @@ FactoryBot.define do
     association :lecturer, factory: :lecturer
     association :subject, factory: :subject
 
-    lecture_time_id { lecture_time.id }
-    group_id { group.id }
-    lecturer_id { lecturer.id }
-    subject_id { subject.id }
-    weekday { 'Monday' }
+    weekday { %w[Monday Tuesday Wednesday Thursday Friday Saturday].sample  }
     corpus { rand(1..1000) }
     auditorium { rand(1..1000) }
   end

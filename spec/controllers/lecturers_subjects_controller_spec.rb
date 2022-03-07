@@ -5,6 +5,7 @@ RSpec.describe LecturersSubjectsController, type: :controller do
   let(:department) { create(:department) }
   let!(:lecturer) { create(:lecturer, department: department) }
   let!(:lecturer_subject) { LecturersSubject.create(lecturer_id: lecturer.id, subject_id: create(:subject).id) }
+
   describe '#new' do
     subject(:http_request) { get :new }
 
@@ -60,8 +61,10 @@ RSpec.describe LecturersSubjectsController, type: :controller do
 
   describe '#destroy' do
     subject(:http_request) { delete :destroy, params: params }
+
     context 'with valid attributes' do
       let(:params) { { id: lecturer_subject } }
+
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
@@ -74,6 +77,7 @@ RSpec.describe LecturersSubjectsController, type: :controller do
         expect(http_request).to redirect_to lecturers_path
       end
     end
+
     context 'with invalid id' do
       let(:params) { { id: -1 } }
 
