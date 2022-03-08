@@ -27,7 +27,7 @@ RSpec.describe LecturesController, type: :controller do
           create(:lecture, group: group, lecture_time: create(:lecture_time))
         end
         http_request
-        expect(assigns(:lectures)).to eq group.lectures.order(:weekday).order(:lecture_time_id)
+        expect(assigns(:lectures)).to eq group.lectures.includes(:lecture_time).order(:weekday).order('lecture_times.beginning')
       end
     end
 

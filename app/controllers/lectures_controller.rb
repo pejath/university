@@ -5,7 +5,7 @@ class LecturesController < ApplicationController
 
   # GET /groups/:id/lectures or /groups/:id/lectures.json
   def index
-    @lectures = @group.lectures.order(:weekday).order(:lecture_time_id)
+    @lectures = @group.lectures.includes(:lecture_time).order(:weekday).order('lecture_times.beginning')
   end
 
   # GET /groups/:id/lectures/1 or /groups/:id/lectures/1.json
