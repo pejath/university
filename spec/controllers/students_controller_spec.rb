@@ -4,6 +4,7 @@ RSpec.describe StudentsController, type: :controller do
   let(:group) { create(:group, course: 5) }
   let!(:student) { create(:student, group: group) }
   let!(:red_diploma_student) { create(:student, :with_red_diploma, group: group) }
+  let!(:another_red_diploma_student) { create(:student, :with_red_diploma, group: create(:group, course: 5, id: 3)) }
 
   describe '#index' do
     subject(:http_request) { get :index, params: params }
@@ -15,21 +16,24 @@ RSpec.describe StudentsController, type: :controller do
         params[:red_diplomas] = true
         http_request
         expect(assigns(:students)).to include(red_diploma_student)
+        expect(assigns(:students)).to include(another_red_diploma_student)
         expect(assigns(:students)).to_not include(student)
       end
 
       it 'returns student from group' do
         params[:group_id] = group.id
         http_request
+        expect(assigns(:students)).to_not include(another_red_diploma_student)
         expect(assigns(:students)).to include(red_diploma_student)
         expect(assigns(:students)).to include(student)
       end
 
-      it 'returns student from group' do
+      it 'returns red diploma student from group' do
         params[:group_id] = group.id
         params[:red_diplomas] = true
         http_request
         expect(assigns(:students)).to include(red_diploma_student)
+        expect(assigns(:students)).to_not include(another_red_diploma_student)
         expect(assigns(:students)).to_not include(student)
       end
 
@@ -82,7 +86,7 @@ RSpec.describe StudentsController, type: :controller do
   end
 
   describe '#new' do
-    subject(:http_request) { get :new, params: params}
+    subject(:http_request) { get :new, params: params }
     let(:params) { { student: attributes_for(:student, group: group) } }
 
     it 'returns OK' do
@@ -103,7 +107,7 @@ RSpec.describe StudentsController, type: :controller do
     subject(:http_request) { get :edit, params: params }
 
     context 'with valid params' do
-      let(:params) { { id: student} }
+      let(:params) { { id: student } }
 
       it 'returns OK' do
         expect(http_request).to have_http_status(:success)
@@ -117,7 +121,6 @@ RSpec.describe StudentsController, type: :controller do
       it 'renders the :edit template' do
         expect(http_request).to render_template :edit
       end
-
     end
 
     context 'with invalid params' do
@@ -174,9 +177,7 @@ RSpec.describe StudentsController, type: :controller do
     subject(:http_request) { patch :update, params: params }
 
     context 'with valid attributes' do
-      let(:mark) { build(:mark, lecturer: create(:lecturer), subject: create(:subject)).attributes }
-      let(:ex_params) { { student: attributes_for(:student, group_id: group, marks_attributes: [id: 1, _destroy: true]) }}
-      let(:params) { { id: student, student: attributes_for(:student, group_id: group, marks_attributes: [mark]) } }
+      let(:params) { { id: student, student: attributes_for(:student, group_id: group) } }
 
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
@@ -191,18 +192,6 @@ RSpec.describe StudentsController, type: :controller do
         http_request
         student.reload
         expect(student.name).to eq('Bill')
-      end
-
-      it 'creates marks for the student' do
-        expect { http_request }.to change(Mark, :count).by(1)
-        expect(student.marks.size).to eq(1)
-      end
-
-      it 'destroys marks for the student' do
-        params[:student] = ex_params[:student]
-        params[:id] = red_diploma_student
-        http_request
-        expect(red_diploma_student.marks.size).to eq(0)
       end
     end
 
@@ -227,6 +216,60 @@ RSpec.describe StudentsController, type: :controller do
         student.reload
         expect(student.name).to_not eq('Test')
         expect(student.name).to eq(students_name)
+      end
+    end
+
+    context 'with marks_attributes' do
+      context 'with valid attributes' do
+        let(:mark) { build(:mark, lecturer: create(:lecturer), subject: create(:subject)).attributes }
+        let(:params) { { id: student, student: attributes_for(:student, group_id: group, marks_attributes: [mark]) } }
+
+        it 'creates marks for the student' do
+          expect { http_request }.to change(Mark, :count).by(1)
+          expect(student.marks.size).to eq(1)
+        end
+
+        it 'destroys marks for the student' do
+          params[:id] = red_diploma_student
+          params[:student][:marks_attributes] = [{ id: 1, _destroy: true }]
+          http_request
+          expect(red_diploma_student.marks.size).to eq(0)
+        end
+
+        it 'updates marks for the student' do
+          params[:id] = red_diploma_student
+          params[:student][:marks_attributes] = [{ id: 1, mark: 2 }]
+          http_request
+          expect(red_diploma_student.marks.size).to eq(1)
+          expect(red_diploma_student.marks.first.mark).to eq(2)
+        end
+      end
+
+      context 'with invalid attributes' do
+        let(:mark) { build(:mark, lecturer: create(:lecturer), subject: create(:subject)).attributes }
+        let(:params) { { id: student, student: attributes_for(:student, group_id: group, marks_attributes: [mark]) } }
+
+        it 'does not creates marks for the student' do
+          mark[:mark] = 10
+          expect(http_request).to have_http_status(:unprocessable_entity)
+          expect { http_request }.to_not change(Mark, :count)
+          expect(student.marks.size).to eq(0)
+        end
+
+        it 'does not destroys marks for the student' do
+          params[:id] = red_diploma_student
+          params[:student][:marks_attributes] = [{ id: -1, _destroy: true }]
+          expect(http_request).to have_http_status(:not_found)
+          expect(red_diploma_student.marks.size).to eq(1)
+        end
+
+        it 'does not updates marks for the student' do
+          params[:id] = red_diploma_student
+          params[:student][:marks_attributes] = [{ id: 1, mark: 10 }]
+          expect(http_request).to have_http_status(:unprocessable_entity)
+          expect(red_diploma_student.marks.size).to eq(1)
+          expect(red_diploma_student.marks.first.mark).to eq(5)
+        end
       end
     end
   end

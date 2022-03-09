@@ -17,10 +17,7 @@ RSpec.describe GroupsController, type: :controller do
     end
 
     it 'returns groups in correct order' do
-      lecturers = create_list(:lecturer, 10)
-      lecturers.each do |lecturer|
-        create(:group, department: create(:department), curator: lecturer)
-      end
+      create_list(:group, 10)
       http_request
       expect(assigns(:groups)).to eq Group.order(:department_id).all
     end

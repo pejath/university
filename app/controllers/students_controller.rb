@@ -51,7 +51,7 @@ class StudentsController < ApplicationController
   end
 
   def index
-    @students = filter_by_params(Student.order(:group_id).all, params)
+    @students = filter_by_params(Student.all, filter_params)
     @marks = Mark.all
     @groups_id = Group.select(:id)
   end
@@ -68,7 +68,7 @@ class StudentsController < ApplicationController
   end
 
   def filter_params
-    params.permit(:group_id, :red_diplomas)
+    params.permit(:red_diplomas, :group_id)
     # params.require(:filter).permit(:group_id, :red_diplomas)
   end
 
