@@ -135,7 +135,11 @@ RSpec.describe DepartmentsController, type: :controller do
         expect { http_request }.to change(Department, :count).by(1)
       end
 
-      it 'redirects to faculties#show' do
+      it 'creates department' do
+        expect { http_request }.to change{ faculty.reload.departments.size }.by(1)
+      end
+
+      it 'redirects to departments#show' do
         expect(http_request).to redirect_to faculty_department_path(faculty_id: faculty, id: assigns[:department])
       end
     end
@@ -149,6 +153,10 @@ RSpec.describe DepartmentsController, type: :controller do
 
       it 'does not save the new department in the database' do
         expect { http_request }.to_not change(Department, :count)
+      end
+
+      it 'does not save the new department in the database' do
+        expect { http_request }.to_not change{ faculty.reload.departments.size }
       end
 
       it 're-renders the :new template' do
@@ -196,7 +204,7 @@ RSpec.describe DepartmentsController, type: :controller do
           department: attributes_for(:invalid_department) }
       end
 
-      it 'does not change the faculties attributes' do
+      it 'does not change the departments attributes' do
         department_date = department.formation_date
         params[:department][:name] = 'Test'
         params[:department][:formation_date] = nil
@@ -208,7 +216,7 @@ RSpec.describe DepartmentsController, type: :controller do
       end
 
       it 'returns Not Found' do
-        params[:id]=-1
+        params[:id]= -1
         expect(http_request).to have_http_status(:not_found)
       end
 
@@ -234,6 +242,10 @@ RSpec.describe DepartmentsController, type: :controller do
 
       it 'deletes the department' do
         expect { http_request }.to change(Department, :count).by(-1)
+      end
+
+      it 'deletes the department' do
+        expect { http_request }.to change{ faculty.reload.departments.size }.by(-1)
       end
 
       it 'redirects to #index' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Student, type: :model do
-  let!(:student) { build(:student, :random_student) }
+  let!(:student) { build(:student) }
   let!(:red_diploma_student) { create(:student, :with_red_diploma) }
 
   describe 'relations' do

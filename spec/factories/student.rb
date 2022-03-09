@@ -1,9 +1,6 @@
 FactoryBot.define do
 
   factory :student do
-    trait :random_student do
-      association :group, factory: :group
-    end
 
     trait :with_red_diploma do
       association :group, factory: :group, course: 5
@@ -11,7 +8,14 @@ FactoryBot.define do
         FactoryBot.create(:mark, mark: 5, student: student)
       end
     end
+
+    association :group, factory: :group
     name { Faker::Name.name }
+
+  end
+
+  factory :invalid_student, class: Student do
+    name { nil }
   end
 end
 

@@ -5,7 +5,7 @@ class LecturesController < ApplicationController
 
   # GET /groups/:id/lectures or /groups/:id/lectures.json
   def index
-    @lectures = @group.lectures.order(:weekday).order(:lecture_time_id)
+    @lectures = @group.lectures.includes(:lecture_time).order(:weekday).order('lecture_times.beginning')
   end
 
   # GET /groups/:id/lectures/1 or /groups/:id/lectures/1.json
@@ -25,7 +25,7 @@ class LecturesController < ApplicationController
 
     respond_to do |format|
       if @lecture.save
-        format.html { redirect_to group_lectures_path, notice: "Lecture was successfully created." }
+        format.html { redirect_to group_lecture_path(@group, @lecture), notice: "Lecture was successfully created." }
         format.json { render :show, status: :created, location: @lecture }
       else
         format.html { render :new, status: :unprocessable_entity }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacultiesController, type: :controller do
-  let!(:faculty) { create(:faculty) }
+RSpec.describe SubjectsController, type: :controller do
+  let!(:lec_subject) { create(:subject) }
 
   describe '#index' do
     subject(:http_request) { get :index }
@@ -19,15 +19,15 @@ RSpec.describe FacultiesController, type: :controller do
     subject(:http_request) { get :show, params: params }
 
     context 'with valid params' do
-      let(:params) { { id: faculty } }
+      let(:params) { { id: lec_subject } }
 
       it 'returns OK' do
         expect(http_request).to have_http_status(:success)
       end
 
-      it 'takes correct faculty' do
+      it 'takes correct subject' do
         http_request
-        expect(assigns(:faculty)).to eq faculty
+        expect(assigns(:subject)).to eq lec_subject
       end
 
       it 'renders the :show template' do
@@ -51,9 +51,9 @@ RSpec.describe FacultiesController, type: :controller do
       expect(http_request).to have_http_status(:success)
     end
 
-    it 'builds new faculty' do
+    it 'builds new subject' do
       http_request
-      expect(assigns(:faculty)).to be_a_new(Faculty)
+      expect(assigns(:subject)).to be_a_new(Subject)
     end
 
     it 'renders the :new template' do
@@ -65,14 +65,15 @@ RSpec.describe FacultiesController, type: :controller do
     subject(:http_request) { get :edit, params: params }
 
     context 'with valid params' do
-      let(:params) { { id: faculty } }
+      let(:params) { { id: lec_subject } }
+
       it 'returns OK' do
         expect(http_request).to have_http_status(:success)
       end
 
-      it 'edits faculty record' do
+      it 'edits subject record' do
         http_request
-        expect(assigns(:faculty)).to eq faculty
+        expect(assigns(:subject)).to eq lec_subject
       end
 
       it 'renders the :edit template' do
@@ -93,30 +94,30 @@ RSpec.describe FacultiesController, type: :controller do
     subject(:http_request) { post :create, params: params }
 
     context 'with valid attributes' do
-      let(:params) { { faculty: attributes_for(:faculty) } }
+      let(:params) { { subject: attributes_for(:subject) } }
 
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
 
-      it 'creates faculty' do
-        expect { http_request }.to change(Faculty, :count).by(1)
+      it 'creates subject' do
+        expect { http_request }.to change(Subject, :count).by(1)
       end
 
-      it 'redirects to faculties#show' do
-        expect(http_request).to redirect_to faculty_path(assigns[:faculty])
+      it 'redirects to subjects#show' do
+        expect(http_request).to redirect_to subject_path(assigns[:subject])
       end
     end
 
     context 'with invalid attributes' do
-      let(:params) { { faculty: attributes_for(:invalid_faculty) } }
+      let(:params) { { subject: attributes_for(:invalid_subject) } }
 
       it 'returns Unprocessable Entity' do
         expect(http_request).to have_http_status(:unprocessable_entity)
       end
 
-      it 'does not save the new faculty in the database' do
-        expect { http_request }.to_not change(Faculty, :count)
+      it 'does not save the new subject in the database' do
+        expect { http_request }.to_not change(Subject, :count)
       end
 
       it 're-renders the :new template' do
@@ -129,28 +130,26 @@ RSpec.describe FacultiesController, type: :controller do
     subject(:http_request) { patch :update, params: params }
 
     context 'with valid attributes' do
-      let(:params) { { id: faculty, faculty: attributes_for(:faculty) } }
+      let(:params) { { id: lec_subject, subject: attributes_for(:subject) } }
 
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
 
-      it 'redirects to the updated faculty' do
-        expect(http_request).to redirect_to faculty
+      it 'redirects to the updated subject' do
+        expect(http_request).to redirect_to lec_subject
       end
 
-      it "changes faculty's attributes" do
-        params[:faculty][:name] = 'Test'
-        params[:faculty][:formation_date] = '1000.01.01'
+      it "changes subject's attributes" do
+        params[:subject][:name] = 'Test'
         http_request
-        faculty.reload
-        expect(faculty.name).to eq('Test')
-        expect(faculty.formation_date).to eq('1000.01.01'.to_date)
+        lec_subject.reload
+        expect(lec_subject.name).to eq('Test')
       end
     end
 
     context 'with invalid attributes' do
-      let(:params) { { id: faculty, faculty: attributes_for(:invalid_faculty) } }
+      let(:params) { { id: lec_subject, subject: attributes_for(:invalid_subject) } }
 
       it 'returns Not Found' do
         params['id'] = -1
@@ -162,14 +161,13 @@ RSpec.describe FacultiesController, type: :controller do
         expect(response).to render_template :edit
       end
 
-      it 'does not change the faculties attributes' do
-        faculty_date = faculty.formation_date
-        params[:faculty][:name] = 'Test'
-        params[:faculty][:formation_date] = nil
+      it 'does not change the subject\'s attributes' do
+        subject_name = lec_subject.name
+        params[:subject][:name] = nil
         http_request
-        faculty.reload
-        expect(faculty.name).to_not eq('Test')
-        expect(faculty.formation_date).to eq(faculty_date)
+        lec_subject.reload
+        expect(lec_subject.name).to_not eq(nil)
+        expect(lec_subject.name).to eq(subject_name)
       end
     end
   end
@@ -178,18 +176,18 @@ RSpec.describe FacultiesController, type: :controller do
     subject(:http_request) { delete :destroy, params: params }
 
     context 'with valid attributes' do
-      let(:params) { { id: faculty } }
+      let(:params) { { id: lec_subject } }
 
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
 
-      it 'deletes the faculty' do
-        expect { http_request }.to change(Faculty, :count).by(-1)
+      it 'deletes the subject' do
+        expect { http_request }.to change(Subject, :count).by(-1)
       end
 
       it 'redirects to #index' do
-        expect(http_request).to redirect_to faculties_url
+        expect(http_request).to redirect_to subjects_url
       end
     end
 

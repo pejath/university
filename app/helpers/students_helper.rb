@@ -4,6 +4,7 @@ module StudentsHelper
 
     params.each do |key, value|
       next if value.nil?
+
       scope = case key.to_s
               when 'group_id'
                 scope.where(group_id: value)
@@ -13,6 +14,6 @@ module StudentsHelper
                 scope.all
               end
     end
-    scope
+    scope.order(:group_id)
   end
 end

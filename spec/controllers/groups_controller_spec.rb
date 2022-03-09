@@ -1,7 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe FacultiesController, type: :controller do
-  let!(:faculty) { create(:faculty) }
+RSpec.describe GroupsController, type: :controller do
+  let(:curator) { create(:lecturer) }
+  let(:department) { create(:department) }
+  let!(:group) { create(:group, department: department, curator: curator) }
 
   describe '#index' do
     subject(:http_request) { get :index }
@@ -13,21 +15,27 @@ RSpec.describe FacultiesController, type: :controller do
     it 'renders the :index template' do
       expect(http_request).to render_template :index
     end
+
+    it 'returns groups in correct order' do
+      create_list(:group, 10)
+      http_request
+      expect(assigns(:groups)).to eq Group.order(:department_id).all
+    end
   end
 
   describe '#show' do
     subject(:http_request) { get :show, params: params }
 
     context 'with valid params' do
-      let(:params) { { id: faculty } }
+      let(:params) { { id: group } }
 
       it 'returns OK' do
         expect(http_request).to have_http_status(:success)
       end
 
-      it 'takes correct faculty' do
+      it 'takes correct group' do
         http_request
-        expect(assigns(:faculty)).to eq faculty
+        expect(assigns(:group)).to eq group
       end
 
       it 'renders the :show template' do
@@ -51,9 +59,9 @@ RSpec.describe FacultiesController, type: :controller do
       expect(http_request).to have_http_status(:success)
     end
 
-    it 'builds new faculty' do
+    it 'builds new group' do
       http_request
-      expect(assigns(:faculty)).to be_a_new(Faculty)
+      expect(assigns(:group)).to be_a_new(Group)
     end
 
     it 'renders the :new template' do
@@ -65,14 +73,15 @@ RSpec.describe FacultiesController, type: :controller do
     subject(:http_request) { get :edit, params: params }
 
     context 'with valid params' do
-      let(:params) { { id: faculty } }
+      let(:params) { { id: group } }
+
       it 'returns OK' do
         expect(http_request).to have_http_status(:success)
       end
 
-      it 'edits faculty record' do
+      it 'edits group record' do
         http_request
-        expect(assigns(:faculty)).to eq faculty
+        expect(assigns(:group)).to eq group
       end
 
       it 'renders the :edit template' do
@@ -93,30 +102,30 @@ RSpec.describe FacultiesController, type: :controller do
     subject(:http_request) { post :create, params: params }
 
     context 'with valid attributes' do
-      let(:params) { { faculty: attributes_for(:faculty) } }
+      let(:params) { { group: attributes_for(:group, department_id: department, curator_id: create(:lecturer)) } }
 
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
 
-      it 'creates faculty' do
-        expect { http_request }.to change(Faculty, :count).by(1)
+      it 'creates group' do
+        expect { http_request }.to change(Group, :count).by(1)
       end
 
-      it 'redirects to faculties#show' do
-        expect(http_request).to redirect_to faculty_path(assigns[:faculty])
+      it 'redirects to groups#show' do
+        expect(http_request).to redirect_to group_path(assigns[:group])
       end
     end
 
     context 'with invalid attributes' do
-      let(:params) { { faculty: attributes_for(:invalid_faculty) } }
+      let(:params) { { group: attributes_for(:invalid_group) } }
 
       it 'returns Unprocessable Entity' do
         expect(http_request).to have_http_status(:unprocessable_entity)
       end
 
-      it 'does not save the new faculty in the database' do
-        expect { http_request }.to_not change(Faculty, :count)
+      it 'does not save the new group in the database' do
+        expect { http_request }.to_not change(Group, :count)
       end
 
       it 're-renders the :new template' do
@@ -129,28 +138,28 @@ RSpec.describe FacultiesController, type: :controller do
     subject(:http_request) { patch :update, params: params }
 
     context 'with valid attributes' do
-      let(:params) { { id: faculty, faculty: attributes_for(:faculty) } }
+      let(:params) { { id: group, group: attributes_for(:group, department: department, curator: curator) } }
 
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
 
-      it 'redirects to the updated faculty' do
-        expect(http_request).to redirect_to faculty
+      it 'redirects to the updated group' do
+        expect(http_request).to redirect_to group
       end
 
-      it "changes faculty's attributes" do
-        params[:faculty][:name] = 'Test'
-        params[:faculty][:formation_date] = '1000.01.01'
+      it "changes group's attributes" do
+        params[:group][:specialization_code] = 12
+        params[:group][:form_of_education] = 'correspondence'
         http_request
-        faculty.reload
-        expect(faculty.name).to eq('Test')
-        expect(faculty.formation_date).to eq('1000.01.01'.to_date)
+        group.reload
+        expect(group.specialization_code).to eq(12)
+        expect(group.form_of_education).to eq('correspondence')
       end
     end
 
     context 'with invalid attributes' do
-      let(:params) { { id: faculty, faculty: attributes_for(:invalid_faculty) } }
+      let(:params) { { id: group, group: attributes_for(:invalid_group) } }
 
       it 'returns Not Found' do
         params['id'] = -1
@@ -162,14 +171,14 @@ RSpec.describe FacultiesController, type: :controller do
         expect(response).to render_template :edit
       end
 
-      it 'does not change the faculties attributes' do
-        faculty_date = faculty.formation_date
-        params[:faculty][:name] = 'Test'
-        params[:faculty][:formation_date] = nil
+      it 'does not change the groups attributes' do
+        groups_foe = group.form_of_education
+        params[:group][:course] = 10
+        params[:group][:form_of_education] = 'correspondence'
         http_request
-        faculty.reload
-        expect(faculty.name).to_not eq('Test')
-        expect(faculty.formation_date).to eq(faculty_date)
+        group.reload
+        expect(group.course).to_not eq(10)
+        expect(group.form_of_education).to eq(groups_foe)
       end
     end
   end
@@ -178,18 +187,18 @@ RSpec.describe FacultiesController, type: :controller do
     subject(:http_request) { delete :destroy, params: params }
 
     context 'with valid attributes' do
-      let(:params) { { id: faculty } }
+      let(:params) { { id: group } }
 
       it 'returns Found' do
         expect(http_request).to have_http_status(:found)
       end
 
-      it 'deletes the faculty' do
-        expect { http_request }.to change(Faculty, :count).by(-1)
+      it 'deletes the group' do
+        expect { http_request }.to change(Group, :count).by(-1)
       end
 
       it 'redirects to #index' do
-        expect(http_request).to redirect_to faculties_url
+        expect(http_request).to redirect_to groups_url
       end
     end
 
