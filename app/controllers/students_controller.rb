@@ -10,7 +10,9 @@ class StudentsController < ApplicationController
     @student = Student.new
   end
 
-  def edit; end
+  def edit
+    @subjects
+  end
 
   def create
     @student = Student.new(student_params)
@@ -52,8 +54,7 @@ class StudentsController < ApplicationController
 
   def index
     @students = filter_by_params(Student.all, filter_params)
-    @marks = Mark.all
-    @groups_id = Group.select(:id)
+    @groups_id = Group.select(:id).order(:id)
   end
 
   private

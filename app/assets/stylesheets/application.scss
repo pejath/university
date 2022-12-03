@@ -10,6 +10,14 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "show";
+//@import "form";
+.tableFixHead          { overflow: auto; height: 100px; }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+.centeredCol { text-align: center; }
+table  { border-collapse: collapse; margin-left: auto; margin-right: auto; }
+th     { background: #212529; color: #FFFFFF;}
+

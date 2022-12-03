@@ -1,3 +1,5 @@
+<%= stylesheet_link_tag '_form', media: 'all', 'data-turbolinks-track': 'reload'  %>
+
 <%= form_with(model: faculty) do |form| %>
   <% if faculty.errors.any? %>
     <div id="error_explanation">
@@ -11,17 +13,13 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
+  <div class="editDiv">
+  <%= form.label :name %>
     <%= form.text_field :name %>
-  </div>
 
-  <div class="field">
     <%= form.label 'Formation date' %>
     <%= form.date_select :formation_date %>
-  </div>
 
-  <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>

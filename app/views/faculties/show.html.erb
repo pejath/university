@@ -1,11 +1,13 @@
 <p id="notice"><%= notice %></p>
-<p>
-  <strong>Name</strong>
-  <%= @faculty.name %>
-</p>
-<p>
-  <strong>Formation Date</strong>
-  <%= @faculty.formation_date %>
-</p>
-<%= link_to 'Edit', edit_faculty_path(@faculty) %> |
-<%= link_to 'Back', faculties_path %>
+<div class="divShow">
+  <p>
+    <strong>Name</strong>
+    <%= @faculty.name %>
+  </p>
+  <p>
+    <strong>Formation Date</strong>
+    <%= @faculty.formation_date %>
+  </p>
+  <%= link_to 'Edit', edit_faculty_path(@faculty), class:'aShow' %> |
+  <%= link_to 'Back', faculties_path %>
+</div>
