@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-
-<p>
+<div class="divShow">
+<p style="font-size: 150%; padding-left: 10%">
   <strong>Name:</strong>
   <%= @subject.name %>
 </p>
-<table>
+<table class="table tableFixHead table-hover" style="font-size: 150%; width:80%">
   <thead>
     <tr>
       <th>Lecturers</th>
@@ -23,6 +23,7 @@
 </table>
 
 
-<%= link_to 'Add lecturer', new_lecturers_subject_path%> |
+<%= link_to 'Add lecturer', new_lecturers_subject_path, class: 'aShow'%> |
 <%= link_to 'Edit', edit_subject_path(@subject) %> |
 <%= link_to 'Back', subjects_path %>
+</div>

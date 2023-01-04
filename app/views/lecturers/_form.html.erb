@@ -1,3 +1,5 @@
+<%= stylesheet_link_tag '_form', media: 'all', 'data-turbolinks-track': 'reload'  %>
+
 <%= form_with(model: lecturer) do |form| %>
   <% if lecturer.errors.any? %>
     <div id="error_explanation">
@@ -11,22 +13,16 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
+  <div class="editDiv">
+  <%= form.label :name %>
     <%= form.text_field :name %>
-  </div>
 
-  <div class="field">
     <%= form.label :department %>
     <%= form.select :department_id, @departments.map { |value| [value.name, value.id] } %>
-  </div>
 
-  <div class="field">
     <%= form.label :academic_degree %>
     <%= form.select :academic_degree, [1,2,3,4,5,''] %>
-  </div>
 
-  <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>

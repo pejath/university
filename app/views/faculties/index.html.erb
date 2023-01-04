@@ -1,13 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Faculties</h1>
+<h1 class="centeredCol" >Faculties</h1>
+<p style="padding-left: 15%"><%= link_to 'New Faculty', new_faculty_path %></p>
 
-<table>
+<table class="table table-hover tableFixHead" style="width: 70%">
   <thead>
     <tr>
       <th>Name</th>
       <th>Formation Date</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -27,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Faculty', new_faculty_path %>
+

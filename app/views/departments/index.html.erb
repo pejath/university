@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Departments</h1>
-
-<table>
+<h1 class="centeredCol">Departments</h1>
+<p style="padding-left: 15%"><%= link_to 'New Department', new_faculty_department_path %></p>
+<table class="table table-hover tableFixHead" style="width: 70%;">
   <thead>
     <tr>
       <th>Name</th>
@@ -26,4 +26,3 @@
 
 <br>
 
-<%= link_to 'New Department', new_faculty_department_path %>

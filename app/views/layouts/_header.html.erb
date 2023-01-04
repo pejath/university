@@ -1,0 +1,28 @@
+<!--<div class="container" >-->
+  <div class="topnav">
+    <%= link_to 'Subjects',  subjects_path %>
+    <%= link_to 'Lecturers',  lecturers_path %>
+    <%= link_to 'Students',  students_path %>
+    <%= link_to 'Groups',  groups_path %>
+    <%= link_to 'Faculties',  faculties_path %>
+  </div>
+<!--</div>-->
+
+<style>
+  .topnav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      overflow: hidden;
+  }
+
+  .topnav a {
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+
+</style>

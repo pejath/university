@@ -1,3 +1,5 @@
+<%= stylesheet_link_tag '_form', media: 'all', 'data-turbolinks-track': 'reload'  %>
+
 <%= form_for @student do |form| %>
   <% if @student.errors.any? %>
     <div id="error_explanation">
@@ -10,18 +12,16 @@
     </div>
   <% end %>
 
-  <div class="field">
-  <%= form.label :group_id %>
-  <%= form.text_field :group_id %>
-</div>
+  <div class="editDiv">
+    <%= form.label :group_id %>
+    <%= form.text_field :group_id %>
 
-  <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
-  </div>
-  <% unless @subject.nil? %>
+
+  <% unless @subjects.nil? %>
+      <p>
     <%= form.fields_for :marks do |f| %>
-      <div>
         <%= f.label :mark %>
         <%= f.select :mark, (1..5).to_a %>
         <%= f.label :subject %>
@@ -30,16 +30,16 @@
         <%= f.select :lecturer_id, @lecturers.map{|lecturer| [lecturer.name, lecturer.id]} %>
         <%= f.label :Destroy %>
         <%= f.check_box :_destroy %>
-      </div>
-    <% end %>
+          </p>
 
-    <%= link_to_add_fields "Add mark", form, :marks %>
+      <% end %>
+        <%= link_to_add_fields "Add mark", form, :marks%>
+        </div>
   <% else %>
     <p>There is no subjects</p>
   <% end %>
-  <div class="actions">
     <%= form.submit %>
-  </div>
+  </p>
 <% end %>
 
 

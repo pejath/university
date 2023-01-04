@@ -1,3 +1,5 @@
+<%= stylesheet_link_tag '_form', media: 'all', 'data-turbolinks-track': 'reload'  %>
+
 <%= form_with(model: group) do |form| %>
   <% if group.errors.any? %>
     <div id="error_explanation">
@@ -10,34 +12,24 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :department_id %>
+  <div class="editDiv">
+  <%= form.label :department_id %>
     <%= form.select :department_id , @departments.map{|faculty| [faculty.name, faculty.id]}, {}, class: "form-control"%>
-  </div>
 
-  <div class="field">
     <%= form.label :specialization_code %>
     <%= form.text_field :specialization_code %>
-  </div>
 
-  <div class="field">
     <%= form.label :course %>
     <%= form.text_field :course %>
-  </div>
 
-  <div class="field">
     <%= form.label :form_of_education %>
     <%= form.select :form_of_education, Group::FORM_OF_EDUCATION %>
-  </div>
 
-  <div class="field">
     <%= form.label :curator_id %>
     <%= form.select :curator_id, @curators.map { |curator|
       %W[#{curator.name} #{curator.id}]
     } %>
-  </div>
 
-  <div class="actions">
     <%= form.submit %>
   </div>
 

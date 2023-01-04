@@ -15,7 +15,9 @@ class SubjectsController < ApplicationController
   end
 
   # GET /subjects/1/edit
-  def edit; end
+  def edit
+    @subjects = Subject.all
+  end
 
   # POST /subjects or /subjects.json
   def create
