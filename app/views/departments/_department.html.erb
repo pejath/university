@@ -1,0 +1,7 @@
+<tr>
+  <td><%= department.name %></td>
+  <td><%= department.department_type %></td>
+  <td><%= link_to 'Show', faculty_department_path(@faculty,department) %></td>
+  <td><%= link_to 'Edit', edit_faculty_department_path(@faculty,department) %></td>
+  <td><%= link_to 'Destroy', [@faculty,department], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+</tr>

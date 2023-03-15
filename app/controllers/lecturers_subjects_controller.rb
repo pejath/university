@@ -1,19 +1,10 @@
 class LecturersSubjectsController < ApplicationController
-  include LecturersSubjectsHelper
   before_action :set_lecturer_and_subject, only: %i[new create]
   before_action :set_ls, only: :destroy
-
-  def index
-    @lecturers_subjects = LecturersSubject.all
-  end
-
-  def show; end
 
   def new
     @lecturers_subject = LecturersSubject.new
   end
-
-  def edit; end
 
   def create
     @lecturers_subject = LecturersSubject.new(lecturers_subject_params)
@@ -24,18 +15,6 @@ class LecturersSubjectsController < ApplicationController
         format.json { render :show, status: :created, location: @lecturers_subject }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @lecturers_subject.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @lecturers_subject.update(lecturers_subject_params)
-        format.html { redirect_to lecturers_path, notice: "Data was successfully updated." }
-        format.json { render :show, status: :ok, location: @lecturers_subject }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @lecturers_subject.errors, status: :unprocessable_entity }
       end
     end

@@ -3,7 +3,7 @@ module StudentsHelper
   def filter_by_params(scope, params)
 
     params.each do |key, value|
-      next if value.nil?
+      next if value.empty?
 
       scope = case key.to_s
               when 'group_id'

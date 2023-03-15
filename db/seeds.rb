@@ -13,7 +13,7 @@ FORM_OF_EDUCATION = [0, 1, 2].freeze
 DAY = %w[Monday Tuesday Wednesday Thursday Friday Saturday].freeze
 DEPARTMENT = %w['Ботаники','Генетики'].freeze
 DATE = '1999.12.12'.freeze
-
+SUBJECTS = %w[Math Russian Geography English Economy IT PE Physics Biology Chemistry Science]
 FACULTS.each{|facult|
   Faculty.create(name: facult, formation_date: "19#{rand(70..99)}.#{month = rand(1..12)}.#{month != 2? rand(1..28):rand(1..30)}")
 }
@@ -34,26 +34,26 @@ Department.create(name: 'Источниковедения', faculty_id: 3, depar
 
 
 
-(1..15).each do |i|
-  Lecturer.create(department_id: rand(1..Department.count), name: RND.compose, academic_degree: rand(1..5))
+(1..30).each do |i|
+  Lecturer.create(department_id: rand(1..Department.count), name: Faker::Name.name, academic_degree: rand(1..5))
 end
 
-16.times{
+30.times{
   Group.create(department_id: rand(1..Department.count), specialization_code: rand(400), course: rand(1..5), form_of_education: FORM_OF_EDUCATION.sample, curator_id: rand(1..Lecturer.count))
 }
 
 Group.count.times{|i|
-  20.times{
-    Student.create(group_id: i, name: RND.compose)
+  10.times{
+    Student.create(group_id: i, name: Faker::Name.name)
   }
 }
 
 20.times do
-  Student.create(group_id: rand(1..Group.count), name: RND.compose)
+  Student.create(group_id: rand(1..Group.count), name: Faker::Name.name)
 end
 
 20.times do
-  Student.create(group_id: 1, name: RND.compose)
+  Student.create(group_id: 1, name: Faker::Name.name)
 end
 
 LectureTime.create(beginning: '9:00')
@@ -64,8 +64,9 @@ LectureTime.create(beginning: '15:50')
 LectureTime.create(beginning: '17:10')
 LectureTime.create(beginning: '19:00')
 LectureTime.create(beginning: '20:40')
-
-Subject.create(name: "Math")
+SUBJECTS.each do |subject|
+  Subject.create(name: subject)
+end
 Lecturer.all.each {
   |lecturer|
   @ls = LecturersSubject.new(subject: Subject.all.sample, lecturer: lecturer)

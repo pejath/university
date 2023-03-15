@@ -1,7 +1,7 @@
 <div>
-  <% if  !@students.empty? %>
+  <% if !@students.empty? %>
     <%= link_to 'Create', new_student_path %>
-    <%= select_tag('group', options_for_select(@groups_id.order(:id).map{|group| group.id}<<'', params[:group_id])) %>
+    <%= select_tag('group', options_for_select(@groups_id.order(:id).map { |group| group.id } << '', params[:group_id])) %>
 
     <table>
       <thead>
@@ -14,23 +14,7 @@
       </tr>
       </thead>
       <tbody>
-
-      <% @students.each do |student| %>
-        <tr>
-          <td><%= student.group_id %></td>
-          <td><%= student.name %></td>
-          <td>
-            <% @marks.where(student_id: student.id).each do |mark| %>
-              <%= mark.mark %>
-            <% end %></td>
-          <td><%= student.average_mark %></td>
-          <td><%= link_to 'Show', student %></td>
-          <td><%= link_to 'Edit', edit_student_path(student) %></td>
-          <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
-        </tr>
-      <% end %>
-
+      <%= render @students %>
       </tbody>
     </table>
   <% else %>
@@ -47,5 +31,5 @@
           }
           location.href = url.join('/') + '?group_id=' + e.target.value;
       })
-      </script>
+  </script>
 </div>

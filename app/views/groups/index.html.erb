@@ -1,5 +1,5 @@
 <div>
-  <% if  !@groups.empty? %>
+  <% if !@groups.empty? %>
     <%= link_to 'Create', new_group_path %>
 
     <table>
@@ -14,24 +14,7 @@
       </tr>
       </thead>
       <tbody>
-
-      <% @groups.each do |group| %>
-        <tr>
-          <td><%= group.department.name %></td>
-          <td><%= group.specialization_code %></td>
-          <td><%= group.course %></td>
-          <td><%= group.form_of_education.split('_').join(' ') %></td>
-          <td><%= group.curator&.name %></td>
-
-
-          <td><%= link_to 'Show', group %></td>
-          <td><%= link_to 'Journal', students_path(:group_id => group.id)  %></td>
-          <td><%= link_to 'Edit', edit_group_path(group) %></td>
-          <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <td><%= link_to 'Lectures', group_lectures_path(group)%></td>
-        </tr>
-      <% end %>
-
+      <%= render @groups %>
       </tbody>
     </table>
   <% else %>

@@ -1,0 +1,8 @@
+<tr>
+  <td><%= faculty.name %></td>
+  <td><%= faculty.formation_date %></td>
+  <td><%= link_to 'Show', faculty %></td>
+  <td><%= link_to 'Departments',  faculty_departments_path(faculty) %></td>
+  <td><%= link_to 'Edit', edit_faculty_path(faculty) %></td>
+  <td><%= link_to 'Destroy', faculty, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+</tr>
