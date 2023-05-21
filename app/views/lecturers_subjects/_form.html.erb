@@ -1,15 +1,6 @@
 <%= form_for @lecturers_subject do |form| %>
-  <% if @lecturers_subject.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@lecturers_subject.errors.count, "error") %> prohibited this data from being saved:</h2>
+  <%= render 'shared/errors', resource: @lecturers_subject %>
 
-      <ul>
-        <% @lecturers_subject.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
 
     <div class="field">
       <%= form.label :lecturer %>
@@ -22,4 +13,3 @@
     <%= form.submit %>
   </div>
 <% end %>
-
