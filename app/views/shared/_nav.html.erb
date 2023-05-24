@@ -1,0 +1,14 @@
+<header class="navbar bg-light">
+  <div class="container-fluid">
+    <h2><%= link_to 'TestGuru', root_path, class: 'navbar-brand' %></h2>
+    <span class="navbar-text">
+      <% if user_signed_in? %>
+        Welcome, <b><%= current_user.email %></b> |
+        <%= link_to 'Log Out', destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to 'Log In', new_user_session_path %> |
+        <%= link_to 'Sign Up', new_user_registration_path %>
+      <% end %>
+    </span>
+  </div>
+</header>

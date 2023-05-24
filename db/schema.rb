@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_15_171458) do
+ActiveRecord::Schema.define(version: 2023_05_21_170510) do
+
+  create_table "admins", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "departments", force: :cascade do |t|
     t.integer "faculty_id"
@@ -40,6 +46,20 @@ ActiveRecord::Schema.define(version: 2022_02_15_171458) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["curator_id"], name: "index_groups_on_curator_id"
     t.index ["department_id"], name: "index_groups_on_department_id"
+  end
+
+  create_table "invitation_tokens", force: :cascade do |t|
+    t.integer "lecturer_id"
+    t.integer "student_id"
+    t.integer "admin_id"
+    t.integer "methodist_id"
+    t.string "token"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_id"], name: "index_invitation_tokens_on_admin_id"
+    t.index ["lecturer_id"], name: "index_invitation_tokens_on_lecturer_id"
+    t.index ["methodist_id"], name: "index_invitation_tokens_on_methodist_id"
+    t.index ["student_id"], name: "index_invitation_tokens_on_student_id"
   end
 
   create_table "lecture_times", force: :cascade do |t|
@@ -92,6 +112,12 @@ ActiveRecord::Schema.define(version: 2022_02_15_171458) do
     t.index ["subject_id"], name: "index_marks_on_subject_id"
   end
 
+  create_table "methodists", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "students", force: :cascade do |t|
     t.integer "group_id"
     t.string "name", null: false
@@ -102,6 +128,20 @@ ActiveRecord::Schema.define(version: 2022_02_15_171458) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "invitation_token"
+    t.integer "role"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "groups", "lecturers", column: "curator_id"

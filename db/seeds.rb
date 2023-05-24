@@ -75,7 +75,7 @@ Lecturer.all.each {
   end
 }
 
-500.times {
+100.times {
   lecturer = rand(1..Lecturer.count)
   subject = rand(1..Subject.count)
   lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: lecturer, subject_id: subject, weekday: DAY.sample)
@@ -90,3 +90,16 @@ Lecturer.all.each {
     Mark.create(subject_id: rand(1..Subject.count), mark: rand(1..5), student_id: i, lecturer_id: rand(1..Lecturer.count))
   }
 }
+
+Admin.create(name: 'Admin')
+inv = InvitationToken.create(admin_id: 1, token: SecureRandom.urlsafe_base64(6, false))
+Methodist.create(name: 'Methodist')
+
+lect = Lecturer.first.invitation_token.token
+meth = Methodist.first.invitation_token.token
+stud = Student.first.invitation_token.token
+
+User.create(email:'admin@mail.com', password:'qwerty12', role:0, invitation_token: inv)
+User.create(email:'lecturer@mail.com', password:'qwerty12', role:1, invitation_token: lect)
+User.create(email:'methodist@mail.com', password:'qwerty12', role:2, invitation_token: meth)
+User.create(email:'student@mail.com', password:'qwerty12', role:3, invitation_token: stud)
