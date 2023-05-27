@@ -4,6 +4,7 @@ class Group < ApplicationRecord
   enum form_of_education: {evening: 0, correspondence: 1, full_time: 2}
   belongs_to :department
   belongs_to :curator, class_name: 'Lecturer', foreign_key: :curator_id, optional: true
+  has_many :students, dependent: :nullify
   has_many :lectures, dependent: :destroy
   has_many :lecturers, through: :lectures
   has_many :subjects, through: :lectures

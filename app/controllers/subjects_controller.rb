@@ -1,6 +1,6 @@
 class SubjectsController < ApplicationController
+  before_action :authorize_objects
   before_action :set_subject, only: %i[show edit update destroy]
-
   # GET /subjects or /subjects.json
   def index
     @subjects = Subject.all
@@ -58,13 +58,18 @@ class SubjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_subject
-      @subject = Subject.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def subject_params
-      params.require(:subject).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_subject
+    @subject = Subject.find(params[:id])
+  end
+
+  def authorize_objects
+    authorize Subject
+  end
+
+  # Only allow a list of trusted parameters through.
+  def subject_params
+    params.require(:subject).permit(:name)
+  end
 end

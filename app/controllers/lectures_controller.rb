@@ -1,5 +1,6 @@
 class LecturesController < ApplicationController
   before_action :get_group
+  before_action :authorize_objects
   before_action :set_lecturers_subject_and_time, only: %i[create edit new]
   before_action :set_lecture, only: %i[ show edit update destroy ]
 
@@ -61,9 +62,11 @@ class LecturesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+  def authorize_objects
+    authorize Lecture
+  end
 
   def set_lecturers_subject_and_time
-
     @lectures_time = LectureTime.all
     @subjects = Subject.all
     @lecturers = Lecturer.select(:id, :name)

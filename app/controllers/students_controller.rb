@@ -4,16 +4,23 @@ class StudentsController < ApplicationController
   before_action :set_student, only: %i[show edit update destroy]
 
 
-  def show; end
+  def show
+    authorize Student
+  end
 
   def new
+    authorize Student
     @student = Student.new
   end
 
-  def edit; end
+  def edit
+    authorize Student
+    authorize @student
+  end
 
   def create
     @student = Student.new(student_params)
+    authorize @student
 
     respond_to do |format|
       if @student.save
@@ -27,6 +34,7 @@ class StudentsController < ApplicationController
   end
 
   def update
+    authorize Student
 
     respond_to do |format|
       if @student.update(student_params)
@@ -40,6 +48,7 @@ class StudentsController < ApplicationController
   end
 
   def destroy
+    authorize Student
 
     respond_to do |format|
       if @student.destroy
@@ -51,6 +60,8 @@ class StudentsController < ApplicationController
   end
 
   def index
+    authorize Student
+
     @students = filter_by_params(Student.all, filter_params)
     @marks = Mark.all
     @groups_id = Group.select(:id)

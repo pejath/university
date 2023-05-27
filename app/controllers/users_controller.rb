@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   # ROLES = { "admin_id" => 0, "lecturer_id" => 1, "methodist_id" => 2, "student_id" => 3 }
 
   def profile
-
     case current_user.role
     when 0
       puts 0

@@ -1,4 +1,5 @@
 class FacultiesController < ApplicationController
+  before_action :authorize_objects
   before_action :set_faculty, only: %i[ show edit update destroy ]
 
   # GET /faculties or /faculties.json
@@ -63,6 +64,10 @@ class FacultiesController < ApplicationController
    # Use callbacks to share common setup or constraints between actions.
   def set_faculty
     @faculty = Faculty.find(params[:id])
+  end
+
+  def authorize_objects
+    authorize Faculty
   end
 
   # Only allow a list of trusted parameters through.

@@ -10,12 +10,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    # pry
     token = InvitationToken.find_by(token: sign_up_params["invitation_token"])
     if token && !User.find_by(invitation_token: sign_up_params["invitation_token"])&.any?
       super
     else
-      # pry
       flash[:error] = "Токен уже использован или вы используете неверный."
       clean_up_passwords resource
       set_minimum_password_length

@@ -5,14 +5,33 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  # after_create :set_role
+  has_one :invitation_token, foreign_key: :token, primary_key: :token
+  after_create :set_role
 
   def set_role
-    pry
     find_role = InvitationToken.select(:lecturer_id, :student_id, :admin_id, :methodist_id)
-                               .find_by(token: invitation_token).attributes.compact.keys
+                               .find_by(token: token).attributes&.compact&.keys
     self.role = ROLES[find_role[0]]
     save!
+  end
+
+  def owner
+    invitation_token.owner
+  end
+
+  def is_admin?
+    true if role.zero?
+  end
+
+  def is_lecturer?
+    true if role == 1
+  end
+
+  def is_methodist?
+    true if role == 2
+  end
+
+  def is_student?
+    true if role == 3
   end
 end

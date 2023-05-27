@@ -75,7 +75,7 @@ Lecturer.all.each {
   end
 }
 
-100.times {
+50.times {
   lecturer = rand(1..Lecturer.count)
   subject = rand(1..Subject.count)
   lec = Lecture.new(auditorium: rand(900), corpus: rand(1..4), lecture_time_id: rand(1..8), group_id: rand(1..15), lecturer_id: lecturer, subject_id: subject, weekday: DAY.sample)
@@ -92,14 +92,14 @@ Lecturer.all.each {
 }
 
 Admin.create(name: 'Admin')
-inv = InvitationToken.create(admin_id: 1, token: SecureRandom.urlsafe_base64(6, false))
+inv = InvitationToken.create(admin_id: 1, token: SecureRandom.urlsafe_base64(6, false)).token
 Methodist.create(name: 'Methodist')
 
 lect = Lecturer.first.invitation_token.token
 meth = Methodist.first.invitation_token.token
 stud = Student.first.invitation_token.token
 
-User.create(email:'admin@mail.com', password:'qwerty12', role:0, invitation_token: inv)
-User.create(email:'lecturer@mail.com', password:'qwerty12', role:1, invitation_token: lect)
-User.create(email:'methodist@mail.com', password:'qwerty12', role:2, invitation_token: meth)
-User.create(email:'student@mail.com', password:'qwerty12', role:3, invitation_token: stud)
+User.create(email:'admin@mail.com', password:'qwerty12', role:0, token: inv)
+User.create(email:'lecturer@mail.com', password:'qwerty12', role:1, token: lect)
+User.create(email:'methodist@mail.com', password:'qwerty12', role:2, token: meth)
+User.create(email:'student@mail.com', password:'qwerty12', role:3, token: stud)

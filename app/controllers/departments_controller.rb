@@ -5,6 +5,7 @@ class DepartmentsController < ApplicationController
   # GET /faculties/:id/departments or /faculties/:id/departments.json
   def index
     @departments = @faculty.departments
+    authorize @departments
   end
 
   # GET /faculties/:id/departments/1 or /faculties/:id/departments/1.json
@@ -13,14 +14,18 @@ class DepartmentsController < ApplicationController
   # GET /faculties/:id/departments/new
   def new
     @department = @faculty.departments.build
+    authorize @department
   end
 
   # GET /faculties/:id/departments/1/edit
-  def edit; end
+  def edit
+    authorize @department
+  end
 
   # POST /faculties/:id/departments or /faculties/:id/departments.json
   def create
     @department = @faculty.departments.build(department_params)
+    authorize @department
 
     respond_to do |format|
       if @department.save
@@ -35,6 +40,8 @@ class DepartmentsController < ApplicationController
 
   # PATCH/PUT /faculties/:id/departments/1 or /faculties/:id/departments/1.json
   def update
+    authorize @department
+
     respond_to do |format|
       if @department.update(department_params)
         format.html { redirect_to faculty_department_url(@faculty, @department), notice: 'Department was successfully updated.' }
@@ -48,6 +55,8 @@ class DepartmentsController < ApplicationController
 
   # DELETE /faculties/:id/departments/1 or /faculties/:id/departments/1.json
   def destroy
+    authorize @department
+
     respond_to do |format|
       if @department.destroy
         format.html { redirect_to faculty_departments_url, notice: 'Department was successfully destroyed.' }

@@ -1,6 +1,6 @@
 <p>
-  <strong>Faculty:</strong>
-  <%= @group.faculty.name %>
+  <strong>Department:</strong>
+  <%= @group.department.name %>
 </p>
 
 <p>
@@ -22,6 +22,21 @@
   <strong>Curator:</strong>
   <%= @group.curator&.name %>
 </p>
-
-<%= link_to 'Edit', edit_group_path(@group)%> |
+<% if @students %>
+<table>
+  <thead>
+  <tr>
+    <th>Group</th>
+    <th>Name</th>
+    <th>Marks</th>
+    <th>Average</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <%= render @students %>
+  </tbody>
+</table>
+<% end %>
+<%= link_to 'Edit', edit_group_path(@group) %> |
 <%= link_to 'Back', groups_path %>

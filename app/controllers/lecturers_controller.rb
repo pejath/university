@@ -1,4 +1,5 @@
 class LecturersController < ApplicationController
+  before_action :authorize_objects
   before_action :set_departments, only: %i[edit new create]
   before_action :set_lecturer, only: %i[show edit update destroy ]
 
@@ -68,6 +69,10 @@ class LecturersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_lecturer
     @lecturer = Lecturer.find(params[:id])
+  end
+
+  def authorize_objects
+    authorize Lecturer
   end
 
   def set_departments
