@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Lecture, type: :model do
   describe 'enum' do
-    it { should define_enum_for(:weekday).with_values(%i[Monday Tuesday Wednesday Thursday Friday Saturday])}
+    it { should define_enum_for(:weekday).with_values(%i[Monday Tuesday Wednesday Thursday Friday Saturday]) }
   end
 
   describe 'relations' do

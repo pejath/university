@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LectureTime < ApplicationRecord
   has_many :lectures
 
@@ -5,6 +7,6 @@ class LectureTime < ApplicationRecord
   validates_format_of :beginning, with: /([0-1]?[0-9]|2[0-3]):[0-5][0-9]/
 
   def formatted_time
-    beginning.strftime("%H:%M")
+    beginning.strftime('%H:%M')
   end
 end

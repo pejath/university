@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateInvitationTokens < ActiveRecord::Migration[6.1]
   def change
     create_table :invitation_tokens do |t|

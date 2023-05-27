@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe DepartmentsController, type: :controller do
@@ -136,7 +138,7 @@ RSpec.describe DepartmentsController, type: :controller do
       end
 
       it 'creates department' do
-        expect { http_request }.to change{ faculty.reload.departments.size }.by(1)
+        expect { http_request }.to change { faculty.reload.departments.size }.by(1)
       end
 
       it 'redirects to departments#show' do
@@ -156,7 +158,7 @@ RSpec.describe DepartmentsController, type: :controller do
       end
 
       it 'does not save the new department in the database' do
-        expect { http_request }.to_not change{ faculty.reload.departments.size }
+        expect { http_request }.to_not(change { faculty.reload.departments.size })
       end
 
       it 're-renders the :new template' do
@@ -216,7 +218,7 @@ RSpec.describe DepartmentsController, type: :controller do
       end
 
       it 'returns Not Found' do
-        params[:id]= -1
+        params[:id] = -1
         expect(http_request).to have_http_status(:not_found)
       end
 
@@ -245,7 +247,7 @@ RSpec.describe DepartmentsController, type: :controller do
       end
 
       it 'deletes the department' do
-        expect { http_request }.to change{ faculty.reload.departments.size }.by(-1)
+        expect { http_request }.to change { faculty.reload.departments.size }.by(-1)
       end
 
       it 'redirects to #index' do

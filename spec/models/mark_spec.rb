@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mark, type: :model do
   describe 'relations' do
-    it { is_expected.to belong_to(:student)}
-    it { is_expected.to belong_to(:subject)}
-    it { is_expected.to belong_to(:lecturer).optional}
+    it { is_expected.to belong_to(:student) }
+    it { is_expected.to belong_to(:subject) }
+    it { is_expected.to belong_to(:lecturer).optional }
   end
 
   describe 'validations' do

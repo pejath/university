@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class LecturersController < ApplicationController
   before_action :authorize_objects
   before_action :set_departments, only: %i[edit new create]
-  before_action :set_lecturer, only: %i[show edit update destroy ]
+  before_action :set_lecturer, only: %i[show edit update destroy]
 
   # GET /lecturers or /lecturers.json
   def index
@@ -29,7 +31,7 @@ class LecturersController < ApplicationController
 
     respond_to do |format|
       if @lecturer.save
-        format.html { redirect_to lecturer_url(@lecturer), notice: "Lecturer was successfully created." }
+        format.html { redirect_to lecturer_url(@lecturer), notice: 'Lecturer was successfully created.' }
         format.json { render :show, status: :created, location: @lecturer }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +44,7 @@ class LecturersController < ApplicationController
   def update
     respond_to do |format|
       if @lecturer.update(lecturer_params)
-        format.html { redirect_to lecturer_url(@lecturer), notice: "Lecturer was successfully updated." }
+        format.html { redirect_to lecturer_url(@lecturer), notice: 'Lecturer was successfully updated.' }
         format.json { render :show, status: :ok, location: @lecturer }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,15 +53,14 @@ class LecturersController < ApplicationController
     end
   end
 
-
   # DELETE /lecturers/1 or /lecturers/1.json
   def destroy
     respond_to do |format|
       if @lecturer.destroy
-        format.html { redirect_to lecturers_url, notice: "Lecturer was successfully destroyed." }
+        format.html { redirect_to lecturers_url, notice: 'Lecturer was successfully destroyed.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to lecturers_url, notice: "Something go wrong." }
+        format.html { redirect_to lecturers_url, notice: 'Something go wrong.' }
       end
     end
   end
@@ -83,5 +84,4 @@ class LecturersController < ApplicationController
   def lecturer_params
     params.require(:lecturer).permit(:department_id, :name, :academic_degree)
   end
-
 end

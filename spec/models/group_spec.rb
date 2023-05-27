@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 
 require 'rails_helper'
 
 RSpec.describe Group, type: :model do
   describe 'enum' do
-    it { should define_enum_for(:form_of_education).with_values(%i[evening correspondence full_time])}
+    it { should define_enum_for(:form_of_education).with_values(%i[evening correspondence full_time]) }
   end
 
   describe 'relations' do

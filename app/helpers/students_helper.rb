@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 
 module StudentsHelper
   def filter_by_params(scope, params)
-
     params.each do |key, value|
       next if value.empty?
 

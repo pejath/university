@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 class GroupPolicy < ApplicationPolicy
   def show?
     true
   end
 
   def journal?
-    if user.is_student?
-      return scope.id == user.owner.group_id
-    end
+    return scope.id == user.owner.group_id if user.is_student?
+
     user.is_admin? || user.is_lecturer?
   end
 

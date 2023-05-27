@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLectures < ActiveRecord::Migration[6.1]
   def change
     create_table :lectures do |t|
@@ -8,7 +10,6 @@ class CreateLectures < ActiveRecord::Migration[6.1]
       t.integer :weekday, null: false
       t.integer :corpus, null: false
       t.integer :auditorium, null: false
-
     end
   end
 end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class FacultiesController < ApplicationController
   before_action :authorize_objects
-  before_action :set_faculty, only: %i[ show edit update destroy ]
+  before_action :set_faculty, only: %i[show edit update destroy]
 
   # GET /faculties or /faculties.json
   def index
@@ -24,7 +26,7 @@ class FacultiesController < ApplicationController
 
     respond_to do |format|
       if @faculty.save
-        format.html { redirect_to faculty_url(@faculty), notice: "Faculty was successfully created." }
+        format.html { redirect_to faculty_url(@faculty), notice: 'Faculty was successfully created.' }
         format.json { render :show, status: :created, location: @faculty }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,7 +39,7 @@ class FacultiesController < ApplicationController
   def update
     respond_to do |format|
       if @faculty.update(faculty_params)
-        format.html { redirect_to faculty_url(@faculty), notice: "Faculty was successfully updated." }
+        format.html { redirect_to faculty_url(@faculty), notice: 'Faculty was successfully updated.' }
         format.json { render :show, status: :ok, location: @faculty }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -48,20 +50,19 @@ class FacultiesController < ApplicationController
 
   # DELETE /faculties/1 or /faculties/1.json
   def destroy
-
     respond_to do |format|
       if @faculty.destroy
-        format.html { redirect_to faculties_url, notice: "Faculty was successfully destroyed." }
+        format.html { redirect_to faculties_url, notice: 'Faculty was successfully destroyed.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to faculties_url, notice: "Something go wrong." }
+        format.html { redirect_to faculties_url, notice: 'Something go wrong.' }
       end
     end
   end
 
   private
 
-   # Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_faculty
     @faculty = Faculty.find(params[:id])
   end

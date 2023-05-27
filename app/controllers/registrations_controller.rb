@@ -10,14 +10,14 @@ class RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    token = InvitationToken.find_by(token: sign_up_params["invitation_token"])
-    if token && !User.find_by(invitation_token: sign_up_params["invitation_token"])&.any?
+    token = InvitationToken.find_by(token: sign_up_params['invitation_token'])
+    if token && !User.find_by(invitation_token: sign_up_params['invitation_token'])&.any?
       super
     else
-      flash[:error] = "Токен уже использован или вы используете неверный."
+      flash[:error] = 'Токен уже использован или вы используете неверный.'
       clean_up_passwords resource
       set_minimum_password_length
-      redirect_to new_user_registration_url, alert: "Токен уже использован или вы используете неверный."
+      redirect_to new_user_registration_url, alert: 'Токен уже использован или вы используете неверный.'
     end
   end
 
@@ -49,7 +49,8 @@ class RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :invitation_token, :password_confirmation, :role])
+    devise_parameter_sanitizer.permit(:sign_up,
+                                      keys: %i[email password invitation_token password_confirmation role])
   end
 
   # If you have extra params to permit, append them to the sanitizer.

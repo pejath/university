@@ -1,5 +1,6 @@
-FactoryBot.define do
+# frozen_string_literal: true
 
+FactoryBot.define do
   factory :group do
     association :curator, factory: :lecturer
     association :department, factory: :department
@@ -13,4 +14,3 @@ FactoryBot.define do
     course { nil }
   end
 end
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LecturersSubjectsController < ApplicationController
   before_action :set_lecturer_and_subject, only: %i[new create]
   before_action :set_ls, only: :destroy
@@ -11,7 +13,7 @@ class LecturersSubjectsController < ApplicationController
 
     respond_to do |format|
       if @lecturers_subject.save
-        format.html { redirect_to lecturers_path, notice: "Data was successfully created." }
+        format.html { redirect_to lecturers_path, notice: 'Data was successfully created.' }
         format.json { render :show, status: :created, location: @lecturers_subject }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -21,13 +23,12 @@ class LecturersSubjectsController < ApplicationController
   end
 
   def destroy
-
     respond_to do |format|
       if @lecturers_subject.destroy
-        format.html { redirect_to lecturers_path, notice: "Lecturers subject was successfully destroyed." }
+        format.html { redirect_to lecturers_path, notice: 'Lecturers subject was successfully destroyed.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to lecturers_subjects_url, notice: "Something go wrong." }
+        format.html { redirect_to lecturers_subjects_url, notice: 'Something go wrong.' }
       end
     end
   end
@@ -37,7 +38,6 @@ class LecturersSubjectsController < ApplicationController
   def set_lecturer_and_subject
     @subject = Subject.all
     @lecturer = Lecturer.all
-
   end
 
   def set_ls

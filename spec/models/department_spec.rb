@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Department, type: :model do
@@ -17,6 +19,6 @@ RSpec.describe Department, type: :model do
     it { is_expected.to validate_presence_of(:formation_date).with_message('is invalid') }
     it { is_expected.to allow_value('2000.01.18').for(:formation_date) }
     it { is_expected.to_not allow_value('01.18').for(:formation_date) }
-    it { is_expected.to validate_uniqueness_of(:name)}
+    it { is_expected.to validate_uniqueness_of(:name) }
   end
 end

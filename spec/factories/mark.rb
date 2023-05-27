@@ -1,5 +1,6 @@
-FactoryBot.define do
+# frozen_string_literal: true
 
+FactoryBot.define do
   factory :mark do
     association :student, factory: :student
     association :subject, factory: :subject
@@ -7,6 +8,4 @@ FactoryBot.define do
 
     mark { rand(1..5) }
   end
-
 end
-

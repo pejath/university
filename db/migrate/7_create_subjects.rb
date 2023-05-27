@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSubjects < ActiveRecord::Migration[6.1]
   def change
     create_table :subjects do |t|
@@ -5,6 +7,5 @@ class CreateSubjects < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-
   end
 end

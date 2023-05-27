@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -22,7 +24,8 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:email, :password, :invitation_token, :password_confirmation, :role) }
+    devise_parameter_sanitizer.permit(:sign_up) do |u|
+      u.permit(:email, :password, :invitation_token, :password_confirmation, :role)
+    end
   end
-
 end

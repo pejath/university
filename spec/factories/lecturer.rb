@@ -1,5 +1,6 @@
-FactoryBot.define do
+# frozen_string_literal: true
 
+FactoryBot.define do
   factory :lecturer do
     trait :curator do
       after(:create) do |lecturer|
@@ -17,4 +18,3 @@ FactoryBot.define do
     name { nil }
   end
 end
-

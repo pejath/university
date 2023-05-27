@@ -1,5 +1,6 @@
-FactoryBot.define do
+# frozen_string_literal: true
 
+FactoryBot.define do
   factory :subject do
     name { Faker::FunnyName.name }
   end
@@ -8,4 +9,3 @@ FactoryBot.define do
     name { nil }
   end
 end
-

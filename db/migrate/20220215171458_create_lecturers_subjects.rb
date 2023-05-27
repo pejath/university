@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLecturersSubjects < ActiveRecord::Migration[6.1]
   def change
     create_table :lecturers_subjects do |t|
@@ -5,6 +7,6 @@ class CreateLecturersSubjects < ActiveRecord::Migration[6.1]
       t.belongs_to :subject
       t.timestamps
     end
-    add_index :lecturers_subjects, [:lecturer_id, :subject_id], unique: true
+    add_index :lecturers_subjects, %i[lecturer_id subject_id], unique: true
   end
 end

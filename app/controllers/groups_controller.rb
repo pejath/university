@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GroupsController < ApplicationController
   include GroupsHelper
   before_action :set_group, only: %i[show edit update destroy journal]
@@ -44,7 +46,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to group_url(@group), notice: "Group was successfully created." }
+        format.html { redirect_to group_url(@group), notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -70,10 +72,10 @@ class GroupsController < ApplicationController
     authorize @group
     respond_to do |format|
       if @group.destroy
-        format.html { redirect_to groups_url, notice: "Group was successfully destroyed." }
+        format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to groups_url, notice: "Something went wrong." }
+        format.html { redirect_to groups_url, notice: 'Something went wrong.' }
       end
     end
   end
@@ -86,11 +88,7 @@ class GroupsController < ApplicationController
   private
 
   def set_group
-    if params[:group_id]
-      @group = Group.find(params[:group_id])
-    else
-      @group = Group.find(params[:id])
-    end
+    @group = Group.find(params[:group_id] || params[:id])
   end
 
   def set_department_curators
@@ -99,6 +97,7 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:department_id, :curator_id, :specialization_code, :course, :form_of_education, :subject)
+    params.require(:group).permit(:department_id, :curator_id, :specialization_code, :course, :form_of_education,
+                                  :subject)
   end
 end

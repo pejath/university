@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class StudentsController < ApplicationController
   include StudentsHelper
   before_action :set_subject_and_lecturers, only: %i[show edit new create]
   before_action :set_student, only: %i[show edit update destroy]
-
 
   def show
     authorize Student
@@ -24,7 +25,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to student_url(@student), notice: "Student was successfully created." }
+        format.html { redirect_to student_url(@student), notice: 'Student was successfully created.' }
         format.json { render :show, status: :created, location: @student }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -52,9 +53,9 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.destroy
-        format.html { redirect_to students_path, notice: "Student was successfully destroyed." }
+        format.html { redirect_to students_path, notice: 'Student was successfully destroyed.' }
       else
-        format.html { redirect_to students_url, notice: "Something went wrong."}
+        format.html { redirect_to students_url, notice: 'Something went wrong.' }
       end
     end
   end

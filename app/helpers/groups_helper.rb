@@ -1,10 +1,9 @@
+# frozen_string_literal: true
+
 module GroupsHelper
   def subject_marks(marks, subject)
+    return unless subject
 
-    if subject
-      marks.where(subject_id: subject)
-    else
-      nil
-    end
+    marks.where(subject_id: subject)
   end
 end

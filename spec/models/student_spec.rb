@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Student, type: :model do
@@ -26,20 +28,19 @@ RSpec.describe Student, type: :model do
     end
   end
 
-
   describe 'class_methods' do
     describe '#average_mark' do
-      context "without marks student" do
+      context 'without marks student' do
         it 'returns 0.0' do
           expect(student.average_mark).to match(0.0)
         end
       end
-      context "with only one mark" do
+      context 'with only one mark' do
         it 'returns 5.0' do
           expect(red_diploma_student.average_mark).to match(5.0)
         end
       end
-      context "with many marks" do
+      context 'with many marks' do
         it 'returns 4.5 with two marks' do
           red_diploma_student.marks << build(:mark, student_id: red_diploma_student.id, mark: 4)
           expect(red_diploma_student.average_mark).to match(4.5)

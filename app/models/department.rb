@@ -1,7 +1,9 @@
-class Department < ApplicationRecord
-  DEPARTMENT_TYPE = %w[Interfacult Basic Military]
+# frozen_string_literal: true
 
-  enum department_type: { Interfacult: 0, Basic: 1, Military: 2}
+class Department < ApplicationRecord
+  DEPARTMENT_TYPE = %w[Interfacult Basic Military].freeze
+
+  enum department_type: { Interfacult: 0, Basic: 1, Military: 2 }
   belongs_to :faculty
   has_many :lecturers
   has_many :groups

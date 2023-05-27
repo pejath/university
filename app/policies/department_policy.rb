@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DepartmentPolicy < ApplicationPolicy
   def show?
     true

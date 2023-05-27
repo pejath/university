@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StudentPolicy < ApplicationPolicy
   def edit?
     user.is_lecturer? || user.is_admin?

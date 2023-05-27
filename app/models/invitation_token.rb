@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InvitationToken < ApplicationRecord
   belongs_to :student, optional: true
   belongs_to :methodist, optional: true
@@ -10,6 +12,7 @@ class InvitationToken < ApplicationRecord
     return student if student
     return methodist if methodist
     return lecturer if lecturer
-    admin if admin
+
+    admin
   end
 end

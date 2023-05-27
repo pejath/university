@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class LecturesController < ApplicationController
   before_action :get_group
   before_action :authorize_objects
   before_action :set_lecturers_subject_and_time, only: %i[create edit new]
-  before_action :set_lecture, only: %i[ show edit update destroy ]
+  before_action :set_lecture, only: %i[show edit update destroy]
 
   # GET /groups/:id/lectures or /groups/:id/lectures.json
   def index
@@ -26,7 +28,7 @@ class LecturesController < ApplicationController
 
     respond_to do |format|
       if @lecture.save
-        format.html { redirect_to group_lecture_path(@group, @lecture), notice: "Lecture was successfully created." }
+        format.html { redirect_to group_lecture_path(@group, @lecture), notice: 'Lecture was successfully created.' }
         format.json { render :show, status: :created, location: @lecture }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +41,7 @@ class LecturesController < ApplicationController
   def update
     respond_to do |format|
       if @lecture.update(lecture_params)
-        format.html { redirect_to group_lecture_path, notice: "Lecture was successfully updated." }
+        format.html { redirect_to group_lecture_path, notice: 'Lecture was successfully updated.' }
         format.json { render :show, status: :ok, location: @lecture }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,18 +52,18 @@ class LecturesController < ApplicationController
 
   # DELETE /groups/:id/lectures/1 or /groups/:id/lectures/1.json
   def destroy
-
     respond_to do |format|
       if @lecture.destroy
-        format.html { redirect_to group_lectures_path, notice: "Lecture was successfully destroyed." }
+        format.html { redirect_to group_lectures_path, notice: 'Lecture was successfully destroyed.' }
       else
-        format.html { redirect_to group_lectures_path, notice: "Something went wrong."}
+        format.html { redirect_to group_lectures_path, notice: 'Something went wrong.' }
       end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
+  # Use callbacks to share common setup or constraints between actions.
   def authorize_objects
     authorize Lecture
   end
@@ -71,6 +73,7 @@ class LecturesController < ApplicationController
     @subjects = Subject.all
     @lecturers = Lecturer.select(:id, :name)
   end
+
   def get_group
     @group = Group.find(params[:group_id])
   end
@@ -79,8 +82,9 @@ class LecturesController < ApplicationController
     @lecture = @group.lectures.find(params[:id])
   end
 
-    # Only allow a list of trusted parameters through.
+  # Only allow a list of trusted parameters through.
   def lecture_params
-    params.require(:lecture).permit(:lecture_time_id, :group_id, :lecturer_id, :subject_id, :weekday, :corpus, :auditorium)
+    params.require(:lecture).permit(:lecture_time_id, :group_id, :lecturer_id, :subject_id, :weekday, :corpus,
+                                    :auditorium)
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin < ApplicationRecord
   has_one :invitation_token, dependent: :destroy
   after_create :create_invitation_token

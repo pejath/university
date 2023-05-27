@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Subject < ApplicationRecord
   has_many :lecturers_subjects
   has_many :lectures

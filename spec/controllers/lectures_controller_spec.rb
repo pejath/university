@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe LecturesController, type: :controller do
@@ -6,7 +8,9 @@ RSpec.describe LecturesController, type: :controller do
   let(:lecture_time) { create(:lecture_time) }
   let(:lec_subject) { create(:subject) }
   let(:lecturer) { create(:lecturer, department: department) }
-  let!(:lecture) { create(:lecture, group: group, lecture_time: lecture_time, subject: lec_subject, lecturer: lecturer) }
+  let!(:lecture) do
+    create(:lecture, group: group, lecture_time: lecture_time, subject: lec_subject, lecturer: lecturer)
+  end
 
   describe '#index' do
     subject(:http_request) { get :index, params: params }
@@ -137,7 +141,9 @@ RSpec.describe LecturesController, type: :controller do
     subject(:http_request) { post :create, params: params }
 
     context 'with valid attributes' do
-      let(:create_params) { { group_id: group, lecture_time_id: create(:lecture_time), subject_id: lec_subject, lecturer_id: lecturer } }
+      let(:create_params) do
+        { group_id: group, lecture_time_id: create(:lecture_time), subject_id: lec_subject, lecturer_id: lecturer }
+      end
       let(:params) { { group_id: group, lecture: attributes_for(:lecture, create_params) } }
 
       it 'returns Found' do
@@ -169,7 +175,7 @@ RSpec.describe LecturesController, type: :controller do
       end
 
       it 'does not save the new lecture in the database' do
-        expect { http_request }.to_not change{ group.reload.lectures.size }
+        expect { http_request }.to_not(change { group.reload.lectures.size })
       end
 
       it 're-renders the :new template' do
@@ -187,7 +193,9 @@ RSpec.describe LecturesController, type: :controller do
     subject(:http_request) { patch :update, params: params }
 
     context 'with valid attributes' do
-      let(:create_params) { { group_id: group.id, lecture_time_id: lecture_time.id, subject_id: lec_subject.id, lecturer_id: lecturer.id } }
+      let(:create_params) do
+        { group_id: group.id, lecture_time_id: lecture_time.id, subject_id: lec_subject.id, lecturer_id: lecturer.id }
+      end
       let(:params) { { id: lecture, group_id: group.id, lecture: attributes_for(:lecture, create_params) } }
 
       it "changes lecture's attributes" do
@@ -256,7 +264,7 @@ RSpec.describe LecturesController, type: :controller do
       end
 
       it 'deletes the lecture' do
-        expect { http_request }.to change{ group.reload.lectures.size }.by(-1)
+        expect { http_request }.to change { group.reload.lectures.size }.by(-1)
       end
 
       it 'redirects to #index' do

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class DepartmentsController < ApplicationController
   before_action :set_faculty
-  before_action :set_department, only: %i[ show edit update destroy ]
+  before_action :set_department, only: %i[show edit update destroy]
 
   # GET /faculties/:id/departments or /faculties/:id/departments.json
   def index
@@ -29,7 +31,9 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.save
-        format.html { redirect_to faculty_department_url(@faculty, @department), notice: 'Department was successfully created.' }
+        format.html do
+          redirect_to faculty_department_url(@faculty, @department), notice: 'Department was successfully created.'
+        end
         format.json { render :show, status: :created, location: @department }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +48,9 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.update(department_params)
-        format.html { redirect_to faculty_department_url(@faculty, @department), notice: 'Department was successfully updated.' }
+        format.html do
+          redirect_to faculty_department_url(@faculty, @department), notice: 'Department was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @department }
       else
         format.html { render :edit, status: :unprocessable_entity }
