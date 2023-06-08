@@ -1,1 +1,94 @@
-<%= @student %>
+<div class="container">
+  <div class="row gx-5">
+    <div class="col">
+
+      <!--   students profile start   -->
+      <div class="container rounded-4 my-3 px-4 py-4" style="height: 225px; background: rgba(255, 255, 255, 0.48);">
+        <div class="container"><p style="font-size: 32px;">Профиль</p></div>
+        <div class="container d-flex">
+          <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
+          <div class="container d-flex flex-column">
+            <p class="mb-auto" style="font-size: 22px;"><%= @student.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Факультет: <%= @student.department.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Курс: <%= @student.group.course %></p>
+            <p class="mb-auto" style="font-size: 16px;">Группа: <%= @student.group.specialization_code %></p>
+          </div>
+        </div>
+      </div>
+      <!--   students profile end   -->
+
+      <!--   timetable start   -->
+      <%= render "users/time_table" %>
+      <!--   timetable end   -->
+    </div>
+
+    <div class="col">
+      <!--   marks start   -->
+      <div class="container rounded-4 my-3" style="background: rgba(255, 255, 255, 0.32);">
+        <div class="container d-flex">
+          <p style="font-size: 36px;">Оценки</p>
+          <%= select_month(@month, { name: 'month', id: 'month_id' }, class: 'your_class') %>
+        </div>
+        <%= render "users/student_marks_table" %>
+      </div>
+      <!--   marks end   -->
+
+      <!--   curator profile start   -->
+      <div class="container rounded-4 my-3 px-4 py-4" style="height: 225px; background: rgba(255, 255, 255, 0.48);">
+        <div class="container"><p style="font-size: 32px;">Куратор</p></div>
+        <div class="container d-flex">
+          <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
+          <div class="container d-flex flex-column">
+            <p class="mb-auto" style="font-size: 22px;"><%= @group.curator.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @group.curator.department.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Степень: <%= @group.curator.academic_degree %></p>
+          </div>
+        </div>
+      </div>
+      <!--   curator profile end   -->
+
+      <!--   lecturers start   -->
+      <div class="container rounded-4 my-3" style="background: rgba(255, 255, 255, 0.32);">
+        <p style="font-size: 36px;">Преподаватели</p>
+        <div class="row justify-content-center">
+          <% @lectures.uniq(&:lecturer).each do |lecture| %>
+            <div class="col-md-2 col-4 text-center rounded-3 mx-3 my-4" style="background: rgba(255, 255, 255, 0.32);">
+              <p class="rounded-4" style="background: rgba(255, 255, 255, 0.32);"><%= lecture.subject.name %></p>
+              <%= image_tag "person.png", class: "rounded-circle ", style: "width: 50px; height: 50px;" %>
+              <p><%= lecture.lecturer.name %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <!--   lecturers end   -->
+    </div>
+  </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); // Январь это 0!
+
+        var id = '#' + dd + '-' + mm;
+        var element = $(id);
+
+        if (element.length) {
+            $('.table-container').animate({
+                scrollLeft: element.position().left - 90
+            }, 1000);
+        }
+    });
+
+    $('#date_month').change(function () {
+        var monthId = $(this).val();
+
+        if (monthId) {
+            window.location.href = '/profile?month_id=' + monthId;
+        } else {
+            window.location.href = '/profile';
+        }
+    });
+</script>

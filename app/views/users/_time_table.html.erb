@@ -1,0 +1,42 @@
+<div class="container rounded-4 my-3" style="height: 750px; background: rgba(255, 255, 255, 0.32);">
+  <div class="container"><p style="font-size: 36px;">Расписание</p></div>
+  <div class="overflow-auto" style="height: 650px">
+    <% @grouped_lectures.each do |day, lectures| %>
+      <div class="container rounded-3" style="background: rgba(255, 255, 255, 0.24); width: 540px">
+        <p style="font-size: 24px; padding-top: 12px"><%= day %></p>
+        <table class="timetable timetable-rounded">
+          <thead>
+          <tr>
+            <th>Начало</th>
+            <th>Предмет</th>
+            <th>Аудитория</th>
+            <th>Корпус</th>
+            <% case current_user.role %>
+            <% when 1 %>
+              <th>Группа</th>
+            <% when 3 %>
+              <th>Преподаватель</th>
+            <% end %>
+          </tr>
+          </thead>
+          <tbody>
+          <% lectures.each do |lecture| %>
+            <tr class="text-center">
+              <td><%= lecture.lecture_time.beginning.strftime("%H:%M") %></td>
+              <td><%= lecture.subject.name %></td>
+              <td><%= lecture.auditorium %></td>
+              <td><%= lecture.corpus %></td>
+              <% case current_user.role %>
+              <% when 1 %>
+                <td><%= lecture.group.specialization_code %></td>
+              <% when 3 %>
+                <td><%= lecture.lecturer.name %></td>
+              <% end %>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

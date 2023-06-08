@@ -1,0 +1,13 @@
+.my-button {
+  background: #219EBC;
+  border-radius: 6px;
+  border: none;
+
+  &:hover {
+    background: darken(#219EBC, 7%);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

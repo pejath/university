@@ -8,19 +8,9 @@ class GroupsController < ApplicationController
   def show
     authorize @group
 
-    if current_user.is_admin? || current_user.is_lecturer?
-      @students = @group.students
-      @marks = Mark.where(student_id: @students)
-    elsif current_user.is_student?
-      if @group.id == current_user.owner.group_id
-        @students = @group.students
-        @marks = Mark.where(student_id: @students)
-      else
-        @students = nil
-      end
-    else
-      @students = nil
-    end
+    @grouped_lectures = @group.lectures.includes(:lecture_time).order('weekday').order('lecture_times.beginning').group_by(&:weekday)
+    @students = @group.students
+    @curator = @group.curator
   end
 
   def new
@@ -82,6 +72,15 @@ class GroupsController < ApplicationController
 
   def index
     @groups = Group.includes(:department, :curator).order(:department_id).all
+
+    @departments = Department.where(params[:department_id])&.first || Department.first
+    if params[:course] != '0' && !params[:course].nil?
+      @groups = @groups.where(course: params[:course])
+      end
+    if params[:department_id]
+      @groups = @groups.where(department_id: params[:department_id])
+    end
+
     authorize Group
   end
 

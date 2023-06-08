@@ -1,14 +1,13 @@
-<tr>
-  <td><%= group.department&.name %></td>
-  <td><%= group.specialization_code %></td>
-  <td><%= group.course %></td>
-  <td><%= group.form_of_education.split('_').join(' ') %></td>
-  <td><%= group.curator&.name %></td>
-
-
-  <td><%= link_to 'Show', group %></td>
-  <td><%= link_to 'Journal', students_path(:group_id => group.id) %></td>
-  <td><%= link_to 'Edit', edit_group_path(group) %></td>
-  <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  <td><%= link_to 'Lectures', group_lectures_path(group) %></td>
-</tr>
+<div class="container rounded-3 col-md-2 col-4 mx-4 my-4 item" style="background: rgba(255, 255, 255, 0.48);">
+  <%= link_to group, class:"link-dark link-underline-opacity-0" do %>
+    <h3>Группа: <%= group.specialization_code %></h3>
+    <p>Курс: <%= group.course %></p>
+    <p>Куратор: <%= group.curator&.name %></p>
+  <% end %>
+  <% if current_user.is_admin? %>
+    <div class="d-flex">
+      <%= link_to 'Edit', edit_group_path(group) %> |
+      <%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Вы уверены?' } %>
+    </div>
+  <% end %>
+</div>

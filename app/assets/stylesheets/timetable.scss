@@ -1,0 +1,66 @@
+.timetable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.48);
+  }
+
+  th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr td:last-child {
+    border-right: none;
+  }
+}
+
+.timetable-rounded {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.timetable-rounded-overflow {
+  border-radius: 8px;
+  //overflow: auto;
+}
+
+
+.table-container {
+  display: flex;
+  overflow: auto;
+  max-width: 630px; // Or any other value
+}
+
+//.sticky-cell {
+//  position: sticky;
+//  left: 0;
+//  background-color: #fff;}
+
+.sticky-cell {
+  position: -webkit-sticky; // for Safari
+  position: sticky;
+  left: 0;
+  background: white; // need a background to cover cells when scrolled
+  z-index: 1; // keep sticky cells on top
+}
+
+.your_class {
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  font-size: 20px; // Используйте размер шрифта, который подходит вашим требованиям
+}

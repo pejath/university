@@ -1,9 +1,9 @@
 <header class="navbar bg-light">
   <div class="container-fluid">
-    <h2><%= link_to 'TestGuru', root_path, class: 'navbar-brand' %></h2>
+    <h2><%= link_to 'Университет', root_path, class: 'navbar-brand' %></h2>
     <span class="navbar-text">
       <% if user_signed_in? %>
-        Welcome, <b><%= current_user.email %></b> |
+        Добро пожаловать, <b><%= link_to current_user.owner.name, profile_path %></b> |
         <%= link_to 'Log Out', destroy_user_session_path, method: :delete %>
       <% else %>
         <%= link_to 'Log In', new_user_session_path %> |

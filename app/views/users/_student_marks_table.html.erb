@@ -1,0 +1,27 @@
+<div class="table-responsive table-container">
+  <table class="timetable timetable-rounded-overflow">
+    <thead>
+    <tr>
+      <th scope="col" class="sticky-cell">Предмет</th>
+      <% @dates.each do |date| %>
+        <th scope="col" id="<%= date.strftime('%d-%m') %>"><%= date.strftime('%d.%m') %></th>
+      <% end %>
+      <th scope="col">Средняя</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% @marks.each do |k,v| %>
+        <th scope="row" class="sticky-cell"><%= k %></th>
+        <% @dates.each do |date| %>
+          <td class="text-center">
+            <% marks = v[date] %>
+            <%= marks ? marks.mark : '' %>
+          </td>
+      <% end %>
+        <td><%= @student.average_mark(k) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

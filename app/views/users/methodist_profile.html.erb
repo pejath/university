@@ -1,1 +1,30 @@
-<%= @methodist %>
+<div class="container rounded-4 my-3" style="width: 630px; background: rgba(255, 255, 255, 0.32);">
+  <div class="container"><p style="font-size: 36px;">Оценки</p></div>
+  <div class="table-container">
+    <div class="table-wrapper">
+      <table class="timetable timetable-rounded">
+        <thead>
+        <tr>
+          <th scope="col" class="sticky-cell">Предмет</th>
+          <% @dates.each do |date| %>
+            <th scope="col" id="<%= date.strftime('%d-%m') %>"><%= date.strftime('%d-%m') %></th>
+          <% end %>
+        </tr>
+        </thead>
+        <tbody>
+        <% @subjects.each do |subject| %>
+          <tr>
+            <th scope="row" class="sticky-cell"><%= subject.name %></th>
+            <% @dates.each do |date| %>
+              <td>
+                <% marks = @marks.where(created_at: date.beginning_of_day..date.end_of_day, subject_id: subject).first %>
+                <%= marks ? marks.mark : '' %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

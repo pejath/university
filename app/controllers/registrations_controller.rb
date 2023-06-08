@@ -10,8 +10,9 @@ class RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    token = InvitationToken.find_by(token: sign_up_params['invitation_token'])
-    if token && !User.find_by(invitation_token: sign_up_params['invitation_token'])&.any?
+    token = InvitationToken.find_by(token: sign_up_params['token'])
+
+    if token && !User.find_by(invitation_token: token)
       super
     else
       flash[:error] = 'Токен уже использован или вы используете неверный.'
@@ -50,7 +51,7 @@ class RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up,
-                                      keys: %i[email password invitation_token password_confirmation role])
+                                      keys: %i[email password token password_confirmation role])
   end
 
   # If you have extra params to permit, append them to the sanitizer.

@@ -10,13 +10,14 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body style="background: #219EBC;    display: flex; flex-direction: column; min-height: 100vh;">
   <%= render 'shared/nav' %>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main>
 <!--      <p class="notice"><%#= notice %></p>-->
       <p class="alert"><%= alert %></p>
 
       <%= yield %>
     </main>
+  <%= render 'shared/footer' %>
   </body>
 </html>

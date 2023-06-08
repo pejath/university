@@ -22,4 +22,8 @@ class Lecturer < ApplicationRecord
   def create_invitation_token
     InvitationToken.create(lecturer_id: id, token: SecureRandom.urlsafe_base64(6, false))
   end
+
+  def is_curator?
+    !curatorial_group.nil?
+  end
 end
