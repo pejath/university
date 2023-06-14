@@ -8,6 +8,13 @@ class LecturersController < ApplicationController
   # GET /lecturers or /lecturers.json
   def index
     @lecturers = Lecturer.all
+    @departments = Department.where(params[:department_id])&.first || Department.first
+    if params[:degree] != '0' && !params[:degree].nil?
+      @lecturers = @lecturers.where(academic_degree: params[:degree])
+    end
+    if params[:department_id]
+      @lecturers = @lecturers.where(department_id: params[:department_id])
+    end
   end
 
   def subject
@@ -15,7 +22,9 @@ class LecturersController < ApplicationController
   end
 
   # GET /lecturers/1 or /lecturers/1.json
-  def show; end
+  def show
+    @grouped_lectures = @lecturer.lectures.includes(:lecture_time).order('weekday').order('lecture_times.beginning').group_by(&:weekday)
+  end
 
   # GET /lecturers/new
   def new

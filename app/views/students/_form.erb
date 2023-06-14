@@ -1,30 +1,61 @@
 <%= form_for @student do |form| %>
   <%= render 'shared/errors', resource: @student %>
+  <% if current_user.is_admin? %>
+    <div class="field">
+      <%= form.label :group_id %>
+      <%= form.text_field :group_id %>
+    </div>
 
-  <div class="field">
-  <%= form.label :group_id %>
-  <%= form.text_field :group_id %>
-</div>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-  <% unless @subject.nil? %>
-    <%= form.fields_for :marks do |f| %>
-      <div>
-        <%= f.label :mark %>
-        <%= f.select :mark, (1..5).to_a %>
-        <%= f.label :subject %>
-        <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
-        <%= f.label :lecturer %>
-        <%= f.select :lecturer_id, @lecturers.map{|lecturer| [lecturer.name, lecturer.id]} %>
-        <%= f.label :Destroy %>
-        <%= f.check_box :_destroy %>
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+  <% else %>
+    <div class="container rounded-4 my-3 px-4 py-4" style="height: 180px; background: rgba(255, 255, 255, 0.48);">
+      <div class="container d-flex">
+        <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
+        <div class="container d-flex flex-column">
+          <p class="mb-auto" style="font-size: 22px;"><%= @student.name %></p>
+          <p class="mb-auto" style="font-size: 16px;">Группа: <%= @student.group.specialization_code %></p>
+          <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @student.department.name %></p>
+          <% if current_user.is_admin? %>
+            <p>Токен: <%= @student.invitation_token.token %></p>
+          <% end %>
+        </div>
       </div>
-    <% end %>
+    </div>
+  <% end %>
+  <%= select_tag :subject_id, options_from_collection_for_select(Subject.all, :id, :name, params[:subject_id]), prompt: "new" %>
 
-    <%= link_to_add_fields "Add mark", form, :marks %>
+  <% unless @subject.nil? %>
+    <div class="d-flex flex-wrap">
+      <%= link_to_add_fields "Add mark", form, :marks %>
+      <%= form.fields_for :marks do |f| %>
+        <div class="item card col-3 bg-light mb-3 rounded" data-subject-id="<%= f.object.subject_id %>">
+          <div class="card-body">
+            <div class="mb-3">
+              <%= f.label :mark, class: 'form-label' %>
+              <%= f.select :mark, (1..5).to_a, {}, class: 'form-select' %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :subject, class: 'form-label' %>
+              <%= f.select :subject_id, @subjects.map { |subject| [subject.name, subject.id] }, {}, class: 'form-select' %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :lecturer, class: 'form-label' %>
+              <%= f.select :lecturer_id, @lecturers.map { |lecturer| [lecturer.name, lecturer.id] }, {}, class: 'form-select' %>
+            </div>
+
+            <div class="form-check mb-3">
+              <%= f.label :_destroy, class: 'form-check-label' %>
+              <%= f.check_box :_destroy, class: 'form-check-input' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% else %>
     <p>There is no subjects</p>
   <% end %>
@@ -36,11 +67,28 @@
 
 <script>
 
-$('form').on('click','.add_fields', function (e){
-    var regexp, time
-    time = new Date().getTime();
-    regexp = new RegExp($(this).data('id'), 'g');
-    $(this).before($(this).data('fields').replace(regexp, time));
-    return e.preventDefault();
-})
+    $('form').on('click', '.add_fields', function (e) {
+        var regexp, time
+        time = new Date().getTime();
+        regexp = new RegExp($(this).data('id'), 'g');
+        $(this).before($(this).data('fields').replace(regexp, time));
+        return e.preventDefault();
+    })
+
+    $(document).ready(function () {
+        $('#subject_id').change(function () {
+            var selectedSubjectId = $(this).val();
+
+            $('.item').each(function () {
+                var itemSubjectId = $(this).data('subject-id');
+
+                if (selectedSubjectId == itemSubjectId || $(this).data('type') == 'new') {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+
 </script>

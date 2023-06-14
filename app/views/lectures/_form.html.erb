@@ -1,38 +1,44 @@
-<%= form_with(model: [@group, @lecture]) do |form| %>
-  <%= render 'shared/errors', resource: @lecture %>
+<div class="container">
+  <div class="card mx-auto mt-5 col-8">
+    <div class="card-body">
 
-  <div class="field">
-    <%= form.label :lecture_time %>
-    <%= form.select :lecture_time_id , @lectures_time.map{|time| [time.formatted_time, time.id]}%>
+      <%= form_with(model: [@group, @lecture]) do |form| %>
+        <%= render 'shared/errors', resource: @lecture %>
+
+        <div class="form-group">
+          <%= form.label :lecture_time %>
+          <%= form.select :lecture_time_id, @lectures_time.map{|time| [time.formatted_time, time.id]}, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :lecturer %>
+          <%= form.select :lecturer_id, @lecturers.map{|lecturer| [lecturer.name, lecturer.id]}, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :subject %>
+          <%= form.select :subject_id, Subject.all.map{|subject| [subject.name, subject.id]}, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :weekday %>
+          <%= form.select :weekday, Lecture::WEEKDAY, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :corpus %>
+          <%= form.text_field :corpus, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :auditorium %>
+          <%= form.text_field :auditorium, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.submit "Submit", class: "btn btn-primary btn-block" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= form.label :lecturer %>
-    <%= form.select :lecturer_id , @lecturers.map{|lecturer| [lecturer.name, lecturer.id]}%>
-  </div>
-
-  <div class="field">
-    <%= form.label :subject %>
-    <%= form.select :subject_id , @subject.map{|subject| [subject.name, subject.id]}%>
-  </div>
-
-  <div class="field">
-    <%= form.label :weekday %>
-    <%= form.select :weekday , Lecture::WEEKDAY%>
-  </div>
-
-  <div class="field">
-    <%= form.label :corpus %>
-    <%= form.text_field :corpus%>
-  </div>
-
-  <div class="field">
-    <%= form.label :auditorium %>
-    <%= form.text_field :auditorium%>
-  </div>
-
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

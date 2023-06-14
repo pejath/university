@@ -9,7 +9,7 @@
           <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
           <div class="container d-flex flex-column">
             <p class="mb-auto" style="font-size: 22px;"><%= @student.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Факультет: <%= @student.department.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @student.department.name %></p>
             <p class="mb-auto" style="font-size: 16px;">Курс: <%= @student.group.course %></p>
             <p class="mb-auto" style="font-size: 16px;">Группа: <%= @student.group.specialization_code %></p>
           </div>

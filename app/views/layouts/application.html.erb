@@ -6,15 +6,18 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag "application" %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
 
   <body style="background: #219EBC;    display: flex; flex-direction: column; min-height: 100vh;">
   <%= render 'shared/nav' %>
     <main>
 <!--      <p class="notice"><%#= notice %></p>-->
-      <p class="alert"><%= alert %></p>
+      <% if alert %>
+      <p class="alert alert-danger resource-errors col-12 col-md-8 mx-auto alert-dismissible" style="margin-top: 5px; margin-bottom: -3.3%;"><%= alert %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></p>
+      <% end %>
 
       <%= yield %>
     </main>

@@ -1,23 +1,59 @@
-<p id="notice"><%= notice %></p>
+<div>
+  <% if !@lecturers.empty? %>
+    <% if current_user.is_admin? %>
+      <%= link_to 'Create', new_group_path %>
+    <% end %>
+    <div class="container" style="background: rgba(255, 255, 255, 0.32);">
+      <h2 class="px-2 py-2">Группы</h2>
+      <div class="d-flex flex-wrap">
+        <%= select_tag :degree, options_for_select((0..5).to_a, params[:degree]), class: 'your_class' %>
+        <%= select_tag :department_id, options_from_collection_for_select(Department.all, :id, :name, params[:department_id]), class: 'your_class', prompt: "Выберите кафедру" %>
+        <input class="form-control" id="myInput" type="text" placeholder="Поиск.." style="width: 130px;">
+      </div>
+      <button id="clear-params-button" class="my-button float-end">Очистить параметры</button>
+      <div class="container d-flex flex-wrap justify-content-center" id="myList">
+        <%= render @lecturers %>
+      </div>
+    </div>
+  <% else %>
+    <h3>Такой группы нету</h3>
+    <button id="clear-params-button" class="my-button">Очистить параметры</button>
+  <% end %>
+</div>
 
-<h1>Lecturers</h1>
 
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Department</th>
-    <th>Academic Degree</th>
-    <th>Subjects</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
+<script>
+    document.getElementById('clear-params-button').addEventListener('click', function () {
+        var url = new URL(window.location.href);
+        url.search = '';  // Очистить параметры
+        window.location.href = url.href;
+    });
+    $(document).ready(function () {
+        function updateUrlParameter(param, value) {
+            var url = new URL(window.location.href);
+            url.searchParams.set(param, value);
+            window.location.href = url.href;
 
-  <tbody>
-  <%= render @lecturers %>
-    </tbody>
-</table>
+        }
 
-<br>
+        $('#degree').change(function () {
+            var degree = $(this).val();
 
-<%= link_to 'New Lecturer', new_lecturer_path %>
+            if (degree) {
+                updateUrlParameter('degree', degree);
+            } else {
+                window.location.href = '/lecturers';
+            }
+        });
+
+        $('#department_id').change(function () {
+            var departmentId = $(this).val();
+
+            if (departmentId) {
+                updateUrlParameter('department_id', departmentId);
+            } else {
+                window.location.href = '/lecturers';
+            }
+        });
+    });
+</script>

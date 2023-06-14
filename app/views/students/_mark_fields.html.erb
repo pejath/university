@@ -1,13 +1,23 @@
+<div class="item card col-3 bg-light mb-3 rounded" data-subject-id="<%= form.object.subject_id %>" data-type="new">
+  <div class="card-body">
+    <div class="mb-3">
+      <%= form.label :mark, class: 'form-label' %>
+      <%= form.select :mark, (1..5).to_a, {}, class: 'form-select' %>
+    </div>
 
+    <div class="mb-3">
+      <%= form.label :subject, class: 'form-label' %>
+      <%= form.select :subject_id, @subjects.map { |subject| [subject.name, subject.id] }, {}, class: 'form-select' %>
+    </div>
 
-  <div>
-    <%= form.label :mark %>
-    <%= form.select :mark, (1..5).to_a %>
-    <%= form.label :subject %>
-    <%= form.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
-    <%= form.label :lecturer %>
-    <%= form.select :lecturer_id, @lecturers.map{|lecturer| [lecturer.name, lecturer.id]} %>
-    <%= form.label :Destroy %>
-    <%= form.check_box :_destroy %>
+    <div class="mb-3">
+      <%= form.label :lecturer, class: 'form-label' %>
+      <%= form.select :lecturer_id, @lecturers.map { |lecturer| [lecturer.name, lecturer.id] }, {}, class: 'form-select' %>
+    </div>
+
+    <div class="form-check mb-3">
+      <%= form.label :_destroy, class: 'form-check-label' %>
+      <%= form.check_box :_destroy, class: 'form-check-input' %>
+    </div>
   </div>
-
+</div>

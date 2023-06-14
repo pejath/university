@@ -1,9 +1,18 @@
-<tr>
-  <td><%= lecturer.name %></td>
-  <td><%= lecturer.department&.name %></td>
-  <td><%= lecturer.academic_degree %></td>
-  <td><%= lecturer.subjects.map(&:name).split(/\[\]"/).join(' ') %></td>
-  <td><%= link_to 'Show', lecturer %></td>
-  <td><%= link_to 'Edit', edit_lecturer_path(lecturer) %></td>
-  <td><%= link_to 'Destroy', lecturer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-</tr>
+<div class="container col-md-3 col-12 mx-4 my-4 item" style="background: rgba(255, 255, 255, 0.48); height: 200px;">
+  <%= link_to lecturer, class:"link-dark link-underline-opacity-0" do %>
+    <div class="container d-flex">
+      <%= image_tag "person.png", class: "rounded-circle my-3", style: "width: 100px; height: 100px;" %>
+      <div class="container d-flex flex-column mx-auto my-1">
+        <p class="mb-auto" style="font-size: 22px;"><%= lecturer.name %></p>
+        <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= lecturer.department&.name %></p>
+        <p class="mb-auto" style="font-size: 16px;">Степень: <%= lecturer.academic_degree %></p>
+      </div>
+    </div>
+  <% end %>
+  <% if current_user.is_admin? %>
+    <div class="d-flex">
+      <%= link_to 'Edit', edit_lecturer_path(lecturer) %> |
+      <%= link_to 'Destroy', lecturer, method: :delete, data: { confirm: 'Вы уверены?' } %>
+    </div>
+  <% end %>
+</div>

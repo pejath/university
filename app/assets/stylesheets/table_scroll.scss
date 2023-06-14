@@ -7,7 +7,9 @@
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.384) 100%);
   border-radius: 5px;
 }
-
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.384) 100%);
   border: 1px solid #219EBC;
@@ -44,4 +46,8 @@
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.384) 100%);
   border: 1px solid #219EBC;
   border-radius: 12px;
+}
+
+* {
+  scrollbar-corner: none transparent;
 }

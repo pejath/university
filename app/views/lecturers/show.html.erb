@@ -1,39 +1,31 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row gx-5">
+    <div class="col">
+      <div class="container rounded-4 my-3 px-4 py-4" style="height: 225px; background: rgba(255, 255, 255, 0.48);">
+        <div class="container"><p style="font-size: 32px;">Преподаватель</p></div>
+        <div class="container d-flex">
+          <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
+          <div class="container d-flex flex-column">
+            <p class="mb-auto" style="font-size: 22px;"><%= @lecturer.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @lecturer.department.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Степень: <%= @lecturer.academic_degree %></p>
+            <% if current_user.is_admin? %>
+              <p>Токен: <%= @lecturer.invitation_token.token %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <% if @lecturer.curatorial_group %>
+        <div class="container rounded-4 my-3 px-4 py-4" style="height: 180px; background: rgba(255, 255, 255, 0.48);">
+          <h3>Куратор группы: <%= @lecturer.curatorial_group.specialization_code %></h3>
+          <p>Кафедра: <%= @lecturer.curatorial_group.department.name %></p>
+          <p>Курс: <%= @lecturer.curatorial_group.course %></p>
+        </div>
+      <% end %>
+    </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @lecturer.name %>
-</p>
-
-<p>
-  <strong>Department:</strong>
-  <%= @lecturer.department.name %>
-</p>
-
-<p>
-  <strong>Academic Degree:</strong>
-  <%= @lecturer.academic_degree %>
-</p>
-
-
-<table>
-  <thead>
-  <tr>
-    <th>Subjects</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @lecturer.lecturers_subjects.map do |ls| %>
-    <tr>
-      <td><%= ls.subject.name %></td>
-      <td><%= link_to 'Destroy', lecturers_subject_path(ls),method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-
-
-<%= link_to 'Add subjects', new_lecturers_subject_path%> |
-<%= link_to 'Edit', edit_lecturer_path(@lecturer) %> |
-<%= link_to 'Back', lecturers_path %>
+    <div class="col">
+      <%= render 'users/time_table' %>
+    </div>
+  </div>
+</div>

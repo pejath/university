@@ -7,6 +7,8 @@ class StudentsController < ApplicationController
 
   def show
     authorize Student
+    @grouped_lectures = @student.lectures.includes(:lecture_time).order('weekday').order('lecture_times.beginning').group_by(&:weekday)
+
   end
 
   def new
@@ -16,7 +18,7 @@ class StudentsController < ApplicationController
 
   def edit
     authorize Student
-    authorize @student
+    @subject = @student.subjects
   end
 
   def create

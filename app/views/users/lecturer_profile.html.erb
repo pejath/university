@@ -9,7 +9,7 @@
           <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
           <div class="container d-flex flex-column">
             <p class="mb-auto" style="font-size: 22px;"><%= @lecturer.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Факультет: <%= @lecturer.department.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @lecturer.department.name %></p>
             <p class="mb-auto" style="font-size: 16px;">Степень: <%= @lecturer.academic_degree %></p>
           </div>
         </div>
@@ -24,7 +24,7 @@
         <div class="container d-flex">
           <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
           <div class="container d-flex flex-column">
-            <p class="mb-auto" style="font-size: 16px;">Факульткт: <%= @lecturer.curatorial_group.department.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @lecturer.curatorial_group.department.name %></p>
             <p class="mb-auto" style="font-size: 16px;">Курс: <%= @lecturer.curatorial_group.course %></p>
           </div>
         </div>
