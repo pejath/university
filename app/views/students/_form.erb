@@ -16,20 +16,24 @@
         <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
         <div class="container d-flex flex-column">
           <p class="mb-auto" style="font-size: 22px;"><%= @student.name %></p>
-          <p class="mb-auto" style="font-size: 16px;">Группа: <%= @student.group.specialization_code %></p>
-          <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @student.department.name %></p>
+          <p class="mb-auto" style="font-size: 16px;">Группа: <%= @student.group&.specialization_code %></p>
+          <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @student.department&.name %></p>
           <% if current_user.is_admin? %>
-            <p>Токен: <%= @student.invitation_token.token %></p>
+            <p>Токен: <%= @student.invitation_token&.token %></p>
           <% end %>
         </div>
       </div>
     </div>
   <% end %>
   <%= select_tag :subject_id, options_from_collection_for_select(Subject.all, :id, :name, params[:subject_id]), prompt: "new" %>
-
+  <div class="actions">
+    <%= form.submit %>
+  </div>
   <% unless @subject.nil? %>
-    <div class="d-flex flex-wrap">
-      <%= link_to_add_fields "Add mark", form, :marks %>
+    <div class="container d-flex flex-wrap">
+      <span class="col-12" id="mark-fields">
+        <%= link_to_add_fields "Add mark", form, :marks %>
+      </span>
       <%= form.fields_for :marks do |f| %>
         <div class="item card col-3 bg-light mb-3 rounded" data-subject-id="<%= f.object.subject_id %>">
           <div class="card-body">
@@ -59,21 +63,27 @@
   <% else %>
     <p>There is no subjects</p>
   <% end %>
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+
 <% end %>
 
 
 <script>
 
-    $('form').on('click', '.add_fields', function (e) {
-        var regexp, time
-        time = new Date().getTime();
-        regexp = new RegExp($(this).data('id'), 'g');
-        $(this).before($(this).data('fields').replace(regexp, time));
-        return e.preventDefault();
-    })
+    $(document).on('click', '.add_fields', function(e) {
+        e.preventDefault();
+
+        var id = $(this).data('id');
+        var fields = $(this).data('fields');
+        var newId = new Date().getTime();
+        var regex = new RegExp(id, 'g');
+
+        fields = fields.replace(regex, newId);
+        var newFields = $('<div>').html(fields).contents(); // Создаем новые элементы из HTML строки
+
+        $('#mark-fields').after(newFields); // Перемещаем новые элементы после существующего span
+    });
+
+
 
     $(document).ready(function () {
         $('#subject_id').change(function () {

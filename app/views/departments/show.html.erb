@@ -1,17 +1,11 @@
 <p id="notice"><%= notice %></p>
-<p>
-  <strong>Name</strong>
-  <%= @department.name %>
-</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <%= render @department %>
+  </div>
 
-<p>
-  <strong>Department type </strong>
-  <%= @department.department_type %>
-</p>
 
-<p>
-  <strong>Formation Date</strong>
-  <%= @department.formation_date %>
-</p>
-<%= link_to 'Edit', edit_faculty_department_path(@department) %> |
-<%= link_to 'Back', faculty_departments_path %>
+  <div class="d-flex flex-wrap justify-content-center">
+    <%= render @department.groups %>
+  </div>
+</div>

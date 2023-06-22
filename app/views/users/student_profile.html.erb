@@ -9,9 +9,9 @@
           <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
           <div class="container d-flex flex-column">
             <p class="mb-auto" style="font-size: 22px;"><%= @student.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @student.department.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Курс: <%= @student.group.course %></p>
-            <p class="mb-auto" style="font-size: 16px;">Группа: <%= @student.group.specialization_code %></p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @student.department&.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Курс: <%= @student.group&.course %></p>
+            <p class="mb-auto" style="font-size: 16px;">Группа: <%= @student.group&.specialization_code %></p>
           </div>
         </div>
       </div>
@@ -39,9 +39,9 @@
         <div class="container d-flex">
           <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
           <div class="container d-flex flex-column">
-            <p class="mb-auto" style="font-size: 22px;"><%= @group.curator.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @group.curator.department.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Степень: <%= @group.curator.academic_degree %></p>
+            <p class="mb-auto" style="font-size: 22px;"><%= @group.curator&.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @group.curator&.department&.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Степень: <%= @group.curator&.academic_degree %></p>
           </div>
         </div>
       </div>
@@ -53,9 +53,9 @@
         <div class="row justify-content-center">
           <% @lectures.uniq(&:lecturer).each do |lecture| %>
             <div class="col-md-2 col-4 text-center rounded-3 mx-3 my-4" style="background: rgba(255, 255, 255, 0.32);">
-              <p class="rounded-4" style="background: rgba(255, 255, 255, 0.32);"><%= lecture.subject.name %></p>
+              <p class="rounded-4" style="background: rgba(255, 255, 255, 0.32);"><%= lecture.subject&.name %></p>
               <%= image_tag "person.png", class: "rounded-circle ", style: "width: 50px; height: 50px;" %>
-              <p><%= lecture.lecturer.name %></p>
+              <p><%= lecture.lecturer&.name %></p>
             </div>
           <% end %>
         </div>

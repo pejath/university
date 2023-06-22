@@ -1,11 +1,11 @@
 <tr>
-  <td><%= lecture.lecture_time.formatted_time %></td>
+  <td><%= lecture.lecture_time&.formatted_time %></td>
   <td><%= lecture.weekday %></td>
-  <td><%= lecture.subject.name %></td>
-  <td><%= lecture.lecturer.name %></td>
+  <td><%= lecture.subject&.name %></td>
+  <td><%= lecture.lecturer&.name %></td>
   <td><%= lecture.corpus %></td>
   <td><%= lecture.auditorium %></td>
-  <td><%= lecture.lecturer.name %></td>
+  <td><%= lecture.lecturer&.name %></td>
 
   <td><%= link_to 'Show', [@group, lecture] %></td>
   <td><%= link_to 'Edit', edit_group_lecture_path(@group,lecture) %></td>

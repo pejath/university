@@ -22,15 +22,15 @@
           <tbody>
           <% lectures.each do |lecture| %>
             <tr class="text-center">
-              <td><%= lecture.lecture_time.beginning.strftime("%H:%M") %></td>
-              <td><%= lecture.subject.name %></td>
+              <td><%= lecture&.lecture_time&.beginning&.strftime("%H:%M") %></td>
+              <td><%= lecture&.subject&.name %></td>
               <td><%= lecture.auditorium %></td>
               <td><%= lecture.corpus %></td>
               <% case current_user.role %>
               <% when 1 %>
-                <td><%= lecture.group.specialization_code %></td>
+                <td><%= lecture.group&.specialization_code %></td>
               <% when 3 %>
-                <td><%= lecture.lecturer.name %></td>
+                <td><%= lecture.lecturer&.name %></td>
               <% end %>
             </tr>
           <% end %>

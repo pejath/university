@@ -17,8 +17,11 @@ class UsersController < ApplicationController
                end
 
       @students = @group.students
-      @subjects = @group.subjects
-      @subject = Subject.where(params[:subject_id])&.first || @subjects.first
+      @subjects = @group.subjects.uniq
+      @subject = Subject.where(id: params[:subject_id])
+
+      @subject = @group.subjects.first if @subject.nil?
+
       @marks = {}
       @students.each do |student|
         @marks[student] = {}

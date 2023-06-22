@@ -3,20 +3,29 @@
     <div class="col">
       <div class="container rounded-4 my-3 px-4 py-4" style="background: rgba(255, 255, 255, 0.48);">
         <h2>Группа <%= @group.specialization_code %></h2>
-        <p>Кафедра: <%= @group.department.name %> | Курс <%= @group.course %> </p>
-      </div>
+        <p>Кафедра: <%= @group.department&.name %> | Курс <%= @group.course %> </p>
+        <% if current_user.is_admin? %>
+          <%= link_to "Edit", edit_group_path(@group) %>
+        <% end %>
 
-      <div class="container rounded-4 my-3 px-4 py-4" style="height: 225px; background: rgba(255, 255, 255, 0.48);">
-        <div class="container"><p style="font-size: 32px;">Куратор</p></div>
-        <div class="container d-flex">
-          <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
-          <div class="container d-flex flex-column">
-            <p class="mb-auto" style="font-size: 22px;"><%= @curator.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @curator.department.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Степень: <%= @curator.academic_degree %></p>
+        <% if current_user.is_methodist? %>
+          <%= link_to "Edit Timetable", group_lectures_path(@group) %>
+        <% end %>
+
+      </div>
+      <% if @curator %>
+        <div class="container rounded-4 my-3 px-4 py-4" style="height: 225px; background: rgba(255, 255, 255, 0.48);">
+          <div class="container"><p style="font-size: 32px;">Куратор</p></div>
+          <div class="container d-flex">
+            <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
+            <div class="container d-flex flex-column">
+              <p class="mb-auto" style="font-size: 22px;"><%= @curator.name %></p>
+              <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @curator.department&.name %></p>
+              <p class="mb-auto" style="font-size: 16px;">Степень: <%= @curator.academic_degree %></p>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
       <%= render "users/time_table" %>
     </div>
 
@@ -27,8 +36,8 @@
           <% @students.each_with_index do |student, i| %>
             <div class="container col-sm-5 col-12 d-flex mx-auto my-1" style="background: rgba(255, 255, 255, 0.32); height: 74px;">
               <h4 class="my-auto"><%= i + 1 %></h4>
-              <%= link_to(image_tag("person.png", class: 'rounded-circle mx-2 my-auto', style: "width: 50px; height: 50px;"), student_path(student), class:"my-auto", style: "text-decoration: none; color: black;") %>
-              <p class="my-auto"><%= link_to student.name, student_path(student), class:"my-auto", style: "text-decoration: none; color: black;" %></p>
+              <%= link_to(image_tag("person.png", class: 'rounded-circle mx-2 my-auto', style: "width: 50px; height: 50px;"), student_path(student), class: "my-auto", style: "text-decoration: none; color: black;") %>
+              <p class="my-auto"><%= link_to student.name, student_path(student), class: "my-auto", style: "text-decoration: none; color: black;" %></p>
             </div>
           <% end %>
 

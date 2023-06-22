@@ -1,11 +1,14 @@
-<div class="container col-md-3 col-12 mx-4 my-4 item" style="background: rgba(255, 255, 255, 0.48); height: 200px;">
-  <%= link_to lecturer, class:"link-dark link-underline-opacity-0" do %>
+<div class="container col-md-3 col-12 mx-4 my-4 item" style="background: rgba(255, 255, 255, 0.48); height: 220px;">
+  <%= link_to lecturer, class: "link-dark link-underline-opacity-0" do %>
     <div class="container d-flex">
       <%= image_tag "person.png", class: "rounded-circle my-3", style: "width: 100px; height: 100px;" %>
       <div class="container d-flex flex-column mx-auto my-1">
         <p class="mb-auto" style="font-size: 22px;"><%= lecturer.name %></p>
         <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= lecturer.department&.name %></p>
         <p class="mb-auto" style="font-size: 16px;">Степень: <%= lecturer.academic_degree %></p>
+        <% if current_user.is_admin? %>
+          <p class="mb-auto" style="font-size: 16px;">Token: <%= lecturer.invitation_token&.token %></p>
+        <% end %>
       </div>
     </div>
   <% end %>

@@ -9,7 +9,7 @@
           <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
           <div class="container d-flex flex-column">
             <p class="mb-auto" style="font-size: 22px;"><%= @lecturer.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @lecturer.department.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @lecturer.department&.name %></p>
             <p class="mb-auto" style="font-size: 16px;">Степень: <%= @lecturer.academic_degree %></p>
           </div>
         </div>
@@ -20,12 +20,12 @@
       <!--   curator profile start   -->
       <% if @lecturer.is_curator? %>
       <div class="container rounded-4 my-3 px-4 py-4" style="height: 225px; background: rgba(255, 255, 255, 0.48);">
-        <div class="container"><p style="font-size: 32px;">Куратор группы <%= @lecturer.curatorial_group.specialization_code %></p></div>
+        <div class="container"><p style="font-size: 32px;">Куратор группы <%= @lecturer.curatorial_group&.specialization_code %></p></div>
         <div class="container d-flex">
           <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
           <div class="container d-flex flex-column">
-            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @lecturer.curatorial_group.department.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Курс: <%= @lecturer.curatorial_group.course %></p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @lecturer.curatorial_group&.department&.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Курс: <%= @lecturer.curatorial_group&.course %></p>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@
         var subjectId = $(this).val();
 
         if (subjectId) {
-            updateUrlParameter('group_id', subjectId);
+            updateUrlParameter('subject_id', subjectId);
         } else {
             window.location.href = '/profile';
         }

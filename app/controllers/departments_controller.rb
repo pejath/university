@@ -1,21 +1,16 @@
 # frozen_string_literal: true
 
 class DepartmentsController < ApplicationController
-  before_action :set_faculty
   before_action :set_department, only: %i[show edit update destroy]
 
   # GET /faculties/:id/departments or /faculties/:id/departments.json
-  def index
-    @departments = @faculty.departments
-    authorize @departments
-  end
 
   # GET /faculties/:id/departments/1 or /faculties/:id/departments/1.json
   def show; end
 
   # GET /faculties/:id/departments/new
   def new
-    @department = @faculty.departments.build
+    @department = Department.new
     authorize @department
   end
 
@@ -26,13 +21,13 @@ class DepartmentsController < ApplicationController
 
   # POST /faculties/:id/departments or /faculties/:id/departments.json
   def create
-    @department = @faculty.departments.build(department_params)
+    @department = Department.build(department_params)
     authorize @department
 
     respond_to do |format|
       if @department.save
         format.html do
-          redirect_to faculty_department_url(@faculty, @department), notice: 'Department was successfully created.'
+          redirect_to faculties_url, notice: 'Department was successfully created.'
         end
         format.json { render :show, status: :created, location: @department }
       else
@@ -78,11 +73,7 @@ class DepartmentsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
 
   def set_department
-    @department = @faculty.departments.find(params[:id])
-  end
-
-  def set_faculty
-    @faculty = Faculty.find(params[:faculty_id])
+    @department = Department.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

@@ -1,14 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Факультеты</h1>
 <% if current_user.is_admin? %>
   <%= link_to 'New Faculty', new_faculty_path %>
 <% end %>
 <div class="container">
+  <h1>Факультеты</h1>
   <% @faculties.each do |faculty| %>
-    <h2><%= faculty.name %></h2>
-    <% faculty.departments.each do |department| %>
-
-    <% end %>
+    <h2 class="px-2 py-2"><%= faculty.name %></h2>
+    <div class="container" style="background: rgba(255, 255, 255, 0.32);">
+      <div class="container d-flex flex-wrap justify-content-center">
+        <% faculty.departments.each do |department| %>
+          <%= render department %>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>
+<br>

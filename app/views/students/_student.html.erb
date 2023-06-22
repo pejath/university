@@ -1,6 +1,7 @@
 <tr>
-  <td><%= student.group.specialization_code %></td>
+  <td><%= student.group&.specialization_code %></td>
   <td><%= student.name %></td>
+  <td><%= student.invitation_token&.token %></td>
   <% if current_user.is_admin? || current_user.is_lecturer? %>
     <td><%= link_to 'Show', student %></td>
     <td><%= link_to 'Edit', edit_student_path(student) %></td>

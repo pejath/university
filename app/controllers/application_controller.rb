@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:alert] = 'У вас недостаточно прав для этого действия'
-    redirect_to(request.referrer || root.path)
+    redirect_to(request.referrer || root_path)
   end
 
   def configure_permitted_parameters

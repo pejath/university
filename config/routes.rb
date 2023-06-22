@@ -9,9 +9,8 @@ Rails.application.routes.draw do
   resources :students
   resources :lecturers_subjects, only: %i[destroy new create]
 
-  resources :faculties do
-    resources :departments
-  end
+  resources :faculties
+  resources :departments, only: %i[destroy new create show edit]
 
   resources :groups do
     resources :lectures

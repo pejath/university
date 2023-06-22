@@ -6,17 +6,17 @@
           <%= image_tag "person.png", class: "rounded-circle ", style: "width: 100px; height: 100px;" %>
           <div class="container d-flex flex-column">
             <p class="mb-auto" style="font-size: 22px;"><%= @student.name %></p>
-            <p class="mb-auto" style="font-size: 16px;">Группа: <%= @student.group.specialization_code %></p>
-            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @student.department.name %></p>
+            <p class="mb-auto" style="font-size: 16px;">Группа: <%= link_to @student.group&.specialization_code, @student.group, style: "text-decoration: none; color: black;"%> </p>
+            <p class="mb-auto" style="font-size: 16px;">Кафедра: <%= @student.department&.name %></p>
             <% if current_user.is_admin? %>
-              <p>Токен: <%= @student.invitation_token.token %></p>
+              <p>Токен: <%= @student.invitation_token&.token %></p>
             <% end %>
           </div>
         </div>
+        <% if current_user.is_admin? || current_user.is_lecturer? %>
+          <td><%= link_to 'Edit', edit_student_path(@student) %></td>
+        <% end %>
       </div>
-      <% if current_user.is_admin? || current_user.is_lecturer? %>
-        <td><%= link_to 'Edit', edit_student_path(@student) %></td>
-    <% end %>
     </div>
 
     <div class="col">
