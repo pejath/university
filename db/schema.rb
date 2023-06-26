@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2023_05_21_170510) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "admins", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -19,7 +22,7 @@ ActiveRecord::Schema.define(version: 2023_05_21_170510) do
   end
 
   create_table "departments", force: :cascade do |t|
-    t.integer "faculty_id"
+    t.bigint "faculty_id"
     t.string "name", null: false
     t.integer "department_type", null: false
     t.date "formation_date", null: false
@@ -37,8 +40,8 @@ ActiveRecord::Schema.define(version: 2023_05_21_170510) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.integer "department_id"
-    t.integer "curator_id"
+    t.bigint "department_id"
+    t.bigint "curator_id"
     t.integer "specialization_code", null: false
     t.integer "course", null: false
     t.integer "form_of_education", null: false
@@ -49,10 +52,10 @@ ActiveRecord::Schema.define(version: 2023_05_21_170510) do
   end
 
   create_table "invitation_tokens", force: :cascade do |t|
-    t.integer "lecturer_id"
-    t.integer "student_id"
-    t.integer "admin_id"
-    t.integer "methodist_id"
+    t.bigint "lecturer_id"
+    t.bigint "student_id"
+    t.bigint "admin_id"
+    t.bigint "methodist_id"
     t.string "token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -67,7 +70,7 @@ ActiveRecord::Schema.define(version: 2023_05_21_170510) do
   end
 
   create_table "lecturers", force: :cascade do |t|
-    t.integer "department_id"
+    t.bigint "department_id"
     t.string "name", null: false
     t.integer "academic_degree"
     t.datetime "created_at", precision: 6, null: false
@@ -76,8 +79,8 @@ ActiveRecord::Schema.define(version: 2023_05_21_170510) do
   end
 
   create_table "lecturers_subjects", force: :cascade do |t|
-    t.integer "lecturer_id"
-    t.integer "subject_id"
+    t.bigint "lecturer_id"
+    t.bigint "subject_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lecturer_id", "subject_id"], name: "index_lecturers_subjects_on_lecturer_id_and_subject_id", unique: true
@@ -86,10 +89,10 @@ ActiveRecord::Schema.define(version: 2023_05_21_170510) do
   end
 
   create_table "lectures", force: :cascade do |t|
-    t.integer "lecture_time_id"
-    t.integer "group_id"
-    t.integer "lecturer_id"
-    t.integer "subject_id"
+    t.bigint "lecture_time_id"
+    t.bigint "group_id"
+    t.bigint "lecturer_id"
+    t.bigint "subject_id"
     t.integer "weekday", null: false
     t.integer "corpus", null: false
     t.integer "auditorium", null: false
@@ -101,9 +104,9 @@ ActiveRecord::Schema.define(version: 2023_05_21_170510) do
   end
 
   create_table "marks", force: :cascade do |t|
-    t.integer "student_id"
-    t.integer "subject_id"
-    t.integer "lecturer_id"
+    t.bigint "student_id"
+    t.bigint "subject_id"
+    t.bigint "lecturer_id"
     t.integer "mark", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -119,7 +122,7 @@ ActiveRecord::Schema.define(version: 2023_05_21_170510) do
   end
 
   create_table "students", force: :cascade do |t|
-    t.integer "group_id"
+    t.bigint "group_id"
     t.string "name", null: false
     t.index ["group_id"], name: "index_students_on_group_id"
   end

@@ -8,7 +8,7 @@ class StudentsController < ApplicationController
   def show
     authorize Student
     @grouped_lectures = @student.lectures.includes(:lecture_time).order('weekday').order('lecture_times.beginning').group_by(&:weekday)
-
+    @group = @student.group
   end
 
   def new

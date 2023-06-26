@@ -12,14 +12,14 @@
     <tbody>
       <tr>
         <% @marks.each do |k,v| %>
-        <th scope="row" class="sticky-cell"><%= k %></th>
+        <th scope="row" class="sticky-cell"><%= k.name %></th>
         <% @dates.each do |date| %>
           <td class="text-center">
             <% marks = v[date] %>
             <%= marks ? marks.mark : '' %>
           </td>
       <% end %>
-        <td><%= @student.average_mark(k) %></td>
+        <td><%= @student.average_mark(k.id) %></td>
       </tr>
     <% end %>
     </tbody>

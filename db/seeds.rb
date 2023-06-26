@@ -21,7 +21,6 @@ FACULTS.each{|facult|
 Department.create(name: 'Ботаники', faculty_id: 1, department_type: 'Interfacult', formation_date: DATE)
 Department.create(name: 'Генетики', faculty_id: 1, department_type: 'Basic', formation_date: DATE)
 Department.create(name: 'Географической экологии', faculty_id: 2, department_type: 'Basic', formation_date: DATE)
-Department.create(name: 'Экономической и социальной географии', faculty_id: 2, department_type: 'Interfacult', formation_date: DATE)
 Department.create(name: 'Истории России', faculty_id: 3, department_type: 'Interfacult', formation_date: DATE)
 Department.create(name: 'Древнего мира', faculty_id: 3, department_type: 'Basic', formation_date: DATE)
 Department.create(name: 'Медиалогии', faculty_id: 4, department_type: 'Basic', formation_date: DATE)

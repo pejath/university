@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
       @students = @group.students
       @subjects = @group.subjects.uniq
-      @subject = Subject.where(id: params[:subject_id])
+      @subject = Subject.where(id: params[:subject_id]).first
 
       @subject = @group.subjects.first if @subject.nil?
 
@@ -41,10 +41,10 @@ class UsersController < ApplicationController
       @subjects = @group.subjects.group(:subject_id)
       @marks = {}
       @subjects.each do |subject|
-        @marks[subject.name] = {}
+        @marks[subject] = {}
         @dates.each do |date|
           mark = @student.marks.where(created_at: date.beginning_of_day, subject_id: subject).first
-          @marks[subject.name][date] = mark if mark
+          @marks[subject][date] = mark if mark
         end
       end
 

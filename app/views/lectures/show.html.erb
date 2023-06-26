@@ -1,31 +1,31 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Group:</strong>
+  <strong>Группа:</strong>
   <%= @lecture.group_id %>
 </p>
 <p>
-  <strong>Lecture Time:</strong>
+  <strong>Время:</strong>
 <%= @lecture.lecture_time&.formatted_time %>
 </p>
 <p>
-  <strong>Weekday:</strong>
+  <strong>День недели:</strong>
 <%= @lecture.weekday %>
 </p>
 <p>
-  <strong>Subject:</strong>
+  <strong>Предмет:</strong>
 <%= @lecture.subject&.name %>
 </p>
 <p>
-  <strong>Lecturer:</strong>
+  <strong>Преподаватель:</strong>
 <%= @lecture.lecturer&.name %>
 </p>
 <p>
-  <strong>Corpus:</strong>
+  <strong>Корпус:</strong>
 <%= @lecture.corpus %>
 </p>
 <p>
-  <strong>Auditorium:</strong>
+  <strong>Аудитория:</strong>
 <%= @lecture.auditorium %>
 </p>
 

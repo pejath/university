@@ -32,7 +32,7 @@
   <% unless @subject.nil? %>
     <div class="container d-flex flex-wrap">
       <span class="col-12" id="mark-fields">
-        <%= link_to_add_fields "Add mark", form, :marks %>
+        <%= link_to_add_fields "Добавить оценки", form, :marks %>
       </span>
       <%= form.fields_for :marks do |f| %>
         <div class="item card col-3 bg-light mb-3 rounded" data-subject-id="<%= f.object.subject_id %>">
@@ -61,7 +61,7 @@
       <% end %>
     </div>
   <% else %>
-    <p>There is no subjects</p>
+    <p>Нет такого предмета</p>
   <% end %>
 
 <% end %>

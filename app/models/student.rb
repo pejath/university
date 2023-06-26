@@ -19,8 +19,9 @@ class Student < ApplicationRecord
                        }
 
   def average_mark(*subject)
+
     if subject
-      Mark.where('student_id = ? and subject_id = ?', id, Subject.find_by(name: subject[0])).average('mark').to_f.round(2)
+      Mark.where('student_id = ? and subject_id = ?', id, subject).average('mark').to_f.round(2)
     else
       Mark.where('student_id = ?', id).average('mark').to_f.round(2)
     end

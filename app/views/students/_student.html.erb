@@ -1,13 +1,20 @@
 <tr>
   <td><%= student.group&.specialization_code %></td>
   <td><%= student.name %></td>
-  <td><%= student.invitation_token&.token %></td>
-  <% if current_user.is_admin? || current_user.is_lecturer? %>
+  <% if current_user.is_admin? %>
+    <td><%= student.invitation_token&.token %></td>
     <td><%= link_to 'Show', student %></td>
     <td><%= link_to 'Edit', edit_student_path(student) %></td>
     <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   <% else %>
+    <% unless current_user.is_lecturer? %>
+      <td><%= link_to 'Show', student %></td>
+    <% end %>
+  <% end %>
+
+  <% if current_user.is_lecturer? %>
     <td><%= link_to 'Show', student %></td>
-<% end %>
+    <td><%= link_to 'Edit', edit_student_path(student) %></td>
+  <% end %>
 
 </tr>

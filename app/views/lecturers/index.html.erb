@@ -4,7 +4,7 @@
       <%= link_to 'Create', new_group_path %>
     <% end %>
     <div class="container" style="background: rgba(255, 255, 255, 0.32);">
-      <h2 class="px-2 py-2">Группы</h2>
+      <h2 class="px-2 py-2">Преподаватели</h2>
       <div class="d-flex flex-wrap">
         <%= select_tag :degree, options_for_select((0..5).to_a, params[:degree]), class: 'your_class' %>
         <%= select_tag :department_id, options_from_collection_for_select(Department.all, :id, :name, params[:department_id]), class: 'your_class', prompt: "Выберите кафедру" %>
