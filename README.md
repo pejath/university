@@ -1,9 +1,8 @@
 # README
 
-To run this app:
+That is CRM system for the university
 
-Use Ruby version 3.0.2
-
-write in terminal "rails console"
-
-load "main.rb"
+* Ruby 3.0.2
+* Rails 6
+* SQLite
+* RSpec
